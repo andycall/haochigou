@@ -1,4 +1,4 @@
-define(["jquery"], function($){
+define(["jquery", "shop/port"], function($, port){
 	console.log("shop collection bar loaded");
 /*
  *  @include "侧边栏收藏按钮"
@@ -30,7 +30,7 @@ define(["jquery"], function($){
 
 	//收藏ajax
 	function shopFavorAjax( data ){
-		$.post("/shopFavor", data, function(res){
+		$.post( port["shopFavor"], data, function(res){
 			if( typeof res != "object"){
 				try{
 					res = $.parseJSON(res);
@@ -55,7 +55,7 @@ define(["jquery"], function($){
 
 	//取消收藏ajax
 	function delShopFavor( data){
-		$.post("/delShopFavor", data, function(res){
+		$.post( port["delShopFavor"], data, function(res){
 			if( typeof res != "object"){
 				try{
 					res = $.parseJSON(res);

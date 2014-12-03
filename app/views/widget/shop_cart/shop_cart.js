@@ -1,4 +1,4 @@
- define(['jquery', 'underscore'], function($, _){
+ define(['jquery', 'underscore', "shop/port"], function($, _, port){
      var $cartUp = $('#cartScroll');
      $('.aside-icon-cart').on('click', toggleCartScroll);
      function toggleCartScroll(e){
@@ -20,7 +20,7 @@
          }
          //init
          this.itemList = [];
-
+        this.init();
      }
 //     {
 //          id: 123,
@@ -39,6 +39,7 @@
                  return this.itemList[i];
              }
          }
+         if(callback) callback(null);
          return false;
      }
      /**
@@ -49,9 +50,14 @@
      Cart.prototype.add = function(item){
          if(!this.find(item.id)){
              this.itemList.push(item);
-             var tpl = _.template($('#tpl-cart-item').html())({data: item});
-             if($('.rcart-empty').length > 0)$('#cartScroll').html('<h4 class="rcart-title">购物车<a class="rcart-clear basket_clear_btn">[清空]</a></h4><ul class="rcart-list basket_list"></ul>');
-             $('.basket_list').append(tpl);
+             try{
+                 var tpl = _.template($('#tpl-cart-item').html())({data: item});
+                 if($('.rcart-empty').length > 0)$('#cartScroll').html('<h4 class="rcart-title">购物车<a class="rcart-clear basket_clear_btn">[清空]</a></h4><ul class="rcart-list basket_list"></ul>');
+                 $('.basket_list').append(tpl);
+             }catch(e){
+                 console.log('point 1');
+             }
+
              refreshCart();
              fixScroll();
              return true;
@@ -104,13 +110,34 @@
         };
      }
 
-     //todo for debug 显示状态用的
-     Cart.prototype.state = function(){
-         console.log(this.itemList);
-     }
 
      Cart.prototype.empty = function(){
          this.itemList = [];
+     }
+
+     Cart.prototype.each = function(cb){
+
+     }
+
+     Cart.prototype.init = function(cb){
+         var self = this;
+         $.ajax({
+             url: port['cartInit'],
+             type: "POST",
+             data: {},
+             success: function(res){
+                 if(res.success == 'true'){
+                     var data = res.data;
+                     data.forEach(function(item){
+                         cart.add(item);
+                         cb && cb(item);
+                     });
+                 }else{
+                     alert('NetWork Error!');
+                 }
+             }
+         });
+
      }
 
      var cart = new Cart();  //实例化 cart
@@ -121,7 +148,14 @@
          var cartInfo = cart.refresh();
          $totalLen.html(cartInfo.totalNum);
          $totalPrice.html(cartInfo.totalPrice);
-
+         $('.rcart-dish').each(function(i, item){
+             var $item = $(item);
+             var id = $item.data('good_id'),
+                 shop_id = $item.data('shop_id');
+             cart.find(id, function(good){
+                $item.find('.set_num_in').val(good.count);
+             });
+         });
          if(cartInfo.totalPrice == 0){
              $('.rcart-info').hide();
              $('#cartScroll').html('<p class="rcart-empty">篮子是空的</p>');
@@ -158,7 +192,7 @@
          }
 
          $.ajax({
-             url: "./cartSetCount",
+             url: port['cartSetCount'],
              type: "post",
              data: {
                  good_id: id,
@@ -202,7 +236,7 @@
              shop_id = pnt.data('shop_id');
 
          $.ajax({
-             url: "./cartDel",
+             url: port['cartDel'],
              type: "post",
              data: {
                  good_id: id,
@@ -226,7 +260,7 @@
      $('#cartScroll').on('click','.basket_clear_btn', clearCart);
      function clearCart(){
          $.ajax({
-             url: "./cartClear",
+             url: port['cartClear'],
              type: "post",
              data: {
              },
@@ -245,47 +279,54 @@
 
 
      function fixScroll(){
-         $cartUp.animate({top: -$cartUp.height() + 'px'});
+         if($cartUp)
+             $cartUp.animate({top: -$cartUp.height() + 'px'});
      }
 
      var exports = {
          add: function(id, shop_id) {
-             $.ajax({
-                 url: "./cartAdd",
-                 type: "post",
-                 data: {
-                     good_id: id,
-                     shop_id: shop_id
-                 },
-                 beforeSend: function(){
-                     //todo 这里应该转个菊花什么的
-                 },
-                 success: function(res){
-                     if('true' == res.success){
-                         var data = res.data;
-                         $('#cartTotalItems').html(data['cart_count']);
-                         $('#cartTotalPrice').html(data['cart_all']);
-                         cart.add({
-                             id: data.addedItem['goods_id'],
-                             price: data.addedItem['goods_price'],
-                             count: data.addedItem['goods_count'],
-                             title: data.addedItem['goods_name'],
-                             shop_id: data['shop_id'],
-                             domLi: null
-                         });
+             cart.find(id, function(item){
+                 if(item){
+                     item.count ++;
+                 }else{
+                     $.ajax({
+                         url: port['cartAdd'],
+                         type: "post",
+                         data: {
+                             good_id: id,
+                             shop_id: shop_id
+                         },
+                         beforeSend: function(){
+                             //todo 这里应该转个菊花什么的
+                         },
+                         success: function(res){
+                             if('true' == res.success){
+                                 var data = res.data;
+                                 $('#cartTotalItems').html(data['cart_count']);
+                                 $('#cartTotalPrice').html(data['cart_all']);
+                                 cart.add({
+                                     id: data.addedItem['goods_id'],
+                                     price: data.addedItem['goods_price'],
+                                     count: data.addedItem['goods_count'],
+                                     title: data.addedItem['goods_name'],
+                                     shop_id: data['shop_id'],
+                                     domLi: null
+                                 });
 
-                     }else{
-                         alert(res.info);
-                     }
+                             }else{
+                                 alert(res.info);
+                             }
+                         }
+
+                     });
                  }
-
              });
              refreshCart();
          },
 
          del: function(id, shop_id){
              $.ajax({
-                 url: "./cartDel",
+                 url: port['cartDel'],
                  type: "post",
                  data: {
                      good_id: id,
@@ -314,7 +355,7 @@
                  return exports.del(id, shop_id);
              }
              $.ajax({
-                 url: "./cartSetCount",
+                 url: port['cartSetCount'],
                  type: "post",
                  data: {
                      good_id: id,
@@ -339,13 +380,8 @@
 
          empty: clearCart,
 
-         getState: function(){
-             cart.state();
-         }
-         //TODO for debug
      };
 
-     window.cart = exports; //TODO devel for DEBUG
      return exports;
      console.log("shop cart loaded");
 

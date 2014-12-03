@@ -6,6 +6,7 @@ require.config({
 		}
 	},
 	paths : {
+		"register" : "../template/login_register",    
 		"product_image" : "../widget/product_image",
 		"register_form" : "../widget/register_form",
 		"login_form"    : "../widget/login_form",

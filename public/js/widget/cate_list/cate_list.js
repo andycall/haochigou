@@ -1,4 +1,4 @@
-define([ "jquery" ], function() {
+define([ "jquery", "shop_cart/shop_cart" ], function($, cart) {
     function getListTop(list) {
         var arr = [];
         return list.each(function() {
@@ -6,12 +6,13 @@ define([ "jquery" ], function() {
         }), arr;
     }
     console.log("cate list loaded");
+    // 计算滚动方向
     var ready_tmp, CaculateDirection = function() {
         var direction = 1, scrollTmp = 0;
         return function(scrollTop) {
             return direction = scrollTop > scrollTmp ? 1 : -1, scrollTmp = scrollTop, direction;
         };
-    }(), menu_toolbar = $(".menu_toolbar"), menu_offset = menu_toolbar.offset(), toolBar_toggle = $(".toolBar_toggle"), drop_down_menu = $(".drop_down_menu"), classify_sec = $(".classify_sec"), sec_title = $(".sec_title"), toolbar_text = $(".toolbar_text").find("span"), scrollIndex = 0, // 状态保存
+    }(), menu_toolbar = $(".menu_toolbar"), menu_offset = menu_toolbar.offset(), toolBar_toggle = $(".toolBar_toggle"), drop_down_menu = $(".drop_down_menu"), classify_sec = $(".classify_sec"), sec_title = $(".sec_title"), toolbar_text = $(".toolbar_text").find("span"), shop_id = $(".res_info_header").data("shop_id"), scrollIndex = 0, // 状态保存
     ready_status = !1;
     // 是否需要运行切换
     $(window).scrollTop() >= menu_offset.top && (menu_toolbar.css({
@@ -19,8 +20,13 @@ define([ "jquery" ], function() {
         top: 0
     }), toolBar_toggle.fadeIn(300)), toolBar_toggle.on("click", function() {
         drop_down_menu.toggle();
+    }), // 购物车
+    $(".cate_view").on("click", ".rst-d-act-add", function() {
+        var good_id = $(this).parents(".menu_list_block").data("shop_id");
+        return cart.add(good_id, shop_id), !1;
     }), $(window).on("scroll", function() {
-        var nextPosition, prevPosition, target, scrollTop = $(window).scrollTop(), positionArr = getListTop(classify_sec), direction = CaculateDirection(scrollTop), isReady = scrollTop >= menu_offset.top;
+        var // 是否可以切换fixed
+        nextPosition, prevPosition, target, scrollTop = $(window).scrollTop(), positionArr = getListTop(classify_sec), direction = CaculateDirection(scrollTop), isReady = scrollTop >= menu_offset.top;
         if (isReady != ready_tmp && (ready_status = !0, ready_tmp = isReady), isReady && ready_status ? (menu_toolbar.css({
             position: "fixed",
             top: 0

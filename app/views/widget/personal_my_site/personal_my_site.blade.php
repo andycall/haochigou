@@ -33,7 +33,7 @@
     <h3>新增/编辑送餐地址</h3>
 
 
-    {{ Form::open(array('url' => 'foo/bar', "method" => "post", "id" => "order_form")) }}
+    {{ Form::open(array('url' => 'foo/bar', "method" => "post", "id" => "order_form")); }}
          <div class="form_block">
             <label for="address_details"><span class="required_mark">*</span>详细地址</label>
             <input type="text" class="input_box" id="address_details" name="address_details" value="{{$deliver_address['form_address_details']}}"/>
@@ -54,7 +54,7 @@
         <div class="form_block form_submit">
             <input type="submit" name="submit" class="btn btn-yellow" value="保存"/>
         </div>
-    {{ Form::close() }}
+    {{ Form::close(); }}
 
 
 </div>

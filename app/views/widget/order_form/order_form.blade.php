@@ -8,7 +8,7 @@
 
     <div class="inner">
 @foreach($form['deal'] as $value)
-        <div class="order_form">
+        <div class="order_form"  data-shop_id="{{$value['shop_id']}}" data-deal_id="{{$value['deal_id']}}">
             <div class="order_header">
                 <div class="order_wrapper">
 @if($value['deal_statue'] == 0)
@@ -111,8 +111,6 @@
                         <div class="col_value">
                             <span>请点评</span>
                         </div>
-                        <input class="shop_id" type="text" value="{{$value['shop_id']}}" style="display: none"/>
-                        <input class="deal_id" type="text" value="{{$value['deal_id']}}" style="display: none"/>
                         <div class="col_btn" style="display:none">
                             <a class="btn">保存</a>
                         </div>
@@ -148,7 +146,7 @@
                     <p>您对餐厅的服务是否满意：</p>
                     <div class="order_content">
                       <div class="order_label">
-                        <form class="order_content_form">
+                        {{ Form::open(array("class" => "order_content_form"));  }}
                             <label>
                               <input class="order_radio" type="radio" title="满意" name="service-rate" value="3">
                               <i class="rank3"></i>满意
@@ -161,12 +159,10 @@
                               <input class="order_radio" type="radio" title="不满意" name="service-rate" value="1">
                               <i class="rank1"></i>不满意
                             </label>
-                        </form>
+                        {{ Form::close(); }}
                       </div>
                       <div class="order_comment">
                         <textarea class="text" placeholder="再说点什么吧~"></textarea>
-                        <input class="shop_id" type="text" value="{{$value['shop_id']}}"/>
-                        <input class="deal_id" type="text" value="{{$value['deal_id']}}"/>
                         <a class="btn btn-yellow order_comment_save">保存</a>
                         <a class="btn order_comment_cancel" role="button">取消</a>
                       </div>
@@ -290,11 +286,8 @@
 @endif
 
 @else
-                            <td class="rating rating_comment">
+                            <td class="rating rating_comment" data-goods_id="{{$meun['goods_id']}}">
                                 <div class="comment">
-                                    <input class="shop_id" type="text" value="{{$value['shop_id']}}"/>
-                                    <input class="deal_id" type="text" value="{{$value['deal_id']}}"/>
-                                    <input class="goods_id" type="text" value="{{$meun['goods_id']}}"/>
                                     <div title="差评">1
                                         <div title="差点意思">2
                                             <div title="一般般">3
@@ -308,6 +301,12 @@
                                 </div>
 
                                 <div class="rating_text"></div>
+
+                                <div class="order_comment">
+                                    <textarea class="text" placeholder="再说点什么吧~"></textarea>
+                                    <a class="btn btn-yellow order_comment_save">保存</a>
+                                    <a class="btn order_comment_cancel" role="button">取消</a>
+                                </div>
 @endif
 
 @else

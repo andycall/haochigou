@@ -1,30 +1,5 @@
-define(['jquery'], function(){
+define(['jquery' , "shop_cart/shop_cart"], function($, cart){
 	console.log("cate list loaded");
-
-	function delayTrigger(callback, params){
-		var timer,
-			flag = true;
-
-		return function(ev){
-
-			self = this;
-
-			params = params || [];
-
-			if(flag){
-				flag = false;
-				callback.apply(self, params);
-			}
-			if(timer){
-				return ;
-			}
-
-			timer = setTimeout(function(){
-				flag = true;
-				timer = undefined;
-			}, 30);
-		}
-	}
 
 	function getListTop(list){
 		var arr = [];
@@ -35,6 +10,7 @@ define(['jquery'], function(){
 		return arr;
 	}
 
+	// 计算滚动方向
 	var CaculateDirection = (function(){
 		var direction = 1,
 			scrollTmp = 0;
@@ -60,8 +36,9 @@ define(['jquery'], function(){
 		classify_sec    = $(".classify_sec"),
 		sec_title       = $(".sec_title"),
 		toolbar_text    = $(".toolbar_text").find("span"),
+		shop_id         = $(".res_info_header").data("shop_id"),
 		scrollIndex     = 0,
-		ready_tmp,               // 状态保存
+ 		ready_tmp,               // 状态保存
 		ready_status    = false; // 是否需要运行切换
 
 
@@ -77,12 +54,20 @@ define(['jquery'], function(){
 		drop_down_menu.toggle();
 	});
 
+
+	// 购物车
+	$(".cate_view").on('click', '.rst-d-act-add', function(){
+		var good_id = $(this).parents('.menu_list_block').data("shop_id");
+
+		cart.add(good_id, shop_id);
+		return false;
+	});
+
 	$(window).on('scroll', function(e){
 		var scrollTop = $(window).scrollTop(),
 			positionArr = getListTop(classify_sec),
 			direction = CaculateDirection(scrollTop),
 			isReady = scrollTop >= menu_offset.top, // 是否可以切换fixed
-			isSwape = scrollIndex === swape_tmp,
 			nextPosition, prevPosition,
 			target;
 
@@ -90,7 +75,6 @@ define(['jquery'], function(){
 			ready_status = true;
 			ready_tmp = isReady;
 		}
-
 
 		if(isReady && ready_status){
 			menu_toolbar.css({
@@ -129,10 +113,4 @@ define(['jquery'], function(){
 			}
 		}
 	});
-
-
-
-
-
-
 });

@@ -1,4 +1,4 @@
-define([ "jquery", "tools/Sizer" ], function($, Sizer) {
+define([ "jquery", "tools/Sizer", "underscore" ], function($, Sizer, _) {
     // 事件触发的数据获取中间件
     function dataTrigger(ev, type) {
         var spans, activities, flavor, obj = {};

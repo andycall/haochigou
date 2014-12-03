@@ -44,7 +44,7 @@ table{
 	background: none repeat scroll 0% 0% #EEE;
 	border-width: 1px 1px 1px 0px;
 	border-style: solid solid none none;
-	border-color: #DDD #DDD #DDD -moz-use-text-color;
+	border-color: #DDD #DDD #DDD;
 	-moz-border-top-colors: none;
 	-moz-border-right-colors: none;
 }
@@ -53,7 +53,7 @@ table{
 	border-top: 1px solid #DDD;
 	border-width: 1px 1px 1px 0px;
 	border-style: solid solid solid none;
-	border-color: #DDD #DDD #DDD -moz-use-text-color;
+	border-color: #DDD #DDD #DDD ;
 	-moz-border-top-colors: none;
 	-moz-border-right-colors: none;
 	-moz-border-bottom-colors: none;
@@ -64,7 +64,7 @@ table{
 	width: 35%;
 }
 .col_action{
-	width: 24%;
+	width: 28%;
 }
 
 .form_block{

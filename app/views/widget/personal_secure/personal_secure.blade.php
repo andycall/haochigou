@@ -8,8 +8,8 @@
 
     <p class="gray-box">
         <span class="bold">安全等级：</span>
-        <a class="user-safety-level low" href="/profile/security" title="绑定邮箱和手机后可以进行在线支付">
-            低
+        <a class="user-safety-level {{$personal_secure['secure_level']}}" href="{{$personal_secure['secure_center']}}" title="绑定邮箱和手机后可以进行在线支付">
+            {{$personal_secure['secure_level_chinese']}}
         </a>
     </p>
 
@@ -21,25 +21,48 @@
         </colgroup>
 
         <tbody>
-        <tr><th>手机验证 <i class="icon-impt"></i></th>
+        <tr><th>手机验证
+        @if($personal_secure['phone_state'] == "inactive")
+            <i class="icon-impt"></i>
+        @else
+            <i class="icon-check"></i>
+        @endif
+        </th>
             <td>
                 <div class="info">
                     <p>绑定手机即可使用在线支付功能，省去找零麻烦，餐厅优先配送。</p>
                 </div>
             </td>
-            <td><a class="btn" href="/profile/bindmobile">绑定手机</a> </td>
-
+            <td>
+                @if($personal_secure['phone_state'] == "inactive")
+                    <a class="btn" href="{{$personal_secure['change_phone']}}">绑定手机</a>
+                 @endif
+            </td>
         </tr>
         <tr>
 
-            <th>邮箱激活 <i class="icon-impt"></i></th>
-            <td><div class="info"><p>wssgcg****@qq.com尚未激活，请去邮箱查看激活邮件</p></div></td>
+            <th>邮箱激活
+                @if($personal_secure['email_state'] == "inactive")
+                    <i class="icon-impt"></i>
+                @else
+                    <i class="icon-check"></i>
+                @endif
+            </th>
             <td>
-                <a href="/profile/sendac">重发激活邮件</a><br>
-                <a href="/profile/bindemail">更换邮箱</a>
+                <div class="info">
+                    @if($personal_secure['email_state'] == "inactive")
+                        <p>{{$personal_secure['secure_email']}}尚未激活，请去邮箱查看激活邮件</p>
+                    @else
+                        <p>{{$personal_secure['secure_email']}}已经激活!</p>
+                    @endif
+                </div>
             </td>
-
-
+            <td>
+                @if($personal_secure['email_state'] == "inactive")
+                    <a href="{{$personal_secure['send_email']}}">重发激活邮件</a><br>
+                @endif
+                <a href="{{$personal_secure['change_email']}}">更换邮箱</a>
+            </td>
         </tr>
 
         <tr>
@@ -47,11 +70,13 @@
             <th>支付额度 <i class="icon-check"></i></th>
             <td>
                 <div class="info">
-                    <p class="limit">50 元</p>
+                    <p class="limit">{{$personal_secure['cash_limit']}} 元</p>
                     <p class="sub-info">如果当日在线订餐金额超出支付额度，手机验证后才可以付款。</p>
                 </div>
             </td>
-            <td><a href="/profile/modify_payment_quota_step1">更改额度</a></td>
+            <td>
+                <a href="{{$personal_secure['change_cash_limit']}}">更改额度</a>
+            </td>
 
         </tr>
 

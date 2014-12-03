@@ -5,9 +5,7 @@
 @else
         <div class="collection-row-book" data-shop_id="{{$shops[$i]['shop_id']}}" data-place_id="{{$shops[$i]['place_id']}}">
 @endif
-            <div class="collection-row-book-close">
-                <i href="##" class="close"></i>
-            </div>
+            <div class="collection-row-book-close"></div>
             <div class="collection-row-book-left">
                 <div class="logo">
 @if($shops[$i]['shop_logo'])

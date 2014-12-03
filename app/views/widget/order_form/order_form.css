@@ -347,6 +347,16 @@ li {
 .recent_month .inner .order_form .order_wrpper td.rating .content {
   color: #999;
 }
+.recent_month .inner .order_form .order_wrpper th.rating .order_comment,
+.recent_month .inner .order_form .order_wrpper td.rating .order_comment {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  width: auto;
+}
+.recent_month .inner .order_form .order_wrpper th.rating .order_comment textarea,
+.recent_month .inner .order_form .order_wrpper td.rating .order_comment textarea {
+  width: auto;
+}
 .recent_month .inner .order_form .order_wrpper th.price,
 .recent_month .inner .order_form .order_wrpper td.price {
   width: 13%;

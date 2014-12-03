@@ -1,4 +1,4 @@
-define(["jquery"], function($){
+define(["jquery", "register/port"], function($, port){
     //注册表单
     /*
      *@include 验证
@@ -19,8 +19,8 @@ define(["jquery"], function($){
 
     //验证码ajax请求
     function getAuth(data,callback){
-        $.post("/switch_auth", data, function(res){
-            if( typeof res != object ){
+        $.post(port["switchAuth"], data, function(res){
+            if( typeof res != 'object' ){
                 try{
                     res = $.parseJSON(res);
                 }catch(err){
@@ -29,7 +29,7 @@ define(["jquery"], function($){
                 }
             }
 
-            if( res.success){
+            if( res.success == "true"){
                 alert("短信已经发送，请注意接收验证码");
                     
                 //计时禁止连续发送30秒
@@ -69,11 +69,11 @@ define(["jquery"], function($){
         $(".u-error-tip").hide();
 
         //normal err tip
-        var $errPwd      = $divUserPwd.find(".u-error-tip"),
-            $errMobile   = $divUserMobile.find(".u-error-tip"),
-            $errRePwd    = $divUserRePwd.find(".u-error-tip"),
-            $errAuth     = $divAuth.find(".u-error-tip"),
-            $errEmail    = $divUserEmail.find(".u-error-tip");
+        var $errPwd     = $divUserPwd.find(".u-error-tip"),
+              $errMobile = $divUserMobile.find(".u-error-tip"),
+              $errRePwd  = $divUserRePwd.find(".u-error-tip"),
+              $errAuth     = $divAuth.find(".u-error-tip"),
+              $errEmail    = $divUserEmail.find(".u-error-tip");
 
         //验证正则
         var regEmail   = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/, //邮箱验证
@@ -129,13 +129,13 @@ define(["jquery"], function($){
     //ajax
     function ajaxForm(data){
         $.ajax({
-            url      : '/register', 
-            type     :  'post',
-            dataType :  'json',
-            data     :  data,
+            url            : port["register"], 
+            type          :  'post',
+            dataType   :  'json',
+            data          :  data,
 
             success  : function(res){
-                if( typeof res != object ){
+                if( typeof res != 'object' ){
                     try{
                         res = $.parseJSON(res);
                     }catch(err){

@@ -1,4 +1,4 @@
-define(['jquery', "tools/Sizer"], function($, Sizer){
+define(['jquery', "tools/Sizer", "underscore"], function($, Sizer, _){
 	var drop_button = $(".drop_button"),
 		drop_list = $(".drop_list"),
 		activitiesBtn = $('.activities-btn'),
