@@ -1,4 +1,5 @@
 <?php
+// router file
 Route::get('users', function()
 {
     return 'Users!';
