@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Collection;
  * getPicSwap()			获取轮播图片的信息
  * getShopList()		获取餐厅列表
  * getSideBar()			获取右边功能栏的基本信息
+ * uncollection_store()	获取用户的登录信息
  * getUserBar()			userbar的一些地址数据
  * 
  */
@@ -32,6 +33,7 @@ class MainController extends BaseController {
 		# 一个是根据新旧排序，一个是根据热门排序，分别有8个餐厅
 		$data['my_store_alert']['data'] = $this->getMyStoreAlert(); // 我的收藏点击按钮之后弹出的框
 		$data['add_image']['data'] = $this->getAddImage();//5个广告图片
+		$data['uncollection_store']['data'] = $this->uncollection_store();
 
 		return View::make('template.home.home')->with($data);
 	}
@@ -90,10 +92,10 @@ class MainController extends BaseController {
         ); //5个广告图片
         return $data;
 	}
+	}
 
 	/**
 	 * 获取我收藏的店铺，最多5个
-	 * @return 
 	 */
 	public function getMyStore(){
 		if( !Auth::check() ){
@@ -115,8 +117,7 @@ class MainController extends BaseController {
 			
 			$shop                           = Shop::find($store);
 			$onestore['shop_id']            = $shop->id;
-#TODO:place_id不需要
-			$onestore['place_id']           = '123';					// ----------------------------------------后期可能是x和y
+			$onestore['place_id']           = 'null';					// 地址ID，暂时不用
 			$onestore['shop_url']           = 'shop/'.$shop->id;		 	// 点击跳转到相应商家
 			$onestore['shop_logo']          = $shop->pic;		  	// 商家的logo图片地址
 			$onestore['deliver_time']       = $shop->interval;	// 送货时间间隔
@@ -158,7 +159,6 @@ class MainController extends BaseController {
 		foreach($new_shops as $shop){
 			$one = array();
 			$one['shop_id']            = $shop->id;
-#TODO 没有place_id
 			$one['place_id']           = '123';
 			$one['shop_url']           = 'shop/'.$shop->id;
 			$one['shop_logo']          = $shop->pic;
@@ -180,12 +180,10 @@ class MainController extends BaseController {
 			array_push($data['new_shop'], $one);
 		}
 
-
 		$hot_shops = $shops->sortByDesc('addtime');
 		foreach($hot_shops as $shop){
 			$one = array();
 			$one['shop_id']            = $shop->id;
-#TODO 没有place_id
 			$one['place_id']           = '123';
 			$one['shop_url']           = 'shop/'.$shop->id;
 			$one['shop_logo']          = $shop->pic;
@@ -278,7 +276,6 @@ class MainController extends BaseController {
 			$onestore['isOnline']                = $shop->is_online?'true':'false';						// 是否营业		
 			$onestore['isSupportPay']            = in_array('1', explode(',', $shop->pay_method));	// 是否支持在线支付
 			$onestore['shop_id']                 = $shop->id;											// 商家id
-#TODO：place_id不需要
 			$onestore['place_id']                = '不需要';									// -------------------位置经纬度和位置id后期再改数据库
 			$onestore['shop_url']                = 'shop/'.$shop->id;									// 点击跳转到相应商家
 			$onestore['shop_logo']               = $shop->pic;		  								// 商家的logo图片地址
@@ -329,6 +326,15 @@ class MainController extends BaseController {
 			'open_shop'    => 'http=>//shop',
 			'hot_question' => 'http=>//hot_question'
 		);
+	}
+
+	/**
+	 * 获取用户的登录信息
+	 */
+	public function uncollection_store(){
+		$data['is_login'] = Auth::check()?'1':'0';
+		$data['next_src'] = url('login');
+		return $data;
 	}
 
 	/**
