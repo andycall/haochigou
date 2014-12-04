@@ -6,7 +6,7 @@
     <div class="alert">
         为了保障你的账户安全，请及时绑定手机。
     </div>
-    <form class="form-horizontal" method="post">
+    {{ Form::open(array("class" => "form-horizontal", "method" => "post"));  }}
         <div class="control-group clear-fix">
             <label class="control-label" for=""><span class="required">*</span>原手机号:</label>
             <div class="controls">
@@ -24,8 +24,8 @@
         <div class="form-actions">
             <button type="button" id="sendVerifyCode" class="btn btn-yellow">发送验证码</button>
         </div>
-    </form>
-    <form class="form-horizontal" method="post">
+    {{ Form::close(); }}
+    {{ Form::open(array("class" => "form-horizontal", "method" => "post"));  }}
         <div class="control-group clear-fix">
             <label class="control-label" for=""><span class="required">*</span>手机验证码:</label>
             <div class="controls">
@@ -36,7 +36,7 @@
         <div class="form-actions">
             <button type="submit" class="btn btn-yellow" id="verifyBtn">验证</button>
         </div>
-    </form>
+   {{ Form::close(); }}
 </div>
 
 

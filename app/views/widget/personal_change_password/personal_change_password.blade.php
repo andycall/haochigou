@@ -5,7 +5,8 @@
     <div class="alert">
         这里是提示语...........
     </div>
-    <form class="form-horizontal" method="post">
+    {{ Form::open(array("class" => "form-horizontal", "method" => "post"));  }}
+
         <div class="control-group clear-fix">
             <label class="control-label" for=""><span class="required">*</span>原密码:</label>
             <div class="controls">
@@ -30,7 +31,7 @@
         <div class="form-actions">
             <button type="submit" class="btn btn-yellow" id="changePwd">修改密码</button>
         </div>
-    </form>
+    {{ Form::close();  }}
 </div>
 @section("css")
     @parent

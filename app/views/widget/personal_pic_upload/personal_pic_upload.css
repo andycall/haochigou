@@ -1,0 +1,33 @@
+.jcrop-holder #preview-pane {
+	display: block;
+	position: absolute;
+	z-index: 2000;
+	right: -300px;
+	padding: 6px;
+}
+
+/* The Javascript code will set the aspect ratio of the crop
+   area based on the size of the thumbnail preview,
+   specified here */
+#preview-pane .preview-container {
+	width: 210px;
+	height: 210px;
+	overflow: hidden;
+}
+
+.image_crop_container{
+	margin-top: 50px;
+	position: relative;
+	width: 250px;
+	min-height: 250px;
+	float: left;
+	border: 1px solid #BBB;
+}
+
+.image_right_container{
+	float: left;
+}
+
+.button_container{
+	margin-top: 40px;
+}

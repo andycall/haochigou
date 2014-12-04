@@ -1,4 +1,4 @@
-define(['jquery', "jquery-ui"], function($){
+define(['jquery','personal/port', "jquery-ui"], function($, port){
 	console.log("order form loaded");
 
     (function() {
@@ -17,7 +17,7 @@ define(['jquery', "jquery-ui"], function($){
         }
         e[-12] = "提前1小时";
         for (i = -11; i < 0; i++) {
-            e[i] = "提前" + (-i) * 5 + "分钟"
+	        e[i] = "提前" + (-i) * 5 + "分钟"
         }
         $(".slider").slider({range: "min",min: 2,max: 100,value: 100,slide: function(g, h) {
             var l = parseInt($(this).attr("max"));
@@ -55,18 +55,24 @@ define(['jquery', "jquery-ui"], function($){
     });
 
     $(".order_comment_cancel").on('click', function(){
+        var order_content_form = $(this).parents(".order_content").find(".order_content_form")[0] || null;
         $(this).parent().css("display","none");
-        $(this).parents(".order_content").find(".order_content_form")[0].reset();
+        if(order_content_form){
+            order_content_form.reset();
+        }
     });
 
-    $(".order_comment_save").on('click',function(){
+    $(".order_content .order_comment_save").on('click',function(){
+
         var p = document.createElement("p");
-        var order_content = $(this).parent().parent();
-        var shop_id = order_content.find('.shop_id').val();
-        var deal_id = order_content.find('.deal_id').val();
+        var order_form = $(this).parents(".order_form");
+        var order_content = $(this).parents(".order_content");
+
+        var shop_id = order_form.data('shop_id');
+        var deal_id = order_form.data('deal_id');
         var text = order_content.find('.text').val();
         var order_radio = order_content.find('.order_content_form').serializeObject()['service-rate'];
-        console.log(order_radio);
+
         switch (order_radio)
         {
             case "1":
@@ -79,17 +85,17 @@ define(['jquery', "jquery-ui"], function($){
                 p.innerHTML = "已点评，满意";
         }
         $.ajax({
-            url: "####qwertyui###",
+            url: port["commentRestaurant"],
             type: "POST",
             data: {
                 shop_id: shop_id,
                 deal_id: deal_id,
                 deal_satisfied: order_radio,
-                deal_satisfied_comment: text,
+                deal_satisfied_comment: text
             },
             success: function(res){
                 if(res.success == 'true'){
-                    order_content.css("display","none");
+                    order_content.remove();
                     order_content.parent().append(p);
                 }else{
                     alert('评论失败，请重新评论!');
@@ -101,42 +107,21 @@ define(['jquery', "jquery-ui"], function($){
 
 
     $(".rating_comment .comment div").on('click',function(){
-        var rating_comment = $(this).parents(".rating_comment");
-        var shop_id = rating_comment.find('.shop_id').val();
-        var deal_id = rating_comment.find('.deal_id').val();
-        var goods_id = rating_comment.find('.goods_id').val();
-        var goods_level = this.innerText[0];
-        var $_this = $(this);
 
-        $.ajax({
-            url: "####qwertyui###",
-            type: "POST",
-            data: {
-                shop_id: shop_id,
-                deal_id: deal_id,
-                goods_id: goods_id,
-                goods_level: goods_level,
-            },
-            success: function(res){
-                if(res.success == 'true'){
-                    $_this.parents(".rating_comment").removeClass("rating_comment");
-                    $_this.parents(".comment").find("div").off('mouseover',star);
-                }else{
-                    alert('评论失败，请重新评论!');
-                }
-            }
-        });
+        var rating_comment = $(this).parents(".rating_comment");
+
+        rating_comment.find(".order_comment").css("display","block");
 
         return false;
-    }).on('mouseover',star = function(){
 
+    }).on('mouseover', star = function(){
         $(this).parents(".comment").find("div").removeClass("mouseover");
 
         $(this).addClass("mouseover");
 
 
         var rating_text = $(this).parents(".rating_comment").find(".rating_text");
-        switch (this.innerText[0])
+        switch (this.innerText)
         {
             case "1":
                 rating_text.html("差评");
@@ -157,18 +142,55 @@ define(['jquery', "jquery-ui"], function($){
         return false;
     });
 
-    $(".col_btn").on('click',function(){
-        var p = document.createElement("p");
+    $(".rating_comment .order_comment_save").on("click",function(){
+
+        var rating_comment = $(this).parents(".rating_comment");
+        var order_form = $(this).parents(".order_form");
+
+        var shop_id = order_form.data('shop_id');
+        var deal_id = order_form.data('deal_id');
+        var goods_id = rating_comment.data('goods_id');
+        var goods_level = rating_comment.find(".mouseover")[0].innerText[0];
+        var text = rating_comment.find('.text').val();
         var $_this = $(this);
+
+        $.ajax({
+            url: port["commentCate"],
+            type: "POST",
+            data: {
+                shop_id: shop_id,
+                deal_id: deal_id,
+                goods_id: goods_id,
+                goods_level: goods_level,
+                deal_satisfied_comment: text
+            },
+            success: function(res){
+                if(res.success == 'true'){
+                    $_this.parents(".rating_comment").removeClass("rating_comment");
+                    $_this.parents(".comment").find("div").off('mouseover',star);
+                }else{
+                    alert('评论失败，请重新评论!');
+                }
+            }
+        });
+
+    });
+
+    $(".col_btn").on('click',function(){
+
+        var $_this = $(this);
+        var p = document.createElement("p");
         var content = $_this.parents(".content");
-        var shop_id = content.find('.shop_id').val();
-        var deal_id = content.find('.deal_id').val();
+        var order_form = $(this).parents(".order_form");
+
+        var shop_id = order_form.data('shop_id');
+        var deal_id = order_form.data('deal_id');
         var deal_speed = content.find(".col_value span").html();
 
         p.innerHTML = "已点评， 时间： " + deal_speed;
 
         $.ajax({
-            url: "####qwertyui###",
+            url: port["commentSpeed"],
             type: "POST",
             data: {
                 shop_id: shop_id,
@@ -177,8 +199,8 @@ define(['jquery', "jquery-ui"], function($){
             },
             success: function(res){
                 if(res.success == 'true'){
+                    content.find(".content_speed").remove();
                     content.append(p);
-                    content.find(".content_speed").css("display","none");
                 }else{
                     alert('评论失败，请重新评论!');
                 }

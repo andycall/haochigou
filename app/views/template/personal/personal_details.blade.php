@@ -23,7 +23,7 @@
 @section("css")
     {{HTML::style("/css/lib/jquery-ui.css")}}
     {{HTML::style("/css/template/lib/normalize.css")}}
-	{{HTML::style("/css/template/personal/personal.css")}}
+    {{HTML::style("/css/template/personal/personal.css")}}
 @stop
 
 @section("script")

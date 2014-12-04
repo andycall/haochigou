@@ -8,7 +8,7 @@
 <div class="register-bd">
 
 	{{-- 普通注册表单 --}}
-	<form class="m-register" novalidate="true" id="register-form" method="post">
+	{{ Form::open(array("class" => "m-register", "novalidate" => "true", "method" => "post", "id" => "register-form")); }}
 
 		{{-- 电话号码 --}}
 		<div class="u-input-item" id="register-user-mobile">
@@ -46,7 +46,7 @@
         
         {{-- 提交按钮 --}}
         <input type="submit" class="u-register-submit" value="同意协议并注册">
-	</form>
+	{{ Form::close(); }}
 </div>
 
 {{-- 登陆底部 --}}

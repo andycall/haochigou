@@ -1,5 +1,5 @@
 <div class="res_info">
-    <div class="res_info_header">
+    <div class="res_info_header" data-shop_id="{{$top_bar['data']['shop_id']}}">
         <div class="return">
             <a href="{{$top_bar['url']['return_back']}}">
                 <i></i>

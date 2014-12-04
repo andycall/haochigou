@@ -20,6 +20,23 @@
 	background: url("/images/sprites.png") no-repeat scroll 0px -230px transparent;
 }
 
+.account_state .col_left .avatar a{
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 48px;
+	height: 42px;
+	padding-top: 6px;
+	background-color: rgba(0,0,0,0.3);
+	color: white;
+	text-align: center;
+}
+
+.account_state .col_left .avatar:hover a{
+	display: block;
+}
+
 .account_state .col_left .ava_wrapper{
 	margin-left: 65px;
 	width: 235px;

@@ -5,7 +5,7 @@
     <div class="alert">
         验证邮箱...这里是提示语...........
     </div>
-    <form class="form-horizontal" method="post">
+    {{ Form::open(array("class" => "form-horizontal", "method" => "post")); }}
         <div class="control-group clear-fix">
             <label class="control-label" for=""><span class="required">*</span>绑定邮箱:</label>
             <div class="controls">
@@ -16,7 +16,7 @@
         <div class="form-actions">
             <button type="button" class="btn btn-yellow">发送验证邮件</button>
         </div>
-    </form>
+    {{ Form::close(); }}
 </div>
 
 @section("css")

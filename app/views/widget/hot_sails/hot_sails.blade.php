@@ -4,7 +4,7 @@
         @foreach($best_seller as $item)
         <li class="rst-aside-dish-item eleme_view" data-good_id="{{$item['goods_id']}}" data-shop_id="{{$item['shop_id']}}">
             <div class="rst-d-info">
-                <p class="rst-d-main text-overflow">
+                <p class="rst-d-main text-  overflow">
                     <a class="rst-d-name food_name" title="{{$item['goods_name']}}">{{$item['goods_name']}}</a>
                 </p>
                 <span class="rst-d-rating food_rating">

@@ -17,7 +17,8 @@ define(['jquery', 'underscore', 'shop_cart/shop_cart'], function($, _, cart){
     //});
 
     $('#favor_food').on('click', '.add_btn', function(e){
-        var pnt = $(e.target).parents('.r_d_a');
+        var pnt = $(e.target).parents('li');
+        console.log(pnt);
         var id = pnt.data('good_id'),
             shop_id = pnt.data('shop_id');
 

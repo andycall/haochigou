@@ -26,10 +26,6 @@
   display: none;
   background: url("../../../images/bg.gif") no-repeat -550px -773px;
 }
-.collection-row-book .collection-row-book-close i {
-  width: 14px;
-  height: 14px;
-}
  .collection-row-book .collection-row-book-close:hover {
   background: url("../../../images/bg.gif") no-repeat -148px -1019px;
 }

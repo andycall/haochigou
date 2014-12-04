@@ -10,14 +10,14 @@
 
 <div class="login-bd">
 	{{-- 普通方式表单 --}}
-	<form class="m-login" novalidate="true" id="login-form" method="post" action="<?php echo url("login");?>">
+	{{ Form::open(array("class" => "m-login", "novalidate" => "true", "id" => "login-form", "method" => "post" )); }}
 
 		{{-- 普通方式登陆 --}}
 		<div class="way-login-normal js-normal-wapper">
 
 			{{-- 用户名 --}}
 			<div class="u-input-item" id="login-user-name">
-				<input type="text" name="account" id="" class="user-name box f-pr" placeholder="电子邮箱" minlength="5" required>
+				<input type="text" name="user-name" id="" class="user-name box f-pr" placeholder="电子邮箱" minlength="5" required>
 				<div class="u-error-tip f-dn">请填写正确邮箱</div>
 			</div>
 	        
@@ -61,7 +61,7 @@
         </div>
 
         <input type="submit" class="u-login-submit" value="登陆">
-	</form>
+	{{ Form::close(); }}
 </div>
 
 {{-- 登陆底部 --}}
