@@ -92,7 +92,6 @@ class MainController extends BaseController {
         ); //5个广告图片
         return $data;
 	}
-	}
 
 	/**
 	 * 获取我收藏的店铺，最多5个
