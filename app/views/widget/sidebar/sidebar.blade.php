@@ -24,5 +24,5 @@
 
 @section("css")
     @parent
-    {{HTML::style("/css/widget/sideBar/sideBar.css")}}
+    {{HTML::style("/css/widget/sidebar/sidebar.css")}}
 @stop

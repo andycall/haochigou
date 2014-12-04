@@ -66,78 +66,78 @@
 
 
 .icon1{
-    background: url("/images/map-sprites.png") 0px -110px;
+    background: url("../../../images/map-sprites.png") 0px -110px;
 }
 .icon2{
-    background: url("/images/map-sprites.png") -20px -110px;
+    background: url("../../../images/map-sprites.png") -20px -110px;
 }
 .icon3{
-    background: url("/images/map-sprites.png") -40px -110px;
+    background: url("../../../images/map-sprites.png") -40px -110px;
 }
 .icon4{
-    background: url("/images/map-sprites.png") -60px -110px;
+    background: url("../../../images/map-sprites.png") -60px -110px;
 }
 .icon5{
-    background: url("/images/map-sprites.png") -80px -110px;
+    background: url("../../../images/map-sprites.png") -80px -110px;
 }
 .icon6{
-    background: url("/images/map-sprites.png") -100px -110px;
+    background: url("../../../images/map-sprites.png") -100px -110px;
 }
 .icon7{
-    background: url("/images/map-sprites.png") -120px -110px;
+    background: url("../../../images/map-sprites.png") -120px -110px;
 }
 .icon8{
-    background: url("/images/map-sprites.png") -140px -110px;
+    background: url("../../../images/map-sprites.png") -140px -110px;
 }
 .icon9{
-    background: url("/images/map-sprites.png") -160px -110px;
+    background: url("../../../images/map-sprites.png") -160px -110px;
 }
 .icon10{
-    background: url("/images/map-sprites.png") -180px -110px;
+    background: url("../../../images/map-sprites.png") -180px -110px;
 }
 .icon11{
-    background: url("/images/map-sprites.png") -200px -110px;
+    background: url("../../../images/map-sprites.png") -200px -110px;
 }
 .icon12{
-    background: url("/images/map-sprites.png") -220px -110px;
+    background: url("../../../images/map-sprites.png") -220px -110px;
 }
 
 
 .icon1_b{
-    background: url("/images/map-sprites.png") 0px -80px;
+    background: url("../../../images/map-sprites.png") 0px -80px;
 }
 .icon2_b{
-    background: url("/images/map-sprites.png") -20px -80px;
+    background: url("../../../images/map-sprites.png") -20px -80px;
 }
 .icon3_b{
-    background: url("/images/map-sprites.png") -40px -80px;
+    background: url("../../../images/map-sprites.png") -40px -80px;
 }
 .icon4_b{
-    background: url("/images/map-sprites.png") -60px -80px;
+    background: url("../../../images/map-sprites.png") -60px -80px;
 }
 .icon5_b{
-    background: url("/images/map-sprites.png") -80px -80px;
+    background: url("../../../images/map-sprites.png") -80px -80px;
 }
 .icon6_b{
-    background: url("/images/map-sprites.png") -100px -80px;
+    background: url("../../../images/map-sprites.png") -100px -80px;
 }
 .icon7_b{
-    background: url("/images/map-sprites.png") -120px -80px;
+    background: url("../../../images/map-sprites.png") -120px -80px;
 }
 .icon8_b{
-    background: url("/images/map-sprites.png") -140px -80px;
+    background: url("../../../images/map-sprites.png") -140px -80px;
 }
 .icon9_b{
-    background: url("/images/map-sprites.png") -160px -80px;
+    background: url("../../../images/map-sprites.png") -160px -80px;
 }
 .icon10_b{
-    background: url("/images/map-sprites.png") -180px -80px;
+    background: url("../../../images/map-sprites.png") -180px -80px;
 }
 .icon11_b{
-    background: url("/images/map-sprites.png") -200px -80px;
+    background: url("../../../images/map-sprites.png") -200px -80px;
 }
 .icon12_b{
-    background: url("/images/map-sprites.png") -220px -80px;
+    background: url("../../../images/map-sprites.png") -220px -80px;
 }
 
 /* end andycall */

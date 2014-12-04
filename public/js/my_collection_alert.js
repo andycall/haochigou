@@ -6,12 +6,14 @@ define([ "jquery", "home/port" ], function($, port) {
         });
     }
     function addClick() {
-        $(".add").on("click", function() {
-            $(".collection-modal").css("display", "block"), $(".modal-backdrop").css("display", "block");
+        $(".collection-row-none").on("click", function() {
+            var is_login = $(this).data("is_login"), next_src = $(this).data("next_src");
+            is_login ? ($(".collection-modal").css("display", "block"), $(".modal-backdrop").css("display", "block")) : (alert("亲! 还没登录呢! "), 
+            location.href = next_src);
         }), $(".collection-row-book .collection-row-book-close").on("click", function() {
             var father = $(this).parents(".collection-row-book"), shop_id = father.data("shop_id"), place_id = father.data("place_id"), post = {};
             post.shop_id = shop_id, post.place_id = place_id, $.ajax({
-                url: port.cancelCollection,
+                url: port.addCollection,
                 type: "POST",
                 data: post,
                 success: function(res) {

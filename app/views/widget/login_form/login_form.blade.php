@@ -17,8 +17,8 @@
 
 			{{-- 用户名 --}}
 			<div class="u-input-item" id="login-user-name">
-				<input type="text" name="user-name" id="" class="user-name box f-pr" placeholder="电子邮箱" minlength="5" required>
-				<div class="u-error-tip f-dn">请填写正确邮箱</div>
+				<input type="text" name="user-name" id="" class="user-name box f-pr" placeholder="电子邮箱/电话号码" minlength="5" required>
+				<div class="u-error-tip f-dn">请填写正确邮箱/电话号码</div>
 			</div>
 	        
 	        {{-- 密码 --}}

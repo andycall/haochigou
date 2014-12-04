@@ -63,7 +63,7 @@ define(['jquery','login/port'], function($, port){
     }
 
     //输入框绑定事件,每次获得焦点时隐藏提示
-    $("#register-form input").on('focus',function(){
+    $("#login-form input").on('focus',function(){
         $(".u-error-tip").hide();
     });
      
@@ -122,7 +122,7 @@ define(['jquery','login/port'], function($, port){
         //先隐藏原来的errtip
         $(".u-error-tip").hide();
 
-        var regEmail = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/, //邮箱验证
+        var regEmail = /(?:^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$)|(?:^[\d]{6,16})$/, //邮箱验证或电话号码
             regTel       = /^[\d]{11}$/; //手机号码目前只支持11位
 
         //normal err tip

@@ -270,7 +270,7 @@ define(['jquery', 'underscore'], function($, _){
 						city = $("#" + self.city),
 						poil = self.poil;
 
-					console.log(self.resultIndex, self.resultEnd);
+					//console.log(self.resultIndex, self.resultEnd);
 					var poiArr = poil.slice(self.resultIndex, self.resultEnd);
 
 
@@ -519,9 +519,8 @@ define(['jquery', 'underscore'], function($, _){
 							var _x = eve.clientX,
 								_y = eve.clientY,
 								_patchDragWrapOffset = _dNode.offset(),
-
-								l = _x - _patchContOffset.left - _patchDragOriOffset.left - _patchW,  //相对于 drag-wrap 的位置
-								t = _y - _patchContOffset.top - _patchDragOriOffset.top - _patchH;
+								l = _x -  _patchDragOriOffset.left - _patchW,  //相对于 drag-wrap 的位置
+								t = _y -  _patchDragOriOffset.top - _patchH;
 							_dNode.css({top: t, left: l});
 						}
 					}
@@ -536,7 +535,7 @@ define(['jquery', 'underscore'], function($, _){
 							var marker = new AMap.Marker({
 								icon: new AMap.Icon({    //复杂图标
 									size: new AMap.Size(28, 34),//图标大小
-									image: "/images/map-sprites.png", //大图地址
+									image: "./images/map-sprites.png", //大图地址
 									imageOffset: new AMap.Pixel(0, -140)//相对于大图的取图位置
 								}),
 								position: new AMap.LngLat(containerPixelPos.lng, containerPixelPos.lat),
@@ -553,15 +552,31 @@ define(['jquery', 'underscore'], function($, _){
 								offset: new AMap.Pixel(110, -25)//-113, -140
 							});
 
-							AMap.event.addListener(marker, 'mouseup', function(){ //鼠标点击marker弹出自定义的信息窗体
-								var e = window.event, o = $(marker.$.r.B).offset();
-								var containerPixelPos = fromContainerPixelToLngLat(o.left - _patchContOffset.left + 7, o.top - _patchContOffset.top + 2 *_patchH)
-								var infoWindow = new AMap.InfoWindow({
-									isCustom: true,  //使用自定义窗体
-									content: mapObj.pointWindow(containerPixelPos.lng, containerPixelPos.lat),
-									offset: new AMap.Pixel(110, -25)//-113, -140
-								});
-							});
+
+							AMap.event.addListener(marker, 'mouseup', function(e){ //鼠标点击marker弹出自定义的信息窗体
+                                var self = $(e.target.da.bd.contentDom);
+                                var o = self.offset();
+                                var containerPixelPos = fromContainerPixelToLngLat(o.left - _patchContOffset.left + 7, o.top - _patchContOffset.top + 2 * self.height());
+                                var infoWindow = new AMap.InfoWindow({
+                                    isCustom: true,  //使用自定义窗体
+                                    content: mapObj.pointWindow(containerPixelPos.lng, containerPixelPos.lat),
+                                    offset: new AMap.Pixel(110, -25)//-113, -140
+                                });
+                                return false;
+                            });
+
+                            AMap.event.addListener(marker, 'click', function(e){ //鼠标点击marker弹出自定义的信息窗体
+                                var self = $(e.target.da.bd.contentDom);
+                                var o = self.offset();
+                                var containerPixelPos = fromContainerPixelToLngLat(o.left - _patchContOffset.left + 7, o.top - _patchContOffset.top + self.height());
+                                var infoWindow = new AMap.InfoWindow({
+                                    isCustom: true,  //使用自定义窗体
+                                    content: mapObj.pointWindow(containerPixelPos.lng, containerPixelPos.lat),
+                                    offset: new AMap.Pixel(110, -25)//-113, -140
+                                });
+
+                                return false;
+                            });
 
 							_cont.off('mousemove');
 							_cont.off('mouseup');
