@@ -13,7 +13,7 @@ define([ "jquery", "home/port" ], function($, port) {
         }), $(".collection-row-book .collection-row-book-close").on("click", function() {
             var father = $(this).parents(".collection-row-book"), shop_id = father.data("shop_id"), place_id = father.data("place_id"), post = {};
             post.shop_id = shop_id, post.place_id = place_id, $.ajax({
-                url: port.addCollection,
+                url: port.cancelCollection,
                 type: "POST",
                 data: post,
                 success: function(res) {

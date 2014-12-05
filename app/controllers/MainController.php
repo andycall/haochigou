@@ -5,7 +5,8 @@ use Illuminate\Database\Eloquent\Collection;
  * 主页
  *
  * index()   			主页面
- * 
+ *
+ * cancelShop()			取消收藏店铺
  * getAddImage()		5个广告图片
  * getLevel($thing)		计算某个店铺的评分统计
  * getMyStore()			获取我收藏的店铺
@@ -62,6 +63,82 @@ class MainController extends BaseController {
 		}
 		return $result;
 
+	}
+
+	/**
+	 * 取消收藏某个商家
+	 *
+	 * 请求类型：POST
+	 */
+	public function cancelShop(){
+		$user = Auth::user();
+		$rules = array(
+			'uid'     => 'required | integer',
+			'shop_id' => 'required | integer',
+		);
+		$new_collect = array(
+			'uid'     => $user->front_uid,
+			'shop_id' => Input::get('shop_id'),
+		);
+		$v = Validator::make($new_collect, $rules);
+		if( $v->fails() ){
+			$message         = $v->messages();	
+			$error['msg']    = $message->toArray();
+			$error['status'] = '400';
+			return $error;
+		}
+		if( CollectShop::where('shop_id', Input::get('shop_id'))->where('uid', $user->front_uid)->delete() ){
+			$output = array(
+				'success' => 'true',
+				'state' => 200,
+				'nextSrc' => '',
+				'errMsg' => '',
+				'no' => 0
+			);
+			$stores = $this->getMyStore();
+			$output['data']['collection_shop'] = $stores['data'];
+			return $output;
+		}
+	}
+
+	/**
+	 * 收藏某个店铺
+	 *
+	 * 请求类型：POST
+	 */
+	public function collectShop(){
+		$user = Auth::user();
+		$rules = array(
+			'uid'     => 'required | integer | exists:front_user,front_uid',
+			'shop_id' => 'required | integer | exists:shop,id'
+		);
+		$new_collect = array(
+			'uid'     => $user->front_uid,
+			'shop_id' => Input::get('shop_id'),
+			'uptime'  => time()
+		);
+		$v = Validator::make($new_collect, $rules);
+		if( $v->fails() ){
+			return Redirect::to('http://baidu.com');
+
+			return Redirect::to('error')
+				->with('user', Auth::user())
+				->withErrors($v)
+				->withInput();
+		}
+
+		$collect = new CollectShop($new_collect);
+		if( $collect->save() ){
+			$output            = array();
+			$output['success'] = 'true';
+			$output['state']   = 200;
+			$output['nextSrc'] = '';
+			$output['errMsg']  = '';
+			$output['no']      = 0;
+			$output['data']    = $this->getShopInfo(Input::get('shop_id'));
+			//var_dump($output);
+			Response::json($output);
+		}
 	}
 
 	/**
@@ -236,8 +313,6 @@ class MainController extends BaseController {
 	 * 默认15个，多的在更多餐厅里面显示
 	*/
 	public function getShopList(){
-
-
 		$result = array(
 			'shop_list' => array(),
 			'more_shop' => array()
@@ -285,7 +360,6 @@ class MainController extends BaseController {
 			$Level                               = $this->getLevel($shop);
 			$onestore['shop_level']              = $Level['thing_total'];										// 五分制
 			$onestore['shop_announce']           = $shop->announcement;							// 商家公告
-#TODO:模版里用的deliver_state_start
 			$onestore['deliver_state_start']     = $shop->begin_price;
 			$onestore['deliver_start_statement'] = $shop->begin_price;		// 起送价描述
 			$onestore['shop_address']            = $shop->address;									// 商家地址
@@ -301,7 +375,6 @@ class MainController extends BaseController {
 				$user = Auth::user();
 				$onestore['is_collected']            = in_array($shop->id, $user->collectShop->lists('shop_id'))?true:false;	// 是否被收藏了
 			}
-#TODO：额外内容有什么用
 			$onestore['additions']               = array();													// 额外的内容
 
 			$num = $num + 1;
@@ -315,7 +388,7 @@ class MainController extends BaseController {
 
 	}
 
-		/**
+	/**
 	 * 获取右边功能栏的基本信息
 	 * @return [type] [description]
 	 */

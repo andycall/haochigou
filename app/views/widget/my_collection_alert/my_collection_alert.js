@@ -247,7 +247,7 @@ define(['jquery','home/port'], function($, port){
             post.place_id = place_id;
 
             $.ajax({
-                url: port["addCollection"],
+                url: port["cancelCollection"],
                 type: "POST",
                 data: post,
                 success: function(res) {
