@@ -9,7 +9,7 @@ Route::get('users', function()
 # 登陆与注册
 Route::post('register', 'UserAccessController@register');
 Route::get('register', 'UserAccessController@register');
-Route::post('login','UserAccessController@login');
+Route::post('loginAjax','UserAccessController@login');
 Route::get("/login", function(){
     $data = [
         "find_password" => "http://www.hao123.com",
