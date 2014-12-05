@@ -11,9 +11,16 @@ class UserAccountController extends BaseController{
         $this->uid = Auth::user()->front_uid;
     }
 
+    /**
+     * 地址信息列表
+     **/
     public function userSite(){
 
         $siteData = ReceiveAddr::where('front_uid','=',$this->uid)->get();
+
+        $data['deliver_address'] = array();
+
+        $data['deliver_address']['sites'] = array();
 
         $i = 0;
         foreach($siteData as $value){
@@ -23,7 +30,7 @@ class UserAccountController extends BaseController{
                 'spare_phone'=>$value->tel,
                 'address_state'=>$value->first,
                 'edit_address'=>'',
-                'delete_address'=>'',
+                'delete_address'=>url('useraccount/sitedelete'.'/'.$value->id),
                 'set_default'=>'',
                 'form_address_details'=>$value->address,
                 'form_deliver_phone'=>$value->phone,
@@ -47,6 +54,7 @@ class UserAccountController extends BaseController{
 
 
     }
+
 
     /**
      * 用户收货地址增加或编辑
@@ -134,6 +142,24 @@ class UserAccountController extends BaseController{
         }
 
 
+    }
+
+
+    /**
+     * 地址记录删除
+     **/
+    public function siteDelete($id){
+
+        $addr = ReceiveAddr::where('id','=',$id)->where('front_uid','=',$this->uid)->first();
+        
+
+        if(empty($addr)){
+            return Redirect::to('useraccount/site');
+        }
+
+        $addr->delete();
+
+        return Redirect::to('useraccount/site');
     }
 
 
