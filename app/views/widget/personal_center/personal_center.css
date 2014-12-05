@@ -20,7 +20,7 @@
 	background: url("/images/sprites.png") no-repeat scroll 0px -230px transparent;
 }
 
-.account_state .col_left .avatar a{
+#upload_btn{
 	display: none;
 	position: absolute;
 	top: 0;
@@ -32,9 +32,13 @@
 	color: white;
 	text-align: center;
 }
-
-.account_state .col_left .avatar:hover a{
+.account_state .col_left .avatar:hover #upload_btn{
 	display: block;
+}
+
+.uploadify-button-text{
+	font-size: 12px;
+	line-height: 42px;
 }
 
 .account_state .col_left .ava_wrapper{

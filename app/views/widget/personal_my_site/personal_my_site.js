@@ -21,9 +21,17 @@ define(['jquery'], function($){
 	$("#order_form").on('submit', function(ev){
 		var address_details = $("#address_details"),
 			deliver_phone = $("#deliver_phone"),
+			user  = $("#user_name"),
 			checkPlace = /\w+/,
 			checkPhone = /\d{11}/,
+			checkUser = /\w+/,
 			flag = true;
+
+		if(! checkUser.test(user.val())){
+			user.parent().find(".error_box").show();
+			user.addClass("error");
+			flag = false;
+		}
 
 		if(! checkPlace.test(address_details.val())){
 			address_details.parent().find(".error_box").show();

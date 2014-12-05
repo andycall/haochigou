@@ -1,5 +1,5 @@
 require.config({
-	baseUrl : "js/lib/",
+	baseUrl : "/js/lib/",
 	shim : {
 		"underscore" : {
 			exports : "_"
@@ -19,7 +19,6 @@ require.config({
         shop_cart : "../widget/shop_cart",
 	}
 });
-
 
 // 加载项目所需的所有依赖项
 define([
