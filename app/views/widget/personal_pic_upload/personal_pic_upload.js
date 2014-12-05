@@ -56,31 +56,6 @@ define(['port', 'jquery', 'jquery-ui', 'jquery.Jcrop', 'jquery.uploadify'], func
 		$('#height').val(c.h);
 	};
 
-	$("#upload_btn").uploadify({
-		'swf': '/js/lib/uploadify.swf',                        //FLash文件路径
-		'uploader': port['imageUpload'], //处理ASHX页面
-		'formData' : { },         //传参数
-		'width'    : '40',
-		'height'   : "20",
-		'buttonText': '上传',
-		'queueID': 'fileQueue',                        //队列的ID
-		'queueSizeLimit': 10,                           //队列最多可上传文件数量，默认为999
-		'auto': true,                                 //选择文件后是否自动上传，默认为true
-		'multi': true,                                 //是否为多选，默认为true
-		'removeCompleted': true,                       //是否完成后移除序列，默认为true
-		'fileSizeLimit': '10MB',                       //单个文件大小，0为无限制，可接受KB,MB,GB等单位的字符串值
-		'fileTypeDesc': 'person image',                 //文件描述
-		'fileTypeExts': '*.gif; *.jpg; *.png; *.bmp',  //上传的文件后缀过滤器
-		'onQueueComplete': function (event, data) {    //所有队列完成后事件
-			//ShowUpFiles(guid, type, show_div);
-
-			var nextSrc = data['nextSrc'];
-			window.location.href = nextSrc;
-		},
-		'onUploadError': function (event, queueId, fileObj, errorObj) {
-			alert(errorObj.type + "：" + errorObj.info);
-		}
-	});
 
 
 
