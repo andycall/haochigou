@@ -48,12 +48,12 @@ define([ "jquery", "login/port" ], function($, port) {
             dataType: "json",
             data: data,
             success: function(res) {
-                if ("object" != typeof res) try {
+                if (console.log(res), "object" != typeof res) try {
                     res = $.parseJSON(res);
                 } catch (err) {
                     return void alert("服务器异常，稍后再试");
                 }
-                if ("true" == res.success) res.nextSrc ? location.href = res.nextSrc : alert("服务器异常，稍后再试"); else if (res.no || res.no >= 1 && res.no <= 4) //填写错误
+                if (res.success) res.nextSrc ? location.href = res.nextSrc : alert("服务器异常，稍后再试"); else if (res.no || res.no >= 1 && res.no <= 4) //填写错误
                 switch (res.no) {
                   //用户名错误
                     case 1:

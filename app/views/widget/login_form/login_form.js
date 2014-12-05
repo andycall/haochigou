@@ -182,6 +182,8 @@ define(['jquery','login/port'], function($, port){
             data     :  data,
 
             success : function(res){
+	            console.log(res);
+
                 if( typeof res != 'object' ){
                     try{
                         res = $.parseJSON(res);
@@ -191,7 +193,7 @@ define(['jquery','login/port'], function($, port){
                     }
                 }
 
-                if( res.success == 'true'){
+                if(res.success){
                     if(res.nextSrc){
                         location.href = res.nextSrc;
                     }else{
