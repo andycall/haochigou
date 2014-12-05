@@ -1,5 +1,5 @@
 require.config({
-	baseUrl : "js/lib/",
+	baseUrl : "/js/lib/",
 	shim : {
 		"underscore" : {
 			exports : "_"
@@ -26,7 +26,6 @@ require.config({
         order_form : "../widget/order_form"
 	}
 });
-
 
 // 加载项目所需的所有依赖项
 define([

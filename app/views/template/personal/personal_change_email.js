@@ -1,5 +1,5 @@
 require.config({
-	baseUrl : "js/lib/",
+	baseUrl : "/js/lib/",
 	shim : {
 		"underscore" : {
 			exports : "_"
@@ -26,6 +26,7 @@ require.config({
 		personal_change_email : "../widget/personal_change_email"
 	}
 });
+
 
 // 加载项目所需的所有依赖项
 define([
