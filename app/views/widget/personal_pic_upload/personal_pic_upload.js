@@ -1,4 +1,4 @@
-define(['jquery', 'jquery-ui', 'jquery.Jcrop', 'jquery.uploadify'], function(){
+define(['port', 'jquery', 'jquery-ui', 'jquery.Jcrop', 'jquery.uploadify'], function(port){
 	console.log("personal pic loaded");
 	$(".shadow").css({
 		visibility : "visible"
@@ -58,7 +58,7 @@ define(['jquery', 'jquery-ui', 'jquery.Jcrop', 'jquery.uploadify'], function(){
 
 	$("#upload_btn").uploadify({
 		'swf': '/js/lib/uploadify.swf',                        //FLash文件路径
-		'uploader': "/upload/uploadify.php", //处理ASHX页面
+		'uploader': port['imageUpload'], //处理ASHX页面
 		'formData' : { },         //传参数
 		'width'    : '40',
 		'height'   : "20",
