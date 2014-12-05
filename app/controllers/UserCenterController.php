@@ -7,15 +7,18 @@ class UserCenterController extends BaseController{
 
     private $uid;
 
+    public function __construct()
+    {
+        $this->uid = Auth::user()->front_uid;
+    }
+
     /**
      * 个人中心主页
      **/
     public function index(){
-        $this->uid = Auth::user()->front_uid;
 
         $userData = FrontUser::find($this->uid);
-
-
+        
         if($userData->nickname == ''){
             $userName = md5($userData->mobile);
         }else{
@@ -35,6 +38,8 @@ class UserCenterController extends BaseController{
         }else{
             $data['personal']['user_level'] = 3;
         }
+
+        $data['personal']['jump_to_upload'] = '';
 
         $data['personal']['user_balance'] = $userData->balance;
 
@@ -93,7 +98,6 @@ class UserCenterController extends BaseController{
      * 最近一个月订单信息页面
      */
     public function recentMonth(){
-        $this->uid = Auth::user()->front_uid;
 
         //查询该用户当月订单数据
         $now = time();
@@ -175,7 +179,6 @@ class UserCenterController extends BaseController{
      * 一个月前订单信息页面
      */
     public function afterMonth(){
-        $this->uid = Auth::user()->front_uid;
 
         //查询该用户当月订单数据
         $now = time();
@@ -257,7 +260,6 @@ class UserCenterController extends BaseController{
      * 收藏的商家页面
      **/
     public function shopCollect(){
-        $this->uid = Auth::user()->front_uid;
 
         $shopData = FrontUser::find($this->uid)->collectShop;
 
@@ -302,7 +304,6 @@ class UserCenterController extends BaseController{
      * 收藏美食页面
      **/
     public function menuCollect(){
-        $this->uid = Auth::user()->front_uid;
 
         $menuData = FrontUser::find($this->uid)->collectMenu;
 
@@ -451,7 +452,7 @@ class UserCenterController extends BaseController{
             "personal_return" => "#",     // 退单中的订单
             "personal_collection_shop" => url("usercenter/collect_shop"),// 我收藏的餐厅的地址
             "personal_collection_goods" => url("usercenter/collect_menu"), // 我收藏的商品的地址
-            "personal_my_site" => url("personal_my_site") ,  // 我的地址
+            "personal_my_site" => url("useraccount/site") ,  // 我的地址
             "personal_change_password" => url("personal_change_password"), // 修改密码
             "personal_secure"=> url("personal_secure"),        // 安全设置
             "personal_details" => "#"       // 收支明细
