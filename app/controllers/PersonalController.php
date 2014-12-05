@@ -19,10 +19,6 @@ class PersonalController extends BaseController {
 	 * 请求类型：POST
 	 */
 	public function addOrder(){
-		if( !Auth::check() ){
-			return Redirect::to('http://weibo.com');
-		}
-
 		$user  = Auth::user();
 		
 		$rules = array(
@@ -65,10 +61,6 @@ class PersonalController extends BaseController {
      * 请求类型：POST
      */
     public function cancelMenu(){
-    	if( !Auth::check() ){
-			return Redirect::to('http://weibo.com');
-		}
-
 		$user = Auth::user();
 		$rules = array(
 			'uid'      => 'required | integer',
@@ -99,63 +91,13 @@ class PersonalController extends BaseController {
 		}
     }
 
-    /**
-     * 取消订单，并不会立刻删除
-     *
-     * 请求类型：POST
-     */
-    public function cancelOrder(){
 
-    }
-
-    /**
-	 * 取消收藏某个商家
-	 *
-	 * 请求类型：POST
-	 */
-	public function cancelShop(){
-		if( !Auth::check() ){
-			return Redirect::to('http://weibo.com');
-		}
-
-		$user = Auth::user();
-		$rules = array(
-			'uid'     => 'required | integer',
-			'shop_id' => 'required | integer',
-		);
-		$new_collect = array(
-			'uid'     => $user->front_uid,
-			'shop_id' => Input::get('shop_id'),
-		);
-		$v = Validator::make($new_collect, $rules);
-		if( $v->fails() ){
-			return Redirect::to('http://baidu.com');
-
-			return Redirect::to('error')
-				->with('user', Auth::user())
-				->withErrors($v)
-				->withInput();
-		}
-
-		if( CollectShop::where('shop_id', Input::get('shop_id'))->where('uid', $user->front_uid)->delete() ){
-			$output            = array();
-			$output['success'] = 'true';
-			$output['state']   = 200;
-			$output['nextSrc'] = '';
-			$output['errMsg']  = '';
-			$output['no']      = 0;
-			Response::json($output);
-		}
-	}
 
 	/**
 	 * 收藏某个商品
 	 * @return [type] [description]
 	 */
 	public function collectMenu(){
-		if( !Auth::check() ){
-			return Redirect::to('http://weibo.com');
-		}
 		$user = Auth::user();
 		$rules = array(
 			'menu_id' => 'required | integer | exists:menu,id'
@@ -182,10 +124,6 @@ class PersonalController extends BaseController {
 	 * 请求类型：POST
 	 */
 	public function collectShop(){
-		if( !Auth::check() ){
-			return Redirect::to('http://weibo.com');
-		}
-
 		$user = Auth::user();
 		$rules = array(
 			'uid'     => 'required | integer | exists:front_user,front_uid',
@@ -226,10 +164,6 @@ class PersonalController extends BaseController {
 	 * 请求类型：POST
 	 */
 	public function confirmOrder(){
-		
-		if( !Auth::check() ){
-			return Redirect::to('http://weibo.com');
-		}
 		$user  = Auth::user();
 		
 		$rules = array(
@@ -253,11 +187,7 @@ class PersonalController extends BaseController {
 	 * 修改订单状态
 	 * 请求类型：POST
 	 */
-	public function modifyOrder(){
-		if( !Auth::check() ){
-			return Redirect::to('http://baidu.com');
-		}
-		
+	public function modifyOrder(){		
 		$record = array(
 			'order_id'      => Input::get('order_id'),
 			'state' => Input::get('state')

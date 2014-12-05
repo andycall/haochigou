@@ -28,7 +28,6 @@ Route::post('userphoto','UserCenterController@portraitUpload');
 
 
 
-
 #用户中心模块
 Route::get('usercenter', array('before' => 'loginCheck', 'uses' => 'UserCenterController@index'));//用户中心首页
 
@@ -53,26 +52,27 @@ Route::filter('loginCheck', function()
 
 # API/main接口，主页
 Route::get('/', 'MainController@index');
+Route::post('cancelshop', array('before' => 'loginCheck', 'uses' => 'MainController@cancelShop'));     // 取消收藏店铺
+Route::post('collectshop', array('before' => 'loginCheck', 'uses' => 'MainController@collectShop'));   // 收藏某个店铺
+
 
 
 # 商家
 Route::get('shop/{id}', 'ShopController@index');                // 商家页面
 Route::get('shop/{id}/comments', 'ShopController@shopComments');// 商家评论页
-Route::post('collectshop', 'ShopController@collectShop');       // 收藏某个店铺
-Route::post('collectmenu', 'ShopController@cancelShop');        // 取消收藏某个店铺
+//Route::post('collectshop', 'ShopController@collectShop');       // 收藏某个店铺
+//Route::post('collectmenu', 'ShopController@cancelShop');        // 取消收藏某个店铺
 
 
 
 # 用户
 Route::get('mail', function(){});                               // 用户提醒
 Route::get('profile/security', function(){});                   // 安全设置
-Route::post('addorder', 'PersonalController@addOrder');			// 添加订单
-Route::post('cancelmenu', 'PersonalController@cancelMenu');     // 取消收藏商品
-Route::post('cancelshop', 'PersonalController@cancelShop');     // 取消收藏店铺
-Route::post('collectmenu', 'PersonalController@collectMenu');	// 收藏某个商品
-Route::post('collectshop', 'PersonalController@collectShop');	// 收藏某个店铺
-Route::post('confirmorder', 'PersonalController@confirmOrder');	// 确认收货
-Route::post('modifyOrder', 'PersonalController@modifyOrder');	// 修改订单状态：0表示已提交未付款，1表示已付款未收货，2表示已收获，3表示取消订单
+Route::post('addorder', array('before' => 'loginCheck', 'uses' => 'PersonalController@addOrder'));			// 添加订单
+Route::post('cancelmenu', array('before' => 'loginCheck', 'uses' => 'PersonalController@cancelMenu'));     // 取消收藏商品
+Route::post('collectmenu', array('before' => 'loginCheck', 'uses' => 'PersonalController@collectMenu'));	// 收藏某个商品
+Route::post('confirmorder', array('before' => 'loginCheck', 'uses' => 'PersonalController@confirmOrder'));	// 确认收货
+Route::post('modifyorder', array('before' => 'loginCheck', 'uses' => 'PersonalController@modifyOrder'));	// 修改订单状态：0表示已提交未付款，1表示已付款未收货，2表示已收获，3表示取消订单
 
 
 
