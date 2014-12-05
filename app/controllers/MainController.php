@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
  * index()   			主页面
  *
  * cancelShop()			取消收藏店铺
+ * collectShop()		收藏店铺
  * getAddImage()		5个广告图片
  * getLevel($thing)		计算某个店铺的评分统计
  * getMyStore()			获取我收藏的店铺
@@ -129,15 +130,16 @@ class MainController extends BaseController {
 
 		$collect = new CollectShop($new_collect);
 		if( $collect->save() ){
-			$output            = array();
-			$output['success'] = 'true';
-			$output['state']   = 200;
-			$output['nextSrc'] = '';
-			$output['errMsg']  = '';
-			$output['no']      = 0;
-			$output['data']    = $this->getShopInfo(Input::get('shop_id'));
-			//var_dump($output);
-			Response::json($output);
+			$output = array(
+				'success' => 'true',
+				'state' => 200,
+				'nextSrc' => '',
+				'errMsg' => '',
+				'no' => 0
+			);
+			$stores = $this->getMyStore();
+			$output['data']['collection_shop'] = $stores['data'];
+			return $output;
 		}
 	}
 
@@ -202,7 +204,7 @@ class MainController extends BaseController {
 			$onestore['shop_type']          = $shop->type;			// 商家类型，以逗号分隔的字符串---------------------------这个还是问一下
 			$Level                          = $this->getLevel($shop);
 			$onestore['shop_level']         = $Level['thing_total'];			// 商家评级
-			$onestore['order_count']        = $shop->sold_num;		// 订单总量
+			$onestore['order_count']        = (float)$shop->sold_num;		// 订单总量
 			$onestore['is_opening']         = $shop->state;			// 营业状态
 			$onestore['is_ready_for_order'] = $shop->reserve;// 是否接受预定
 
