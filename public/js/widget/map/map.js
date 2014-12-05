@@ -148,9 +148,7 @@ define([ "jquery", "underscore" ], function($, _) {
                 }
                 navigator.userAgent.indexOf("MSIE") > 0 && (document.getElementById(input).onpropertychange = self.autoSearch);
             }, autoComplete.render = function() {
-                var self = this, city = $("#" + self.city), poil = self.poil;
-                console.log(self.resultIndex, self.resultEnd);
-                var poiArr = poil.slice(self.resultIndex, self.resultEnd), resultCount = poil.length / 10, resultStr1 = _.template($("#place_template").html())({
+                var self = this, city = $("#" + self.city), poil = self.poil, poiArr = poil.slice(self.resultIndex, self.resultEnd), resultCount = poil.length / 10, resultStr1 = _.template($("#place_template").html())({
                     resultCount: resultCount,
                     resultIndex: self.resultIndex,
                     autoComplete: self,
@@ -248,10 +246,10 @@ define([ "jquery", "underscore" ], function($, _) {
                     _cont.on("mousemove", mousemove(_patchH, _patchW, _patchContOffset, _patchDragWrapOffset)), 
                     _cont.on("mouseup", mouseup(_patchH, _patchW, _patchContOffset, _patchDragWrapOffset));
                 }
-                function mousemove(_patchH, _patchW, _patchContOffset) {
+                function mousemove(_patchH, _patchW) {
                     return function(eve) {
-                        var _x = eve.clientX, _y = eve.clientY, l = (_dNode.offset(), _x - _patchContOffset.left - _patchDragOriOffset.left - _patchW), //相对于 drag-wrap 的位置
-                        t = _y - _patchContOffset.top - _patchDragOriOffset.top - _patchH;
+                        var _x = eve.clientX, _y = eve.clientY, l = (_dNode.offset(), _x - _patchDragOriOffset.left - _patchW), //相对于 drag-wrap 的位置
+                        t = _y - _patchDragOriOffset.top - _patchH;
                         _dNode.css({
                             top: t,
                             left: l
@@ -269,7 +267,7 @@ define([ "jquery", "underscore" ], function($, _) {
                                 //复杂图标
                                 size: new AMap.Size(28, 34),
                                 //图标大小
-                                image: "/images/map-sprites.png",
+                                image: "./images/map-sprites.png",
                                 //大图地址
                                 imageOffset: new AMap.Pixel(0, -140)
                             }),
@@ -289,10 +287,10 @@ define([ "jquery", "underscore" ], function($, _) {
                             content: mapObj.pointWindow(containerPixelPos.lng, containerPixelPos.lat),
                             offset: new AMap.Pixel(110, -25)
                         });
-                        AMap.event.addListener(marker, "mouseup", function() {
+                        AMap.event.addListener(marker, "mouseup", function(e) {
                             //鼠标点击marker弹出自定义的信息窗体
                             {
-                                var o = (window.event, $(marker.$.r.B).offset()), containerPixelPos = fromContainerPixelToLngLat(o.left - _patchContOffset.left + 7, o.top - _patchContOffset.top + 2 * _patchH);
+                                var self = $(e.target.da.bd.contentDom), o = self.offset(), containerPixelPos = fromContainerPixelToLngLat(o.left - _patchContOffset.left + 7, o.top - _patchContOffset.top + 2 * self.height());
                                 new AMap.InfoWindow({
                                     isCustom: !0,
                                     //使用自定义窗体
@@ -300,6 +298,19 @@ define([ "jquery", "underscore" ], function($, _) {
                                     offset: new AMap.Pixel(110, -25)
                                 });
                             }
+                            return !1;
+                        }), AMap.event.addListener(marker, "click", function(e) {
+                            //鼠标点击marker弹出自定义的信息窗体
+                            {
+                                var self = $(e.target.da.bd.contentDom), o = self.offset(), containerPixelPos = fromContainerPixelToLngLat(o.left - _patchContOffset.left + 7, o.top - _patchContOffset.top + self.height());
+                                new AMap.InfoWindow({
+                                    isCustom: !0,
+                                    //使用自定义窗体
+                                    content: mapObj.pointWindow(containerPixelPos.lng, containerPixelPos.lat),
+                                    offset: new AMap.Pixel(110, -25)
+                                });
+                            }
+                            return !1;
                         }), _cont.off("mousemove"), _cont.off("mouseup"), _dNode.css({
                             top: 0,
                             left: 0

@@ -3,7 +3,7 @@
 define(function(){
 	return {
 		"switchAuth" : "/switch_auth",   //点击切换验证码
-		"login"         : "/loginAjax",             //登陆
-		"register"       : "/registerAjax"        //注册
+		"login"         : "/login",             //登陆
+		"register"       : "/register"        //注册
 	}
 })
