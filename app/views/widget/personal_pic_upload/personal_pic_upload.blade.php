@@ -6,7 +6,7 @@
 <div class="content_inner shadow"  style="visibility: hidden">
        <button id="upload_btn">上传</button>
 
-   {{Form::open(array("method" => "post", "action" => $personal['submit_cut']))}}
+   {{--{{Form::open(array("method" => "post", "action" => $personal['submit_cut']))}}--}}
     <div class="ui-helper-clearfix">
        <div class="image_crop_container">
             <img class="hide" src="{{$personal['user_image']}}" id="target" alt=""/>
@@ -32,7 +32,7 @@
          <input type="submit" class="btn btn-yellow" value="保存"/>
          <a href="{{$personal['return_back']}}" class="btn ">取消</a>
     </div>
-    {{ Form::close(); }}
+    {{--{{ Form::close(); }}--}}
 </div>
 
 @section("css")

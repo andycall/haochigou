@@ -7,7 +7,8 @@
     <div class="account_state">
         <div class="ui-helper-clearfix">
             <div class="col_left">
-                <div class="avatar"><a href="{{$personal['jump_to_upload']}}">上传<br>头像</a></div>
+
+                <div class="avatar"> <span id="upload_btn"></span></div>
                 <div class="ava_wrapper">
                     <h5>{{$personal['user_name']}}</h5>
                     <div>
