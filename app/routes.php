@@ -76,6 +76,9 @@ Route::get('shop/{id}/comments', 'ShopController@shopComments');// 商家评论�
 # 用户
 Route::get('mail', function(){});                               // 用户提醒
 Route::get('profile/security', function(){});                   // 安全设置
+Route::get('cartAdd', function(){
+    return 'wang';
+});
 Route::post('addorder', array('before' => 'loginCheck', 'uses' => 'PersonalController@addOrder'));			// 添加订单
 Route::post('cancelmenu', array('before' => 'loginCheck', 'uses' => 'PersonalController@cancelMenu'));     // 取消收藏商品
 Route::post('collectmenu', array('before' => 'loginCheck', 'uses' => 'PersonalController@collectMenu'));	// 收藏某个商品
