@@ -85,5 +85,5 @@ Route::post('modifyorder', array('before' => 'loginCheck', 'uses' => 'PersonalCo
 
 
 #测试
-Route::get('/test/{id}', 'ShopController@getShopComments');
+Route::get('test/{shop_id}', 'ShopController@getCategory');
 

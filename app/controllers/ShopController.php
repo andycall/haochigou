@@ -84,7 +84,7 @@ class ShopController extends BaseController {
 
 		$menus = $shop->groups()->get();
 		foreach($menus as $menu){
-			if($menu->activity_id != 0){
+			if($menu->activity_id != 1){
 				$oneact = array();
 				$act = Activity::find($menu->activity_id);
 
@@ -136,7 +136,7 @@ class ShopController extends BaseController {
 			$one['classify_id']   = $group->id;
 			$one['classify_icon'] = $group->icon;
 
-			if($group->activity_id == 0 ){
+			if($group->activity_id == 1 ){
 				$one['activity_ads']['activity_name'] = '';
 				$one['activity_ads']['activity_statement'] = '';
 			} else{
@@ -210,11 +210,12 @@ class ShopController extends BaseController {
 		$shop = Shop::find($shop_id);
 				
 		$groups         = $shop->groups->all();
+
 		$goods_category = array();
 		$good_activity  = array();
 		foreach($groups as $group){
 			$one = array();
-			if($group->activity_id == 0){		// 不是活动
+			if($group->activity_id == 1){		// 不是活动
 				$one['classify_name']      = $group->name;
 				$one['classify_name_abbr'] = $group->name_abbr;
 				$one['classify_id']        = $group->id;

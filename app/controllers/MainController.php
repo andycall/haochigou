@@ -329,7 +329,9 @@ class MainController extends BaseController {
 		$activity = Activity::all();
 
 		foreach($activity as $act){
-			$result['shop_list']['data']['activity'][(string)$act->aid] = $act->name;
+			if($act->aid != '1'){
+				$result['shop_list']['data']['activity'][(string)$act->aid] = $act->name;
+			}
 		}
 
 		$data['shops'] = array();
@@ -347,7 +349,8 @@ class MainController extends BaseController {
 			$onestore = array();
 			$shop     = $oneshop['shopData'];
 
-			$onestore['support_activity']        = explode(',', $shop->support_activity);		// 所有支持的活动id
+			$support_activity = explode(',', $shop->support_activity);
+			$onestore['support_activity']        = $support_activity[0]==''?[]:$support_activity;		// 所有支持的活动id
 			$onestore['isHot']                   = $shop->is_hot?'true':'false';								// 是否是热门餐厅
 			$onestore['isOnline']                = $shop->is_online?'true':'false';						// 是否营业		
 			$onestore['isSupportPay']            = in_array('1', explode(',', $shop->pay_method));	// 是否支持在线支付
@@ -385,9 +388,8 @@ class MainController extends BaseController {
 			}else{
 				array_push($result['more_shop']['data'], $onestore);
 			}
-		}	
+		}
 		return $result;
-
 	}
 
 	/**
