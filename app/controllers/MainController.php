@@ -198,7 +198,7 @@ class MainController extends BaseController {
 			$onestore['place_id']           = 'null';					// 地址ID，暂时不用
 			$onestore['shop_url']           = 'shop/'.$shop->id;		 	// 点击跳转到相应商家
 			$onestore['shop_logo']          = $shop->pic;		  	// 商家的logo图片地址
-			$onestore['deliver_time']       = $shop->interval;	// 送货时间间隔
+			$onestore['deliver_time']       = (float)$shop->interval;	// 送货时间间隔
 			$onestore['deliver_start']      = $shop->operation_time;	// ----------------------------没有开始时间，只有一个时间字符串
 			$onestore['shop_name']          = $shop->name;			// 商家名称
 			$onestore['shop_type']          = $shop->type;			// 商家类型，以逗号分隔的字符串---------------------------这个还是问一下
@@ -240,13 +240,13 @@ class MainController extends BaseController {
 			$one['place_id']           = '123';
 			$one['shop_url']           = 'shop/'.$shop->id;
 			$one['shop_logo']          = $shop->pic;
-			$one['deliver_time']       = $shop->interval;
+			$one['deliver_time']       = (float)$shop->interval;
 			$one['deliver_start']      = $shop->operation_time;
 			$one['shop_name']          = $shop->name;
 			$one['shop_type']          = $shop->type;
 			$Level                     = $this->getLevel($shop);
 			$one['shop_level']         = $Level['thing_total'];
-			$one['order_count']        = $shop->sold_num;
+			$one['order_count']        = (float)$shop->sold_num;
 			$one['is_opening']         = $shop->is_online;
 			$one['is_ready_for_order'] = $shop->reserve;
 			if( !Auth::check() ){
@@ -265,13 +265,13 @@ class MainController extends BaseController {
 			$one['place_id']           = '123';
 			$one['shop_url']           = 'shop/'.$shop->id;
 			$one['shop_logo']          = $shop->pic;
-			$one['deliver_time']       = $shop->interval;
+			$one['deliver_time']       = (float)$shop->interval;
 			$one['deliver_start']      = $shop->operation_time;
 			$one['shop_name']          = $shop->name;
 			$one['shop_type']          = $shop->type;
 			$Level                     = $this->getLevel($shop);
 			$one['shop_level']         = $Level['thing_total'];
-			$one['order_count']        = $shop->sold_num;
+			$one['order_count']        = (float)$shop->sold_num;
 			$one['is_opening']         = $shop->is_online;
 			$one['is_ready_for_order'] = $shop->reserve;
 			if( !Auth::check() ){
@@ -358,7 +358,7 @@ class MainController extends BaseController {
 			$onestore['place_id']                = '不需要';									// -------------------位置经纬度和位置id后期再改数据库
 			$onestore['shop_url']                = 'shop/'.$shop->id;									// 点击跳转到相应商家
 			$onestore['shop_logo']               = $shop->pic;		  								// 商家的logo图片地址
-			$onestore['deliver_time']            = $shop->interval;								// 送货时间间隔
+			$onestore['deliver_time']            = (float)$shop->interval;								// 送货时间间隔
 			$onestore['deliver_start']           = $shop->begin_time;								// 送货开始时间
 			$onestore['shop_name']               = $shop->name;										// 商家名称
 			$onestore['shop_type']               = $shop->type;
@@ -373,7 +373,7 @@ class MainController extends BaseController {
 			$onestore['close_msg']               = $shop->close_msg;									// 关门信息
 			$onestore['business_hours']          = $shop->operation_time;						// 营业时间
 			$onestore['shop_summary']            = $shop->intro;									// 商家简介
-			$onestore['order_count']             = $shop->sold_num;									// 订单数量
+			$onestore['order_count']             = (float)$shop->sold_num;									// 订单数量
 			if( !Auth::check() ){
 				$onestore['is_collected'] = false;
 			} else{
