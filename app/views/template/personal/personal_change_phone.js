@@ -9,7 +9,7 @@ require.config({
 		personal : "../template/personal",
 		footer  :"../widget/footer",
 		userBar : "../widget/userBar",
-		sideBar : "../widget/sideBar",
+		sidebar : "../widget/sidebar",
 		personal_center : "../widget/personal_center",
 		personal_after_month : "../widget/personal_after_month",
 		personal_change_password : "../widget/personal_change_password",
@@ -32,7 +32,7 @@ require.config({
 define([
 	'userBar/userBar',
 	"footer/footer",
-	"sideBar/sideBar",
+	"sidebar/sidebar",
 	"personal_change_phone/personal_change_phone"
 ], function($){
 	console.log("init");

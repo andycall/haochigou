@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
  * index()   			主页面
  *
  * cancelShop()			取消收藏店铺
+ * collectShop()		收藏店铺
  * getAddImage()		5个广告图片
  * getLevel($thing)		计算某个店铺的评分统计
  * getMyStore()			获取我收藏的店铺
@@ -129,15 +130,16 @@ class MainController extends BaseController {
 
 		$collect = new CollectShop($new_collect);
 		if( $collect->save() ){
-			$output            = array();
-			$output['success'] = 'true';
-			$output['state']   = 200;
-			$output['nextSrc'] = '';
-			$output['errMsg']  = '';
-			$output['no']      = 0;
-			$output['data']    = $this->getShopInfo(Input::get('shop_id'));
-			//var_dump($output);
-			Response::json($output);
+			$output = array(
+				'success' => 'true',
+				'state' => 200,
+				'nextSrc' => '',
+				'errMsg' => '',
+				'no' => 0
+			);
+			$stores = $this->getMyStore();
+			$output['data']['collection_shop'] = $stores['data'];
+			return $output;
 		}
 	}
 
@@ -196,13 +198,13 @@ class MainController extends BaseController {
 			$onestore['place_id']           = 'null';					// 地址ID，暂时不用
 			$onestore['shop_url']           = 'shop/'.$shop->id;		 	// 点击跳转到相应商家
 			$onestore['shop_logo']          = $shop->pic;		  	// 商家的logo图片地址
-			$onestore['deliver_time']       = $shop->interval;	// 送货时间间隔
+			$onestore['deliver_time']       = (float)$shop->interval;	// 送货时间间隔
 			$onestore['deliver_start']      = $shop->operation_time;	// ----------------------------没有开始时间，只有一个时间字符串
 			$onestore['shop_name']          = $shop->name;			// 商家名称
 			$onestore['shop_type']          = $shop->type;			// 商家类型，以逗号分隔的字符串---------------------------这个还是问一下
 			$Level                          = $this->getLevel($shop);
 			$onestore['shop_level']         = $Level['thing_total'];			// 商家评级
-			$onestore['order_count']        = $shop->sold_num;		// 订单总量
+			$onestore['order_count']        = (float)$shop->sold_num;		// 订单总量
 			$onestore['is_opening']         = $shop->state;			// 营业状态
 			$onestore['is_ready_for_order'] = $shop->reserve;// 是否接受预定
 
@@ -238,13 +240,13 @@ class MainController extends BaseController {
 			$one['place_id']           = '123';
 			$one['shop_url']           = 'shop/'.$shop->id;
 			$one['shop_logo']          = $shop->pic;
-			$one['deliver_time']       = $shop->interval;
+			$one['deliver_time']       = (float)$shop->interval;
 			$one['deliver_start']      = $shop->operation_time;
 			$one['shop_name']          = $shop->name;
 			$one['shop_type']          = $shop->type;
 			$Level                     = $this->getLevel($shop);
 			$one['shop_level']         = $Level['thing_total'];
-			$one['order_count']        = $shop->sold_num;
+			$one['order_count']        = (float)$shop->sold_num;
 			$one['is_opening']         = $shop->is_online;
 			$one['is_ready_for_order'] = $shop->reserve;
 			if( !Auth::check() ){
@@ -263,13 +265,13 @@ class MainController extends BaseController {
 			$one['place_id']           = '123';
 			$one['shop_url']           = 'shop/'.$shop->id;
 			$one['shop_logo']          = $shop->pic;
-			$one['deliver_time']       = $shop->interval;
+			$one['deliver_time']       = (float)$shop->interval;
 			$one['deliver_start']      = $shop->operation_time;
 			$one['shop_name']          = $shop->name;
 			$one['shop_type']          = $shop->type;
 			$Level                     = $this->getLevel($shop);
 			$one['shop_level']         = $Level['thing_total'];
-			$one['order_count']        = $shop->sold_num;
+			$one['order_count']        = (float)$shop->sold_num;
 			$one['is_opening']         = $shop->is_online;
 			$one['is_ready_for_order'] = $shop->reserve;
 			if( !Auth::check() ){
@@ -327,7 +329,9 @@ class MainController extends BaseController {
 		$activity = Activity::all();
 
 		foreach($activity as $act){
-			$result['shop_list']['data']['activity'][(string)$act->aid] = $act->name;
+			if($act->aid != '1'){
+				$result['shop_list']['data']['activity'][(string)$act->aid] = $act->name;
+			}
 		}
 
 		$data['shops'] = array();
@@ -345,7 +349,8 @@ class MainController extends BaseController {
 			$onestore = array();
 			$shop     = $oneshop['shopData'];
 
-			$onestore['support_activity']        = explode(',', $shop->support_activity);		// 所有支持的活动id
+			$support_activity = explode(',', $shop->support_activity);
+			$onestore['support_activity']        = $support_activity[0]==''?[]:$support_activity;		// 所有支持的活动id
 			$onestore['isHot']                   = $shop->is_hot?'true':'false';								// 是否是热门餐厅
 			$onestore['isOnline']                = $shop->is_online?'true':'false';						// 是否营业		
 			$onestore['isSupportPay']            = in_array('1', explode(',', $shop->pay_method));	// 是否支持在线支付
@@ -353,7 +358,7 @@ class MainController extends BaseController {
 			$onestore['place_id']                = '不需要';									// -------------------位置经纬度和位置id后期再改数据库
 			$onestore['shop_url']                = 'shop/'.$shop->id;									// 点击跳转到相应商家
 			$onestore['shop_logo']               = $shop->pic;		  								// 商家的logo图片地址
-			$onestore['deliver_time']            = $shop->interval;								// 送货时间间隔
+			$onestore['deliver_time']            = (float)$shop->interval;								// 送货时间间隔
 			$onestore['deliver_start']           = $shop->begin_time;								// 送货开始时间
 			$onestore['shop_name']               = $shop->name;										// 商家名称
 			$onestore['shop_type']               = $shop->type;
@@ -368,7 +373,7 @@ class MainController extends BaseController {
 			$onestore['close_msg']               = $shop->close_msg;									// 关门信息
 			$onestore['business_hours']          = $shop->operation_time;						// 营业时间
 			$onestore['shop_summary']            = $shop->intro;									// 商家简介
-			$onestore['order_count']             = $shop->sold_num;									// 订单数量
+			$onestore['order_count']             = (float)$shop->sold_num;									// 订单数量
 			if( !Auth::check() ){
 				$onestore['is_collected'] = false;
 			} else{
@@ -383,9 +388,8 @@ class MainController extends BaseController {
 			}else{
 				array_push($result['more_shop']['data'], $onestore);
 			}
-		}	
+		}
 		return $result;
-
 	}
 
 	/**

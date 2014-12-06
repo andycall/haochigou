@@ -22,13 +22,6 @@
  * getUserBar()								获取userbar上面的一些地址数据
  */
 
-/**
- * TODO
- * 未完成的部分有：
- * 位置地图shop_marp
- * 购物车
- * 评论切换分页
- */
 class ShopController extends BaseController {
 
 	/**
@@ -46,6 +39,7 @@ class ShopController extends BaseController {
 		$data['best_seller']              = $this->getBestSeller($shop_id);				// 获取本周热卖
 #TODO：地图地址未完成
 		$data['shop_map']['data']      = $this->getMap($shop_id);						// 地图地址
+		//var_dump($data);
 		return View::make("template.shop.shop")->with($data);
 	}
 
@@ -61,7 +55,6 @@ class ShopController extends BaseController {
 		$data['good_category']  = $this->getGoodCategory($shop_id);		// 商家评论页要这个干嘛
 		$data['category']       = $this->getCategory($shop_id);
 		$data['shop_comments']  = $this->getShopComments($shop_id);
-
 		return View::make("template.shop.shop_comment")->with($data);
 	}
 
@@ -84,7 +77,7 @@ class ShopController extends BaseController {
 
 		$menus = $shop->groups()->get();
 		foreach($menus as $menu){
-			if($menu->activity_id != 0){
+			if($menu->activity_id != 1){
 				$oneact = array();
 				$act = Activity::find($menu->activity_id);
 
@@ -136,7 +129,7 @@ class ShopController extends BaseController {
 			$one['classify_id']   = $group->id;
 			$one['classify_icon'] = $group->icon;
 
-			if($group->activity_id == 0 ){
+			if($group->activity_id == 1 ){
 				$one['activity_ads']['activity_name'] = '';
 				$one['activity_ads']['activity_statement'] = '';
 			} else{
@@ -151,7 +144,7 @@ class ShopController extends BaseController {
 			foreach($goods as $good){
 				$onegood = array();				
 
-				if($good->pic == NULL){
+				if($good->pic != NULL){
 					$onegood['goods_id']       = $good->id;				// 商品id
 					$onegood['goods_name']     = $good->title;			// 商品名称
 					$Level                     = $this->getLevel($good);		
@@ -159,7 +152,7 @@ class ShopController extends BaseController {
 					$onegood['goods_price']    = (float)$good->price;	// 商品价格
 					$onegood['goods_icon']     = '';					// 没有就没有嘛
 					$onegood['goods_original'] = (float)$good->original_price;	// 如果是促销就显示原价
-					$onegood['good_sails']	   = $good->sold_num;
+					$onegood['good_sails']	   = (float)$good->sold_num;
 					array_push($classify_images, $onegood);
 				}else{
 					$onegood['goods_id']       = $good->id;				// 商品id
@@ -168,7 +161,7 @@ class ShopController extends BaseController {
 					$Level                     = $this->getLevel($good);
 					$onegood['goods_level']    = $Level['thing_total'];	// 商品等级
 					$onegood['comment_count']  = $Level['comment_count'];// 投票人数
-					$onegood['goods_sails']    = $good->sold_num;		// 商品销量(这里写的是总销量)
+					$onegood['goods_sails']    = (float)$good->sold_num;		// 商品销量(这里写的是总销量)
 					$onegood['goods_price']    = (float)$good->price;	// 商品价格
 					$onegood['goods_icon']     = $good->icon;			// 一些用户促销的图标
 					$onegood['goods_original'] = (float)$good->original_price;	// 如果是促销，这个用于显示原价
@@ -180,6 +173,7 @@ class ShopController extends BaseController {
 			$one['classify_goods']  = $classify_goods;
 			array_push($result, $one);
 		}
+		//var_dump($result);
 		return $result;
 	}
 
@@ -210,11 +204,12 @@ class ShopController extends BaseController {
 		$shop = Shop::find($shop_id);
 				
 		$groups         = $shop->groups->all();
+
 		$goods_category = array();
 		$good_activity  = array();
 		foreach($groups as $group){
 			$one = array();
-			if($group->activity_id == 0){		// 不是活动
+			if($group->activity_id == 1){		// 不是活动
 				$one['classify_name']      = $group->name;
 				$one['classify_name_abbr'] = $group->name_abbr;
 				$one['classify_id']        = $group->id;
@@ -396,9 +391,7 @@ class ShopController extends BaseController {
 		} else{
 			$info['is_collected'] = 'false';
 		}
-#TODO：右上角的送货速度，董天成添加这个API
-		$info['interval']       = $shop->interval;			// 送餐速度
-#TODO：shop_remark API里两个不同的top_bar
+		$info['interval']       = (float)$shop->interval;			// 送餐速度
 		$info['shop_remark']    = '';
 		return $info;
 	}

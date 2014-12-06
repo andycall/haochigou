@@ -107,7 +107,7 @@ define([ "jquery", "home/port" ], function($, port) {
     }), $(".more_shops-row-book .collect").on("click", function() {
         var father = $(this).parents(".more_shops-row-book"), shop_id = father.data("shop_id"), place_id = father.data("place_id"), post = {};
         post.shop_id = shop_id, post.place_id = place_id, $.ajax({
-            url: "takeaway/public/index.php/add_collect",
+            url: "collectshop",
             type: "POST",
             data: post,
             success: function(res) {
