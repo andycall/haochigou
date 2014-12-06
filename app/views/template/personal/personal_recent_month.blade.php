@@ -9,7 +9,7 @@
 @stop
 
 @section("sidebar")
-    @include("widget.sideBar.sideBar", array("active" => "recent_month"))
+    @include("widget.sidebar.sidebar", array("active" => "recent_month"))
 @stop
 
 @section("rightContent")
