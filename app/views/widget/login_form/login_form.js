@@ -112,10 +112,10 @@ define(['jquery','login/port'], function($, port){
     });
 
     var $divUserEmail   = $("#login-user-name"),
-            $divUserPwd  = $("#login-user-pwd"),
-            $divUserTel    = $("#login-user-mobile"),
-            $divAuth1      = $("#login-user-auth1"),
-            $divAuth2      = $("#login-user-auth2");
+        $divUserPwd  = $("#login-user-pwd"),
+        $divUserTel    = $("#login-user-mobile"),
+        $divAuth1      = $("#login-user-auth1"),
+        $divAuth2      = $("#login-user-auth2");
 
     //表单验证     
     function checkLogin(data){
@@ -157,7 +157,6 @@ define(['jquery','login/port'], function($, port){
 
         }else if( loginWay == 'mobile'){
             //电话号码没有输入  user_email 此时存的是电话号码
-            alert(regTel);
             if( !regTel.test(data.user_email) ){
                 $divUserTel.find(".u-error-tip").show();
                 return false;

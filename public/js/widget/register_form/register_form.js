@@ -36,7 +36,7 @@ define([ "jquery", "register/port" ], function($, port) {
         return console.log(data.user_phone), regTel.test(data.user_phone) ? ($errMobile.hide(), 
         regEmail.test(data.user_email) ? ($errEmail.hide(), regPwd.test(data.user_psw) ? ($errPwd.hide(), 
         data.user_psw != $divUserRePwd.find("input").val() ? ($errRePwd.show(), !1) : ($errRePwd.hide(), 
-        regAuth.test(data.user_auth) ? ($errAuth.hide(), !0) : ($errAuth.show(), !1))) : (-$errPwd.show(), 
+        regAuth.test(data.user_auth) ? ($errAuth.hide(), !0) : ($errAuth.show(), !1))) : ($errPwd.show(), 
         !1)) : ($errEmail.show(), !1)) : ($errMobile.show(), !1);
     }
     //ajax

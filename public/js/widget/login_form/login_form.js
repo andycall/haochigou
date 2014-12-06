@@ -32,8 +32,8 @@ define([ "jquery", "login/port" ], function($, port) {
             if ($errPwd.hide(), 4 != data.user_auth.length) return $errAuth.show(), !1;
             $errAuth.hide();
         } else if ("mobile" == loginWay) {
-            if (//电话号码没有输入  user_email 此时存的是电话号码
-            alert(regTel), !regTel.test(data.user_email)) return $divUserTel.find(".u-error-tip").show(), 
+            //电话号码没有输入  user_email 此时存的是电话号码
+            if (!regTel.test(data.user_email)) return $divUserTel.find(".u-error-tip").show(), 
             !1;
             //没有输入验证码
             if (data.user_auth.length < 1) return $divAuth2.find(".u-error-tip").show(), !1;

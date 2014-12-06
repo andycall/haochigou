@@ -99,7 +99,7 @@ define(["jquery", "register/port"], function($, port){
         }
 
         //验证验证密码
-        if( !regPwd.test(data.user_psw) ){-
+        if( !regPwd.test(data.user_psw) ){
             $errPwd.show();
             return false;
         }else{
