@@ -26,6 +26,8 @@ require.config({
         order_form : "../widget/order_form"
     }
 });
+
+
 // 加载项目所需的所有依赖项
 define([
 	'userBar/userBar',

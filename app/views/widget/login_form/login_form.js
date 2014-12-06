@@ -190,8 +190,7 @@ define(['jquery','login/port'], function($, port){
                         return;
                     }
                 }
-
-                if( res.success == 'true'){
+                if(res.success){
                     if(res.nextSrc){
                         location.href = res.nextSrc;
                     }else{

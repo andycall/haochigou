@@ -59,9 +59,8 @@ table{
 	-moz-border-bottom-colors: none;
 	-moz-border-left-colors: none;
 }
-
 .col-address{
-	width: 35%;
+	width: 30%;
 }
 .col_action{
 	width: 28%;
@@ -77,6 +76,7 @@ table{
 	width: 80px;
 }
 
+
 .form_block .required_mark{
 	color: red;
 	font-size: 14px;
@@ -84,7 +84,7 @@ table{
 }
 
 .form_block p{
-	margin: 10px 0px 10px 105px;
+	margin: 5px 0px 5px 105px;
 }
 
 .form_block .input_box{

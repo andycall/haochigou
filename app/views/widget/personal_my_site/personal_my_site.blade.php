@@ -7,6 +7,7 @@
     <table class="address-table table table-bordered">
         <thead>
             <tr>
+                <th class="col-user">姓名</th>
                 <th class="col-address">地址</th>
                 <th>手机号码</th>
                 <th>备选电话</th>
@@ -16,6 +17,7 @@
         <tbody>
         @foreach($deliver_address['sites'] as $key=>$value)
             <tr>
+                <td>董天成</td>
                 <td>{{$value['address_details']}}</td>
                 <td>{{$value['deliver_phone']}}</td>
                 <td>{{$value['spare_phone']}}</td>
@@ -34,7 +36,13 @@
 
 
     {{ Form::open(array('url' => 'foo/bar', "method" => "post", "id" => "order_form")); }}
-         <div class="form_block">
+        <div class="form_block">
+            <label for="address_details"><span class="required_mark">*</span>姓名</label>
+            <input type="text" class="input_box" id="user_name" name="" value=""/>
+            <span class="error_box">请填写用户姓名</span>
+            <p>（请填写用户姓名）</p>
+        </div>
+        <div class="form_block">
             <label for="address_details"><span class="required_mark">*</span>详细地址</label>
             <input type="text" class="input_box" id="address_details" name="address_details" value="{{$deliver_address['form_address_details']}}"/>
             <span class="error_box">请填写订单地址</span>

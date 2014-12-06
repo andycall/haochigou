@@ -6,8 +6,8 @@
         <h3>当前区域({{$shops['now_area']}})的餐厅 - 共<span class="restaurant_count">{{$shops['now_shop_count']}}</span>个</h3>
         <table class="favor_table table">
             <tbody>
-                <tr>
                 @foreach($shops['now_place'] as $key=>$value)
+                  <tr>
                     <td data-shop_id="{{$value['shop_id']}}" class="restaurant-column">
                         <div class="restaurant-block {{ $value['shop_statue'] == 1 ? "closed"  : "" }}">
                             <div class="line-one">
@@ -42,8 +42,9 @@
                             <a class="close_btn" href="#"><i class="icon icon-remove"></i></a>
                         </div>
                     </td>
+                    </tr>
                 @endforeach
-                </tr>
+
             </tbody>
         </table>
     </div>
