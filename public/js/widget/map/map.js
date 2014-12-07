@@ -1,4 +1,4 @@
-define([ "jquery", "underscore" ], function($, _) {
+define([ "jquery", "underscore", "localMap/port" ], function($, _, port) {
     console.log("map loaded");
     var mapObj = function() {
         var mapObj = new AMap.Map("container", {
@@ -171,25 +171,39 @@ define([ "jquery", "underscore" ], function($, _) {
                     scrollTop: 0
                 }));
             }, autoComplete.placeSearch_CallBack = function(data) {
-                for (var self = autoComplete, city = ($("#" + self.input), $("#" + self.city)), restaurant = [], poil = data.poiList.pois, i = 0, len = poil.length; len > i; i++) restaurant.push([ poil[i].location.A, poil[i].location.D ]);
-                var restaurantResult = [];
-                autoComplete.windowsArr = [], autoComplete.marker = [], autoComplete.data = data, 
-                autoComplete.resultIndex = 0, autoComplete.resultEnd = 10, autoComplete.poil = poil, 
-                autoComplete.restaurantResult = restaurantResult, //清空地图上的InfoWindow和Marker
-                mapObj.clearMap(), self.render(), drag && ($(".drag-wrap").css({
-                    left: 450
-                }), drag.funcs.updateDragPosition()), city.on("mouseover", "li", function(ev) {
-                    var target = ev.currentTarget;
-                    if ("secid" == target.className) {
-                        var dataMouseover = parseInt(target.dataset.mouseover);
-                        self.openMarkerTipById(dataMouseover, target);
-                    }
-                }), $("#search_list").on("click", "span", self.bindNext), $(".prevGroup").on("click", self.bindPrev), 
-                city.on("mouseout", "li", function(ev) {
-                    var target = ev.currentTarget;
-                    if ("secid" == target.className) {
-                        var dataMouseOut = target.dataset.mouseout;
-                        self.onmouseout_MarkerStyle(dataMouseOut, target);
+                var self = autoComplete, city = ($("#" + self.input), $("#" + self.city));
+                console.log(data);
+                for (var restaurant = [], restaurantResult = [], poil = data.poiList.pois, i = 0, len = poil.length; len > i; i++) restaurant.push({
+                    lat: poil[i].location.lat,
+                    lng: poil[i].location.lng
+                });
+                $.ajax({
+                    url: port.getRestaurant,
+                    type: "POST",
+                    data: JSON.stringify(restaurant),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: !1,
+                    success: function(data) {
+                        autoComplete.windowsArr = [], autoComplete.marker = [], autoComplete.data = data, 
+                        autoComplete.resultIndex = 0, autoComplete.resultEnd = 10, autoComplete.poil = poil, 
+                        autoComplete.restaurantResult = restaurantResult, //清空地图上的InfoWindow和Marker
+                        mapObj.clearMap(), self.render(), drag && ($(".drag-wrap").css({
+                            left: 450
+                        }), drag.funcs.updateDragPosition()), city.on("mouseover", "li", function(ev) {
+                            var target = ev.currentTarget;
+                            if ("secid" == target.className) {
+                                var dataMouseover = parseInt(target.dataset.mouseover);
+                                self.openMarkerTipById(dataMouseover, target);
+                            }
+                        }), $("#search_list").on("click", "span", self.bindNext), $(".prevGroup").on("click", self.bindPrev), 
+                        city.on("mouseout", "li", function(ev) {
+                            var target = ev.currentTarget;
+                            if ("secid" == target.className) {
+                                var dataMouseOut = target.dataset.mouseout;
+                                self.onmouseout_MarkerStyle(dataMouseOut, target);
+                            }
+                        });
                     }
                 });
             }, autoComplete.openMarkerTipById1 = function(pointid, that, resultCount) {
