@@ -22,8 +22,8 @@ define([ "jquery", "shop_cart/shop_cart" ], function($, cart) {
         drop_down_menu.toggle();
     }), // 购物车
     $(".cate_view").on("click", ".rst-d-act-add", function() {
-        var good_id = $(this).parents(".menu_list_block").data("shop_id");
-        return cart.add(good_id, shop_id), !1;
+        var good_id = $(this).parents(".menu_list_block").data("good_id");
+        return console.log(good_id), cart.add(good_id, shop_id), !1;
     }), $(window).on("scroll", function() {
         var // 是否可以切换fixed
         nextPosition, prevPosition, target, scrollTop = $(window).scrollTop(), positionArr = getListTop(classify_sec), direction = CaculateDirection(scrollTop), isReady = scrollTop >= menu_offset.top;
