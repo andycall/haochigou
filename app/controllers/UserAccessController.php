@@ -8,11 +8,24 @@ class UserAccessController extends BaseController{
     //注册接口
     public function register(){
 
-        $mobile = Input::get('mobile');
-        $email = Input::get('email');
+        $mobile = Input::get('user_phone');
+        $email = Input::get('user_email');
+
+        //账号重复性检测
+        if(is_object($this->accountCheck($mobile)) || is_object($this->accountCheck($email))){
+            echo json_encode(array(
+                'success'=>false,
+                'state'=>200,
+                array(
+                    'inputMsg'=>'该手机号或邮箱已经被注册!'
+                )
+            ));
+
+            exit();
+        }
 
 
-        $password = Input::get('password');
+        $password = Input::get('user_psw');
         //对密码进行hash加密
         $password = Hash::make($password);
 
@@ -44,7 +57,11 @@ class UserAccessController extends BaseController{
 
 
         if($frontUser->save()){
-            echo "ok";
+            echo json_encode(array(
+                'success'=>true,
+                'state'=>200,
+
+            ));
         }
 
     }
@@ -59,7 +76,7 @@ class UserAccessController extends BaseController{
         $accountCheck = $this->accountCheck($account);
         if(!is_object($accountCheck)){
             echo json_encode(array(
-                'success'=>'false',
+                'success'=>false,
                 'state'=>200,
                 'errMsg'=>array(
                     'inputMsg'=>'用户不存在'
@@ -76,7 +93,7 @@ class UserAccessController extends BaseController{
             Auth::login($accountCheck);
         }else{
             echo json_encode(array(
-                'succcess'=>'false',
+                'succcess'=>false,
                 'state'=>200,
                 'errMsg'=>array(
                     'inputMsg'=>'密码验证失败'

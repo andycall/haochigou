@@ -1,14 +1,16 @@
 <?php
-// router file
-Route::get('users', function()
-{
-    return 'Users!';
-});
 
 
 # 登陆与注册
-Route::post('register', 'UserAccessController@register');
-Route::get('register', 'UserAccessController@register');
+Route::post('registerAjax', 'UserAccessController@register');
+Route::get("/register", function(){
+    $data = [
+        "auth_image" => "http://t11.baidu.com/it/u=254287606,1076184673&fm=58"        //验证码
+    ];
+
+    return View::make("template.login_register.register")->with($data);
+
+});
 Route::post('loginAjax','UserAccessController@login');
 Route::get("/login", function(){
     $data = [
@@ -24,6 +26,7 @@ Route::get('logout','UserAccessController@logout');                      // 退�
 Route::get('message','UserAccessController@sendMessage');
 Route::post('message','UserAccessController@MessageCheck');
 
+#头像上传
 Route::post('userphoto','UserCenterController@portraitUpload');
 
 
@@ -48,6 +51,7 @@ Route::post('useraccount/site', array('before' => 'loginCheck', 'uses' => 'UserA
 Route::get('useraccount/sitedelete/{id}', array('before' => 'loginCheck', 'uses' => 'UserAccountController@siteDelete'));//用户收货地址删除接口
 
 
+#登录验证
 Route::filter('loginCheck', function()
 {
     if (!Auth::check())
