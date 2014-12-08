@@ -71,7 +71,7 @@ class ShopController extends BaseController {
 	 */
 	public function addToCart(){
 		$user = Auth::user();
-		$menu_id = Input::get('goods_id');
+		$menu_id = Input::get('good_id');
 		$shop_id = Input::get('shop_id');
 
 		$cartkey = md5($user->front_uid, $user->uid);
@@ -108,6 +108,8 @@ class ShopController extends BaseController {
 		$cartkey = md5($user->front_uid, $user->uid);
 		$key = 'laravel:user:cart'.$cartkey;
 
+		var_dump(Redis::lrange($key, 0, -1));
+		
 		$shop_id = Redis::lrange($key, 0, 0);
 		$ids = Redis::lrange($key, 1, -1);
 		$ids_unique = array_unique($ids);
@@ -116,6 +118,7 @@ class ShopController extends BaseController {
 		$output['data'] = array();
 		
 		foreach($ids_unique as $id){
+			if( strlen($id) == 0) continue;	// 不知道为什么，反正就是可能会出现这种情况
 			$menu = Menu::find($id);
 			$count = count($ids);
 
@@ -533,7 +536,6 @@ class ShopController extends BaseController {
 				$data['data']['state_msg'] = '店铺太忙了';
 			else 
 				$data['data']['state_msg'] = '';
-			var_dump(Redis::lrange($key, 0, -1));
 			$ids = Redis::lrange($key, 1, -1);
 			$ids_unique = array_unique($ids);
 			$data['data']['goods'] = array();
@@ -550,7 +552,7 @@ class ShopController extends BaseController {
 					'good_count' => $count
 				));
 			}
-			var_dump($data);
+			return Response::json($data);
 		}else{
 			return array(
 				'success' => 'false',
@@ -560,6 +562,5 @@ class ShopController extends BaseController {
 				'data' => array()
 			);
 		}
-
 	}
 }

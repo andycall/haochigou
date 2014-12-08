@@ -70,7 +70,7 @@ Route::post('collectshop', array('before' => 'loginCheck', 'uses' => 'MainContro
 Route::get('shop/{id}', 'ShopController@index');                // 商家页面
 Route::get('shop/{id}/comments', 'ShopController@shopComments');// 商家评论页
 Route::post('shop/addtocart', 'ShopController@addToCart');            // 添加一个菜单至购物车
-Route::post('shop/carinit', 'ShopController@cartInit');         // 购物车初始化
+Route::post('shop/cartInit', 'ShopController@cartInit');         // 购物车初始化
 Route::get('userBarCart', 'ShopController@getUserBarCart');    // 获取购物车信息
 //Route::post('collectshop', 'ShopController@collectShop');       // 收藏某个店铺
 //Route::post('collectmenu', 'ShopController@cancelShop');        // 取消收藏某个店铺
@@ -86,9 +86,7 @@ Route::post('collectmenu', array('before' => 'loginCheck', 'uses' => 'PersonalCo
 Route::post('confirmorder', array('before' => 'loginCheck', 'uses' => 'PersonalController@confirmOrder'));	// 确认收货
 Route::post('modifyorder', array('before' => 'loginCheck', 'uses' => 'PersonalController@modifyOrder'));	// 修改订单状态：0表示已提交未付款，1表示已付款未收货，2表示已收获，3表示取消订单
 
-
-
 #测试
-Route::post('test', 'ShopController@getUserBarCart');
-Route::get('test', 'ShopController@getUserBarCart');
+Route::post('test', 'ShopController@cartInit');
+Route::get('test', 'ShopController@cartInit');
 
