@@ -1,4 +1,4 @@
-define(['jquery','login/port'], function($, port){
+define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
     //登陆模块
 
     /*
@@ -9,6 +9,9 @@ define(['jquery','login/port'], function($, port){
     */
      
      var $smsBtn = $(".sms-btn");
+
+	console.log(loginPort);
+
 
     //图片验证码
     $(".captcha-img").on("click",function(){
@@ -191,11 +194,7 @@ define(['jquery','login/port'], function($, port){
                     }
                 }
                 if(res.success){
-                    if(res.nextSrc){
-                        location.href = res.nextSrc;
-                    }else{
-                        alert("服务器异常，稍后再试");
-                    }
+                    location.href = loginPort['jump_port']
                 }else{
                     if( res.no || (res.no >= 1 && res.no <= 4) ){ //填写错误
 

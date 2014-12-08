@@ -1,9 +1,8 @@
-
 /* start andycall */
 .city {
     position: absolute;
     width: 392px;
-    height: 500px;
+    height: 400px;
     overflow: auto;
     background: #fff;
     z-index: 1;
@@ -11,6 +10,7 @@
     left: 50px;
     box-shadow: 0 1px 6px rgba(0,0,0,0.35)
 }
+
 .city ul{
     margin: 0;
     padding: 0;

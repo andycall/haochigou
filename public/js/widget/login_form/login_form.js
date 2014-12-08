@@ -1,4 +1,4 @@
-define([ "jquery", "login/port" ], function($, port) {
+define([ "jquery", "login/port", "loginPort" ], function($, port, loginPort) {
     //验证码ajax请求
     function getAuth(data) {
         $.post(port.switchAuth, data, function(res) {
@@ -48,12 +48,12 @@ define([ "jquery", "login/port" ], function($, port) {
             dataType: "json",
             data: data,
             success: function(res) {
-                if (console.log(res), "object" != typeof res) try {
+                if ("object" != typeof res) try {
                     res = $.parseJSON(res);
                 } catch (err) {
                     return void alert("服务器异常，稍后再试");
                 }
-                if (res.success) res.nextSrc ? location.href = res.nextSrc : alert("服务器异常，稍后再试"); else if (res.no || res.no >= 1 && res.no <= 4) //填写错误
+                if (res.success) location.href = loginPort.jump_port; else if (res.no || res.no >= 1 && res.no <= 4) //填写错误
                 switch (res.no) {
                   //用户名错误
                     case 1:
@@ -95,7 +95,7 @@ define([ "jquery", "login/port" ], function($, port) {
      * @include "验证码点击切换/发送验证码"
     */
     var $smsBtn = $(".sms-btn");
-    //图片验证码
+    console.log(loginPort), //图片验证码
     $(".captcha-img").on("click", function() {
         getAuth({
             auth_way: "image"

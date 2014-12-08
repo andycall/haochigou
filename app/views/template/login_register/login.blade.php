@@ -9,7 +9,7 @@
 @stop
 
 @section("form")
-    @include("widget.login_form.login_form")
+    @include("widget.login_form.login_form", array("jump_port" => "/usercenter")) {{-- 控制跳转地址--}}
 @stop
 
 @section("footer")

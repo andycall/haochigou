@@ -1,4 +1,4 @@
-define(['jquery', 'underscore'], function($, _){
+define(['jquery', 'underscore', 'localMap/port'], function($, _, port){
 	console.log("map loaded");
 	var mapObj = (function(){
 		var mapObj = new AMap.Map("container",{
@@ -10,7 +10,6 @@ define(['jquery', 'underscore'], function($, _){
 			d = document,
 			city_location = "重庆", // 默认位置
 			city_bound = {}; // 初始位置信息
-
 		// 获取用户位置信息
 		mapObj.getCityInfo = (function(){
 			mapObj.plugin(["AMap.CitySearch"], function() {
@@ -341,70 +340,72 @@ define(['jquery', 'underscore'], function($, _){
 						input = $("#" + self.input),
 						city = $("#" + self.city);
 
-//                console.log(data);
+					console.log(data);
 					// 清空搜索缓存
 
 					// 向后端要订餐的数据
 
-					var restaurant = [];
+					var restaurant = [],
+						restaurantResult = [];
+
 
 					var poil = data.poiList.pois;
 
 					for(var i = 0,len = poil.length; i < len; i ++){
-						restaurant.push([poil[i].location.A, poil[i].location.D]);
+						restaurant.push({ lat : poil[i].location.lat,  lng : poil[i].location.lng});
 					}
 
-					var restaurantResult = [];
+					$.ajax({
+						url: port['getRestaurant'],
+						type: 'POST',
+						data: JSON.stringify(restaurant),
+						contentType: 'application/json; charset=utf-8',
+						dataType: 'json',
+						async: false,
+						success: function(data) {
 
-					autoComplete.windowsArr = [];
-					autoComplete.marker = [];
-					autoComplete.data = data;
-					autoComplete.resultIndex = 0;
-					autoComplete.resultEnd  = 10;
-					autoComplete.poil = poil;
-					autoComplete.restaurantResult = restaurantResult;
+							autoComplete.windowsArr = [];
+							autoComplete.marker = [];
+							autoComplete.data = data;
+							autoComplete.resultIndex = 0;
+							autoComplete.resultEnd  = 10;
+							autoComplete.poil = poil;
+							autoComplete.restaurantResult = restaurantResult;
 
-					//清空地图上的InfoWindow和Marker
-					mapObj.clearMap();
+							//清空地图上的InfoWindow和Marker
+							mapObj.clearMap();
 
-					self.render();
+							self.render();
 
-					if(drag){
-						$(".drag-wrap").css({left : 450});
-						drag.funcs.updateDragPosition();
-					}
+							if(drag){
+								$(".drag-wrap").css({left : 450});
+								drag.funcs.updateDragPosition();
+							}
 
-					city.on('mouseover', 'li', function(ev){
-						var target = ev.currentTarget;
-						if(target.className == 'secid'){
-							var dataMouseover = parseInt(target.dataset['mouseover']);
-							self.openMarkerTipById(dataMouseover, target);
+							city.on('mouseover', 'li', function(ev){
+								var target = ev.currentTarget;
+								if(target.className == 'secid'){
+									var dataMouseover = parseInt(target.dataset['mouseover']);
+									self.openMarkerTipById(dataMouseover, target);
+								}
+							});
+
+
+							$("#search_list").on('click', 'span' , self.bindNext);
+							$(".prevGroup").on('click', self.bindPrev);
+
+							city.on('mouseout', 'li', function(ev){
+								var target = ev.currentTarget;
+								if(target.className == 'secid'){
+									var dataMouseOut = target.dataset['mouseout'];
+									self.onmouseout_MarkerStyle(dataMouseOut, target);
+								}
+							});
 						}
 					});
 
 
-					$("#search_list").on('click', 'span' , self.bindNext);
-					$(".prevGroup").on('click', self.bindPrev);
 
-					city.on('mouseout', 'li', function(ev){
-						var target = ev.currentTarget;
-						if(target.className == 'secid'){
-							var dataMouseOut = target.dataset['mouseout'];
-							self.onmouseout_MarkerStyle(dataMouseOut, target);
-						}
-					});
-
-//                city.on('click', 'li', function(ev){
-//                    var target = ev.currentTarget;
-//                    if(target.className != 'secid') return;
-//                    console.log(2);
-//
-//
-//                    var dataMouseover = parseInt(target.dataset['mouseover']);
-//                    console.log(dataMouseover);
-//                    self.openMarkerTipById1(dataMouseover, target, resultCount);
-//
-//                });
 				};
 
 				//鼠标滑过查询结果改变背景样式，根据id打开信息窗体
