@@ -7,7 +7,10 @@
  * shopComments($shop_id)					商家评论页
  *
  * addToCart()								添加一个菜单到购物车
+ * cartClear()								清空购物车
+ * cartDel()								从购物车删除
  * cartInit()								购物车初始化
+ * cartSetCount()							设置某个上i陪你在购物车里的数量
  * getAnnouncement($shop_id)				获取某个店铺的公告
  * getBestSeller($shop_id)					获取某个店铺的本周热卖
  * getCategory($shop_id)					获取店铺分类的具体内容
@@ -86,14 +89,14 @@ class ShopController extends BaseController {
 			$menu = Menu::find($menu_id);
 			$data['success'] = 'true';
 			$data['data']['addedItem'] = array(
-				'goods_id' => $menu_id,
-				'goods_name' => $menu->title,
+				'goods_id'    => $menu_id,
+				'goods_name'  => $menu->title,
 				'goods_count' => 1,
 				'goods_price' => $menu->price
 			);
-			$data['data']['cart_all'] = $menu->price;
-			$data['data']['shop_id'] = $shop_id;
-			$data['data']['is_ready'] = ($shop->deliver_price <= $menu->price) ? 'true' : 'false';
+			$data['data']['cart_all']   = $menu->price;
+			$data['data']['shop_id']    = $shop_id;
+			$data['data']['is_ready']   = ($shop->deliver_price <= $menu->price) ? 'true' : 'false';
 			$data['data']['card_count'] = 1;
 			return Response::json($data);
 		}elseif( Redis::lindex($key, 0) != $shop_id ) {
@@ -104,14 +107,14 @@ class ShopController extends BaseController {
 		}else{
 			Redis::rpush($key, $menu_id);
 			
-			$ids = array_count_values(Redis::lrange($key, 1, -1));
+			$ids  = array_count_values(Redis::lrange($key, 1, -1));
 			$shop = Shop::find($shop_id);
 			$menu = Menu::find($menu_id);
 			$menu_count = $ids[(string)$menu_id];
 			$data['success'] = 'true';
 			$data['data']['addedItem'] = array(
-				'goods_id' => $menu_id,
-				'goods_name' => $menu->title,
+				'goods_id'    => $menu_id,
+				'goods_name'  => $menu->title,
 				'goods_count' => $menu_count,
 				'goods_price' => $menu_count * $menu->price
 			);
@@ -122,9 +125,46 @@ class ShopController extends BaseController {
 				$data['data']['cart_card_count'] += $count;
 				$data['data']['cart_all'] += ($count * $good->price);
 			}
-			$data['data']['shop_id'] = $shop_id;
+			$data['data']['shop_id']  = $shop_id;
 			$data['data']['is_ready'] = ($shop->deliver_price <= $data['data']['cart_all']) ? 'true' : 'false';
 			return Response::json($data);
+		}
+	}
+
+	/**
+	 * 清空购物车
+	 */
+	public function cartClear(){
+		$user    = Auth::user();
+		$cartkey = md5($user->front_uid, $user->uid);
+		$key     = 'laravel:user:cart'.$cartkey;
+		if( Redis::del($key) ){
+			return Response::json(array(
+				'success' => 'true'
+			));
+		}	
+	}
+
+	/**
+	 * 从购物车删除
+	 */
+	public function cartDel(){
+		$user    = Auth::user();
+		$cartkey = md5($user->front_uid, $user->uid);
+		$key     = 'laravel:user:cart'.$cartkey;
+
+		$good_id = Input::get('good_id');
+		$shop_id = Redis::lrange($key, 0, 0);
+		if( Redis::lrem($key, 0, $good_id) ){
+			if( $shop_id[0] == $good_id ){
+				Redis::lpush($key, $shop_id);
+			}
+			if( Redis::llen($key) == 1){
+				Redis::del($key);
+			}
+			return Response::json(array(
+				'success' => 'true'
+			));
 		}
 	}
 
@@ -132,13 +172,13 @@ class ShopController extends BaseController {
 	 * 购物车初始化
 	 */
 	public function cartInit(){
-		$user = Auth::user();
+		$user    = Auth::user();
 		$cartkey = md5($user->front_uid, $user->uid);
-		$key = 'laravel:user:cart'.$cartkey;
+		$key     = 'laravel:user:cart'.$cartkey;
 
 		//var_dump(Redis::lrange($key, 0, -1));
 		$shop_id = Redis::lrange($key, 0, 0);
-		$ids = array_count_values(Redis::lrange($key, 1, -1));		
+		$ids     = array_count_values(Redis::lrange($key, 1, -1));		
 
 		$output['success'] = 'true';
 		$output['data'] = array();
@@ -148,13 +188,45 @@ class ShopController extends BaseController {
 			$menu = Menu::find($id);
 
 			array_push($output['data'], array(
-				'id' => $id,
+				'id'    => $id,
 				'price' => $menu->price * $count,
 				'count' => $count,
 				'title' => $menu->title
 			));
 		}
 		return $output;
+	}
+
+	/**
+	 * 设置某个商品在购物车里的数量
+	 * 此项操作必须是购物车至少有一件的情况
+	 */
+	public function cartSetCount(){
+		$user    = Auth::user();
+		$cartkey = md5($user->front_uid, $user->uid);
+		$key     = 'laravel:user:cart'.$cartkey;
+
+		$good_id = Input::get('good_id');
+		$shop_id = Input::get('shop_id');	// 不用
+		$count   = Input::get('count');
+
+		$ids = array_count_values(Redis::lrange($key, 1, -1));
+
+		$num = $count - $ids[$good_id];
+		if( $num > 0 ){
+			for($i = $num; $i > 0; $i--){
+				Redis::rpush($key, $good_id);
+			}
+		}elseif( $num < 0 ){
+			Redis::lrem($key, $num, $good_id);
+			if( Redis::llen($key) == 1){
+				Redis::del($key);
+			}
+		}// 相等就不作处理了s
+		//var_dump(Redis::lrange($key, 0, -1));
+		return Response::json(array(
+			'success' => 'true'
+		));
 	}
 
 	/**
