@@ -56,18 +56,18 @@ Route::filter('loginCheck', function()
     }
 });
 
-
-
-# API/main接口，主页
+# 主页
 Route::get('/', 'MainController@index');
 Route::post('cancelshop', array('before' => 'loginCheck', 'uses' => 'MainController@cancelShop'));     // 取消收藏店铺
 Route::post('collectshop', array('before' => 'loginCheck', 'uses' => 'MainController@collectShop'));   // 收藏某个店铺
 
 
-
 # 商家
 Route::get('shop/{id}', 'ShopController@index');                // 商家页面
 Route::get('shop/{id}/comments', 'ShopController@shopComments');// 商家评论页
+Route::post('shop/addtocart', 'ShopController@addToCart');            // 添加一个菜单至购物车
+Route::post('shop/carinit', 'ShopController@cartInit');         // 购物车初始化
+Route::get('userBarCart', 'ShopController@getUserBarCart');    // 获取购物车信息
 //Route::post('collectshop', 'ShopController@collectShop');       // 收藏某个店铺
 //Route::post('collectmenu', 'ShopController@cancelShop');        // 取消收藏某个店铺
 
@@ -76,9 +76,6 @@ Route::get('shop/{id}/comments', 'ShopController@shopComments');// 商家评论�
 # 用户
 Route::get('mail', function(){});                               // 用户提醒
 Route::get('profile/security', function(){});                   // 安全设置
-Route::get('cartAdd', function(){
-    return 'wang';
-});
 Route::post('addorder', array('before' => 'loginCheck', 'uses' => 'PersonalController@addOrder'));			// 添加订单
 Route::post('cancelmenu', array('before' => 'loginCheck', 'uses' => 'PersonalController@cancelMenu'));     // 取消收藏商品
 Route::post('collectmenu', array('before' => 'loginCheck', 'uses' => 'PersonalController@collectMenu'));	// 收藏某个商品
@@ -88,5 +85,6 @@ Route::post('modifyorder', array('before' => 'loginCheck', 'uses' => 'PersonalCo
 
 
 #测试
-Route::get('test/{shop_id}', 'ShopController@getCategory');
+Route::post('test', 'ShopController@getUserBarCart');
+Route::get('test', 'ShopController@getUserBarCart');
 
