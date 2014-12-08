@@ -81,10 +81,21 @@ class ShopController extends BaseController {
 		if( Redis::llen($key) == 0){
 			Redis::lpush($key, $shop_id);
 			Redis::rpush($key, $menu_id);
-			return json_encode(array(
-				'status' => '200',
-				'msg'    => 'add shop and good finished'
-			));			
+
+			$shop = Shop::find($shop_id);
+			$menu = Menu::find($menu_id);
+			$data['success'] = 'true';
+			$data['data']['addedItem'] = array(
+				'goods_id' => $menu_id,
+				'goods_name' => $menu->title,
+				'goods_count' => 1,
+				'goods_price' => $menu->price
+			);
+			$data['data']['cart_all'] = $menu->price;
+			$data['data']['shop_id'] = $shop_id;
+			$data['data']['is_ready'] = ($shop->deliver_price <= $menu->price) ? 'true' : 'false';
+			$data['data']['card_count'] = 1;
+			return Response::json($data);
 		}elseif( Redis::lindex($key, 0) != $shop_id ) {
 			return json_encode(array(
 				'status' => '400',
@@ -93,10 +104,27 @@ class ShopController extends BaseController {
 		}else{
 			Redis::rpush($key, $menu_id);
 			
-			return json_encode(array(
-				'status' => '200',
-				'msg'    => 'add good finished'
-			));	
+			$ids = array_count_values(Redis::lrange($key, 1, -1));
+			$shop = Shop::find($shop_id);
+			$menu = Menu::find($menu_id);
+			$menu_count = $ids[(string)$menu_id];
+			$data['success'] = 'true';
+			$data['data']['addedItem'] = array(
+				'goods_id' => $menu_id,
+				'goods_name' => $menu->title,
+				'goods_count' => $menu_count,
+				'goods_price' => $menu_count * $menu->price
+			);
+			$data['data']['cart_all'] = 0;
+			$data['data']['cart_card_count'] = 0;
+			foreach($ids as $id=>$count){
+				$good = Menu::find($id);
+				$data['data']['cart_card_count'] += $count;
+				$data['data']['cart_all'] += ($count * $good->price);
+			}
+			$data['data']['shop_id'] = $shop_id;
+			$data['data']['is_ready'] = ($shop->deliver_price <= $data['data']['cart_all']) ? 'true' : 'false';
+			return Response::json($data);
 		}
 	}
 
@@ -108,19 +136,16 @@ class ShopController extends BaseController {
 		$cartkey = md5($user->front_uid, $user->uid);
 		$key = 'laravel:user:cart'.$cartkey;
 
-		var_dump(Redis::lrange($key, 0, -1));
-		
+		//var_dump(Redis::lrange($key, 0, -1));
 		$shop_id = Redis::lrange($key, 0, 0);
-		$ids = Redis::lrange($key, 1, -1);
-		$ids_unique = array_unique($ids);
+		$ids = array_count_values(Redis::lrange($key, 1, -1));		
 
 		$output['success'] = 'true';
 		$output['data'] = array();
-		
-		foreach($ids_unique as $id){
+		foreach($ids as $id=>$count){
+
 			if( strlen($id) == 0) continue;	// 不知道为什么，反正就是可能会出现这种情况
 			$menu = Menu::find($id);
-			$count = count($ids);
 
 			array_push($output['data'], array(
 				'id' => $id,
@@ -536,13 +561,11 @@ class ShopController extends BaseController {
 				$data['data']['state_msg'] = '店铺太忙了';
 			else 
 				$data['data']['state_msg'] = '';
-			$ids = Redis::lrange($key, 1, -1);
-			$ids_unique = array_unique($ids);
+
+			$ids = array_count_values(Redis::lrange($key, 1, -1));
 			$data['data']['goods'] = array();
-			foreach($ids_unique as $id){
-				
+			foreach($ids as $id=>$count){
 				$menu = Menu::find($id);
-				$count = count($ids);
 				$value = $menu->price * $count;
 				$data['data']['all_value'] += $value;
 
