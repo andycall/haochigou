@@ -108,6 +108,7 @@ class UserCenterController extends BaseController{
         $orderNum = $orderData->count();
 
         $data['recent_month']['deal_count'] = $orderNum;
+        $data['recent_month']['deal'] = array();
 
         $i = 0;
         foreach($orderData as $value){
@@ -268,6 +269,8 @@ class UserCenterController extends BaseController{
         $data["shops"]["now_shop_count"] = $shopData->count();
 
         $data["shops"]["other_shop_count"] = 0;
+
+        $data["shops"]["now_place"] = array();
 
         $i = 0;
         foreach($shopData as $value){

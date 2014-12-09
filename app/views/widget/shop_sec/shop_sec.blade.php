@@ -1,3 +1,13 @@
+<?php
+    function substr_cut($str_cut,$length)
+    {
+        if (mb_strlen($str_cut) > $length)
+        {
+            $str_cut = mb_substr($str_cut,0,$length)."..";
+        }
+        return $str_cut;
+    }
+?>
 @for ($i = 0; $i < count($shops); $i++)
     <a href="{{$shops[$i]['shop_url']}}" class="restaurant-{{$shops[$i]['shop_id']}}">
 @if($shops[$i]['is_opening'])
@@ -24,7 +34,7 @@
             </div>
             <div class="collection-row-book-right">
                 <div class="title">
-                    <p>{{$shops[$i]['shop_name']}}</p>
+                    <p>{{substr_cut($shops[$i]['shop_name'],6)}}</p>
                 </div>
 @if($shops[$i]['is_opening'])
                 <div class="busy">

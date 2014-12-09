@@ -1,14 +1,20 @@
-// 个人中心Ajax接口
+/**
+ * 商家页面Ajax 接口
+ */
 define(function() {
     return {
-        smsAuth: "/switchAuth",
-        //短信验证码,
-        imageUpload: "/upload/uploadify.php",
-        // 个人中心头像上传
-        commentSpeed: "/comment_speed",
-        //评论送餐速度
-        commentRestaurant: "/comment_restaurant",
-        //评论送餐速度
-        commentCate: "/comment_cate"
+        cartSetCount: "./cartSetCount",
+        //购物车设置商品数量
+        cartClear: "./cartClear",
+        //购物车清空
+        cartAdd: "addtocart",
+        //购物车根据 id 添加商品
+        cartDel: "./cartDel",
+        //购物车根据 id 删除商品
+        cartInit: "cartInit",
+        //购物车初始化
+        shopFavor: "/shopFavor",
+        //收藏店铺
+        delShopFavor: "/delShopFavor"
     };
 });

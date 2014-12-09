@@ -3,10 +3,25 @@
 /*
  **用户个人认证模块
  */
+
+use Gregwar\Captcha\CaptchaBuilder;
+
 class UserAccessController extends BaseController{
 
     //注册接口
     public function register(){
+        if(Auth::check()){
+            echo json_encode(array(
+                'succcess'=>false,
+                'state'=>200,
+                'errMsg'=>array(
+                    'inputMsg'=>'您已登录'
+                ),
+                'no'=>2
+            ));
+
+            exit;
+        }
 
         $mobile = Input::get('user_phone');
         $email = Input::get('user_email');
@@ -57,6 +72,9 @@ class UserAccessController extends BaseController{
 
 
         if($frontUser->save()){
+
+            Auth::login($frontUser);//用户登录
+
             echo json_encode(array(
                 'success'=>true,
                 'state'=>200,
@@ -69,6 +87,19 @@ class UserAccessController extends BaseController{
 
     //登录接口
     public function login(){
+
+        if(Auth::check()){
+            echo json_encode(array(
+                'succcess'=>false,
+                'state'=>200,
+                'errMsg'=>array(
+                    'inputMsg'=>'该用户已登录，请不要重复登录'
+                ),
+                'no'=>2
+            ));
+
+            exit;
+        }
 
         $account = Input::get('user_email');
         $password = Input::get('user_psw');
@@ -110,6 +141,46 @@ class UserAccessController extends BaseController{
 
 
     }
+
+
+    /*
+     * 生成图片验证码
+     **/
+    public function CaptchaMake(){
+        $code = (string)rand(1000,9999);
+
+        $builder = new CaptchaBuilder($code);
+        $builder->build();
+
+        $phrase = $builder->getPhrase();
+        $ip = $this->getIP();
+        $codeKey = md5($ip);
+        Cache::tags('register','code')->put($codeKey,$phrase,1);
+
+        header("Cache-Control: no-cache, must-revalidate");
+        header('Content-Type: image/jpeg');
+        $builder->output();
+        exit;
+    }
+
+
+    /*
+     * 修改图片验证码
+     **/
+    public function CaptchaChange(){
+        $ip = $this->getIP();
+        $codeKey = md5($ip);
+
+        $data = array(
+            //'code'=>Cache::tags('register','code')->get($codeKey),
+            'success'=>true,
+            'nextSrc'=>url('captcha'),
+            'errMsg'=>''
+        );
+
+        echo json_encode($data);
+    }
+
 
     //退出接口
     public function logout(){
