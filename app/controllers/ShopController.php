@@ -36,7 +36,7 @@ class ShopController extends BaseController {
 		$data = array();
 
 		$data['collect'] = $this->getMyCollect($shop_id);								// 获取用户在该店铺内的收藏的商品
-		$data['userbar']['url'] = $this->getUserBar();
+		$data['userbar'] = $this->getUserBar();
 		$data['top_bar']                          = $this->getTopbar($shop_id);			// 获取顶部栏信息
 		$data['good_category']['data']            = $this->getGoodCategory($shop_id);	// 获取美食分类
 		$data['category']['data']['classify_sec'] = $this->getCategory($shop_id);		// 获取分类内容
@@ -54,7 +54,7 @@ class ShopController extends BaseController {
 #TODO：未做分页功能
 	public function shopComments($shop_id){
 		$data = array();
-		$data['userbar']['url'] = $this->getUserBar();
+		$data['userbar'] = $this->getUserBar();
 		$data['top_bar']        = $this->getTopbar($shop_id);
 		$data['announcement']   = $this->getAnnouncement($shop_id);
 		$data['good_category']  = $this->getGoodCategory($shop_id);		// 商家评论页要这个干嘛
@@ -592,7 +592,8 @@ class ShopController extends BaseController {
 	 * userbar上面那一些列地址
 	 */
 	public function getUserBar(){
-		$url = array(
+		$userbar = array();
+		$userbar['url'] = array(
 				"my_place"      => "这里是地址",
 				"switch_palce"  => "##",
 				"logo"          => url('/'),	// 网站主页地址
@@ -608,7 +609,21 @@ class ShopController extends BaseController {
 				"loginout"      => "loginout",              			// 退出登录的地址
 				"switch_place"  => "switch_place"                  		// 切换当前地址的地址
 		);
-		return $url;
+		if( Auth::check() ){
+			$user = Auth::user();
+			$userbar['data'] = array(
+				'user_id' => $user->front_uid,
+				'username' => $user->nickname,
+				'user_place' => ''
+			);			
+		} else{
+			$userbar['data'] = array(
+				'user_id' => 0,
+				'username' => '未登录用户',
+				'user_place' => '暂未获取地址'
+			);
+		}
+		return $userbar;
 	}
 
 	public function getUserBarCart(){
