@@ -168,7 +168,7 @@ class UserAccountController extends BaseController{
             "personal_center" => url("usercenter"),  // 个人中心的地址
             "personal_recent_month" => url("usercenter/recent_month"), // 最近一个月的地址
             "personal_after_month" => url("usercenter/after_month") , // 一个月之前
-            "personal_uncomment" => "#" ,  // 未点评的订单
+            "personal_uncomment" => url('usercenter/personal_uncomment'),  // 未点评的订单
             "personal_return" => "#",     // 退单中的订单
             "personal_collection_shop" => url("usercenter/collect_shop"),// 我收藏的餐厅的地址
             "personal_collection_goods" => url("usercenter/collect_menu"), // 我收藏的商品的地址

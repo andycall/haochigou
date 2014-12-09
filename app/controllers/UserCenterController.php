@@ -336,7 +336,67 @@ class UserCenterController extends BaseController{
 
         return View::make("template.personal.personal_collection_goods")->with($data);
 
+    }
 
+    /**
+     * 未评论页面
+     */
+    public function Uncomment(){
+        $orders = Order::where('state', 4)->get();
+
+        $data['userbar']['url'] = $this->userBar();
+        $data['sidebar'] = $this->sideBar();
+        $data['uncomment']['deal_count'] = count($orders);
+        $data['uncomment']['deal'] = array();
+
+        foreach($orders as $order){
+            $shop = Shop::find($order->shop_id);
+            $one = array();
+            $one['shop_id']         = $order->shop_id;
+            $one['deal_id']         = $order->id;
+            $one['deal_statue']     = $order->state;
+            $one['same_again']      = '##';
+            $one['deal_is_return']  = '##';                 // 是否能退单
+            $one['deal_return']     = '##';                 // 退单链接
+            $one['deal_is_pre']     = $order->is_pre;       // 是否是预定单
+            $one['deal_pre_time']   = $order->arrivetime;   // 送餐时间
+            $one['deal_again']      = '##';                 // 商品的地址
+            $one['shop_name']       = $shop->name; // 商店的名称
+            $one['deal_number']     = $order->id;   // 订单号，先用订单ID代替
+            $one['deal_time']       = $order->ordertime; //订单时间
+            $one['deal_phone']      = $shop->linktel;//餐厅电话
+            $one['deliver_address'] = $order->receive_address;//订单送往地址
+            $one['deliver_phone']   = $order->receive_phone;
+            $one['deliver_remark']  = $order->beta;//订单备注
+            $one['deal_speed']      = 0;// 送餐速度，0没有评价1不满意2一般般3满意
+            $one['deal_satisfied']  = '';
+            $one['good']            = array();
+
+            $menus = array_count_values(explode(',', $order->order_menus));
+            foreach($menus as $menu_id=>$count){
+                $good = Menu::find($menu_id);
+                array_push($one['good'], array(
+                    'goods_id'      => $good->id,
+                    'goods_name'    => $good->title,
+                    'goods_value'   => $good->price, // 应该是单价
+                    'goods_amount'  => $count,
+                    'goods_total'   => $good->price * $count,
+                    'good_atisfied' => '##'      // 这个地方不应该出现满意度撒
+                ));
+            }
+            // others表示其他费用
+            $one['others'] = array( 
+                array(
+                    'item_name'   => '',
+                    'item_value'  => '',
+                    'item_amount' => '',
+                    'item_total'  => ''
+                )
+            );
+            $one['total'] = $order->total;
+            array_push($data['uncomment']['deal'], $one);
+        }
+        return View::make("template.personal.personal_uncomment")->with($data);
     }
 
 
@@ -448,7 +508,7 @@ class UserCenterController extends BaseController{
             "personal_center" => url("usercenter"),  // 个人中心的地址
             "personal_recent_month" => url("usercenter/recent_month"), // 最近一个月的地址
             "personal_after_month" => url("usercenter/after_month") , // 一个月之前
-            "personal_uncomment" => "#" ,  // 未点评的订单
+            "personal_uncomment" => url('usercenter/personal_uncomment'),  // 未点评的订单
             "personal_return" => "#",     // 退单中的订单
             "personal_collection_shop" => url("usercenter/collect_shop"),// 我收藏的餐厅的地址
             "personal_collection_goods" => url("usercenter/collect_menu"), // 我收藏的商品的地址
@@ -478,4 +538,5 @@ class UserCenterController extends BaseController{
             "switch_place" => "123"                  // 切换当前地址的地址
         );
     }
+
 }
