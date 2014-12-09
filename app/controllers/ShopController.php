@@ -6,7 +6,11 @@
  * index($shop_id)							商家主页
  * shopComments($shop_id)					商家评论页
  *
- *
+ * addToCart()								添加一个菜单到购物车
+ * cartClear()								清空购物车
+ * cartDel()								从购物车删除
+ * cartInit()								购物车初始化
+ * cartSetCount()							设置某个上i陪你在购物车里的数量
  * getAnnouncement($shop_id)				获取某个店铺的公告
  * getBestSeller($shop_id)					获取某个店铺的本周热卖
  * getCategory($shop_id)					获取店铺分类的具体内容
@@ -20,6 +24,7 @@
  * getShopInfo($shop_id)					获取店铺的基本信息
  * getTopbar($shop_id)						获取顶部栏的一些地址数据
  * getUserBar()								获取userbar上面的一些地址数据
+ * getUserBarCart()							获取用户的购物车信息
  */
 
 class ShopController extends BaseController {
@@ -62,6 +67,167 @@ class ShopController extends BaseController {
 #	上面是页面：
 #	下面是方法：
 ##
+
+	/**
+	 * 添加一个菜单到购物车
+	 * 目前只实现了已经登录用户的添加
+	 */
+	public function addToCart(){
+		$user = Auth::user();
+		$menu_id = Input::get('good_id');
+		$shop_id = Input::get('shop_id');
+
+		$cartkey = md5($user->front_uid, $user->uid);
+		$key = 'laravel:user:cart'.$cartkey;
+
+		// 第一个元素为店铺的ID，购物车里只能放一个店铺的东西
+		if( Redis::llen($key) == 0){
+			Redis::lpush($key, $shop_id);
+			Redis::rpush($key, $menu_id);
+
+			$shop = Shop::find($shop_id);
+			$menu = Menu::find($menu_id);
+			$data['success'] = 'true';
+			$data['data']['addedItem'] = array(
+				'goods_id'    => $menu_id,
+				'goods_name'  => $menu->title,
+				'goods_count' => 1,
+				'goods_price' => $menu->price
+			);
+			$data['data']['cart_all']   = $menu->price;
+			$data['data']['shop_id']    = $shop_id;
+			$data['data']['is_ready']   = ($shop->deliver_price <= $menu->price) ? 'true' : 'false';
+			$data['data']['card_count'] = 1;
+			return Response::json($data);
+		}elseif( Redis::lindex($key, 0) != $shop_id ) {
+			return json_encode(array(
+				'status' => '400',
+				'msg'    => '不是同一家店'
+			));
+		}else{
+			Redis::rpush($key, $menu_id);
+			
+			$ids  = array_count_values(Redis::lrange($key, 1, -1));
+			$shop = Shop::find($shop_id);
+			$menu = Menu::find($menu_id);
+			$menu_count = $ids[(string)$menu_id];
+			$data['success'] = 'true';
+			$data['data']['addedItem'] = array(
+				'goods_id'    => $menu_id,
+				'goods_name'  => $menu->title,
+				'goods_count' => $menu_count,
+				'goods_price' => $menu_count * $menu->price
+			);
+			$data['data']['cart_all'] = 0;
+			$data['data']['cart_card_count'] = 0;
+			foreach($ids as $id=>$count){
+				$good = Menu::find($id);
+				$data['data']['cart_card_count'] += $count;
+				$data['data']['cart_all'] += ($count * $good->price);
+			}
+			$data['data']['shop_id']  = $shop_id;
+			$data['data']['is_ready'] = ($shop->deliver_price <= $data['data']['cart_all']) ? 'true' : 'false';
+			return Response::json($data);
+		}
+	}
+
+	/**
+	 * 清空购物车
+	 */
+	public function cartClear(){
+		$user    = Auth::user();
+		$cartkey = md5($user->front_uid, $user->uid);
+		$key     = 'laravel:user:cart'.$cartkey;
+		if( Redis::del($key) ){
+			return Response::json(array(
+				'success' => 'true'
+			));
+		}	
+	}
+
+	/**
+	 * 从购物车删除
+	 */
+	public function cartDel(){
+		$user    = Auth::user();
+		$cartkey = md5($user->front_uid, $user->uid);
+		$key     = 'laravel:user:cart'.$cartkey;
+
+		$good_id = Input::get('good_id');
+		$shop_id = Redis::lrange($key, 0, 0);
+		if( Redis::lrem($key, 0, $good_id) ){
+			if( $shop_id[0] == $good_id ){
+				Redis::lpush($key, $shop_id);
+			}
+			if( Redis::llen($key) == 1){
+				Redis::del($key);
+			}
+			return Response::json(array(
+				'success' => 'true'
+			));
+		}
+	}
+
+	/**
+	 * 购物车初始化
+	 */
+	public function cartInit(){
+		$user    = Auth::user();
+		$cartkey = md5($user->front_uid, $user->uid);
+		$key     = 'laravel:user:cart'.$cartkey;
+
+		//var_dump(Redis::lrange($key, 0, -1));
+		$shop_id = Redis::lrange($key, 0, 0);
+		$ids     = array_count_values(Redis::lrange($key, 1, -1));		
+
+		$output['success'] = 'true';
+		$output['data'] = array();
+		foreach($ids as $id=>$count){
+
+			if( strlen($id) == 0) continue;	// 不知道为什么，反正就是可能会出现这种情况
+			$menu = Menu::find($id);
+
+			array_push($output['data'], array(
+				'id'    => $id,
+				'price' => $menu->price * $count,
+				'count' => $count,
+				'title' => $menu->title
+			));
+		}
+		return $output;
+	}
+
+	/**
+	 * 设置某个商品在购物车里的数量
+	 * 此项操作必须是购物车至少有一件的情况
+	 */
+	public function cartSetCount(){
+		$user    = Auth::user();
+		$cartkey = md5($user->front_uid, $user->uid);
+		$key     = 'laravel:user:cart'.$cartkey;
+
+		$good_id = Input::get('good_id');
+		$shop_id = Input::get('shop_id');	// 不用
+		$count   = Input::get('count');
+
+		$ids = array_count_values(Redis::lrange($key, 1, -1));
+
+		$num = $count - $ids[$good_id];
+		if( $num > 0 ){
+			for($i = $num; $i > 0; $i--){
+				Redis::rpush($key, $good_id);
+			}
+		}elseif( $num < 0 ){
+			Redis::lrem($key, $num, $good_id);
+			if( Redis::llen($key) == 1){
+				Redis::del($key);
+			}
+		}// 相等就不作处理了s
+		//var_dump(Redis::lrange($key, 0, -1));
+		return Response::json(array(
+			'success' => 'true'
+		));
+	}
 
 	/**
 	 * 获取某餐厅的公告
@@ -443,5 +609,53 @@ class ShopController extends BaseController {
 				"switch_place"  => "switch_place"                  		// 切换当前地址的地址
 		);
 		return $url;
+	}
+
+	public function getUserBarCart(){
+		$user = Auth::user();
+		$cartkey = md5($user->front_uid, $user->uid);
+		$key = 'laravel:user:cart'.$cartkey;
+
+		if( $shop_id = Redis::lindex($key, 0)){
+			$data['successs'] = 'true';
+			$data['state'] = 200;
+			$data['errMsg'] = '';
+			$data['no'] = 0;
+
+			$shop = Shop::find($shop_id);
+			$data['data']['url'] = 'shop/'.$shop_id;
+			$data['data']['shop_name'] = $shop->name;
+			$data['data']['all_value'] = 0;
+			$data['data']['state'] = $shop->state == 0 ? 0 : 1;
+			if($shop->state == 1) 
+				$data['data']['state_msg'] = '店铺打烊了';
+			elseif($shop->state == 2) 
+				$data['data']['state_msg'] = '店铺太忙了';
+			else 
+				$data['data']['state_msg'] = '';
+
+			$ids = array_count_values(Redis::lrange($key, 1, -1));
+			$data['data']['goods'] = array();
+			foreach($ids as $id=>$count){
+				$menu = Menu::find($id);
+				$value = $menu->price * $count;
+				$data['data']['all_value'] += $value;
+
+				array_push($data['data']['goods'], array(
+					'good_name' => $menu->title,
+					'good_value' => $value,
+					'good_count' => $count
+				));
+			}
+			return Response::json($data);
+		}else{
+			return array(
+				'success' => 'false',
+				'state' => 200,
+				'errMsg' => '',
+				'no' => 0,
+				'data' => array()
+			);
+		}
 	}
 }
