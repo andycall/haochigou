@@ -99,6 +99,11 @@
 	font-size: 14px;
 	display: inline-block;
 }
+
+.activities-btn label{
+    position: relative;
+    top: -1px;
+}
 .shops .shops-header span {
 	float: left;
 	line-height: 40px;
