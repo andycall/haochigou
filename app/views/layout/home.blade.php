@@ -21,8 +21,6 @@
                 @yield("my_collection_alert")
                 {{-- 餐厅列表 --}}
                 @yield("shop_list")
-                {{-- 5个广告图片 --}}
-                @yield("ads")
                 {{-- 更多餐厅 --}}
                 @yield("more_shops")
 			</div>
