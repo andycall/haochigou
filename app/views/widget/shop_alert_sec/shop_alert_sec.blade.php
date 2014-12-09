@@ -1,4 +1,4 @@
-
+49
 @for ($i = 0; $i < count($shops); $i++)
     <div class="collection-row-wrapper" class="restaurant-{{$shops[$i]['shop_id']}}">
         <a href="{{$shops[$i]['shop_url']}}">
