@@ -11,7 +11,6 @@ require.config({
 	}
 });
 
-
 // 加载项目所需的所有依赖项
 define([
 	"map/map",
