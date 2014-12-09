@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="topbar-user-nav">
-            <a href="##" class="tb-username">{{{$userbar['data']['username']}}}<i class="caret"></i></a>
+            <a href="##" class="tb-username"><?php echo mb_substr($userbar['data']['username'], 0, 5); ?><i class="caret"></i></a>
             <ul class="tb-user-dropdown">
                 <li><a rel="nofollow" href="{{{$userbar['url']['personal']}}}"><i class="icon-profile"></i>个人中心</a></li>
                 <li><a rel="nofollow" href="{{{$userbar['url']['my_collection']}}}"><i class="icon-fav"></i>我的收藏</a></li>
