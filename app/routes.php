@@ -3,6 +3,7 @@
 
 # 登陆与注册
 Route::post('registerAjax', 'UserAccessController@register');
+
 Route::get("/register", function(){
     $data = [
         "auth_image" => "http://t11.baidu.com/it/u=254287606,1076184673&fm=58"        //验证码
@@ -11,15 +12,20 @@ Route::get("/register", function(){
     return View::make("template.login_register.register")->with($data);
 
 });
+Route::post('switch_auth','UserAccessController@CaptchaChange');
+
 Route::post('loginAjax','UserAccessController@login');
+
 Route::get("/login", function(){
     $data = [
-        "find_password" => "http://www.hao123.com",
-        "auth_image" => "http://t11.baidu.com/it/u=254287606,1076184673&fm=58"
+        "find_password" => "#",
+        "auth_image" => url('captcha')
     ];
 
     return View::make("template.login_register.login")->with($data);
 });
+Route::get('captcha','UserAccessController@CaptchaMake');
+
 Route::get('logout','UserAccessController@logout');                      // 退出登录
 
 #消息发送
