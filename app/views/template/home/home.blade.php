@@ -31,11 +31,6 @@
     @include("widget/shop_list/shop_list")
 @stop
 
-  {{-- 5个广告图片 --}}
-@section("ads")
-    @include("widget/ads/ads")
-@stop
-
   {{-- 更多餐厅 --}}
 @section("more_shops")
     @include("widget/more_shops/more_shops")

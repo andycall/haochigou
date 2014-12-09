@@ -40,7 +40,7 @@ define(['jquery', 'underscore'], function($, _){
         if($('.tb-cart-dropdown-wrapper').css('display') == 'block'){
             return $('.tb-cart-dropdown-wrapper').hide();
         }
-        $.ajax('userBarCart', {
+        $.ajax('/takeaway/public/index.php/userBarCart', {
             beforeSend: function () {
                 $('.tb-cart-dropdown-wrapper').show();
                 $('.tb-msg-dropdown-wrapper').hide();

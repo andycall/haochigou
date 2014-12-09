@@ -3,6 +3,7 @@
 
 # 登陆与注册
 Route::post('registerAjax', 'UserAccessController@register');
+
 Route::get("/register", function(){
     $data = [
         "auth_image" => "http://t11.baidu.com/it/u=254287606,1076184673&fm=58"        //验证码
@@ -11,15 +12,20 @@ Route::get("/register", function(){
     return View::make("template.login_register.register")->with($data);
 
 });
+Route::post('switch_auth','UserAccessController@CaptchaChange');
+
 Route::post('loginAjax','UserAccessController@login');
+
 Route::get("/login", function(){
     $data = [
-        "find_password" => "http://www.hao123.com",
-        "auth_image" => "http://t11.baidu.com/it/u=254287606,1076184673&fm=58"
+        "find_password" => "#",
+        "auth_image" => url('captcha')
     ];
 
     return View::make("template.login_register.login")->with($data);
 });
+Route::get('captcha','UserAccessController@CaptchaMake');
+
 Route::get('logout','UserAccessController@logout');                      // 退出登录
 
 #消息发送
@@ -42,7 +48,7 @@ Route::get('usercenter/collect_shop',array('before' => 'loginCheck', 'uses' => '
 
 Route::get('usercenter/collect_menu',array('before' => 'loginCheck', 'uses' => 'UserCenterController@menuCollect'));//收藏的菜品
 
-
+Route::get('usercenter/personal_uncomment', array('before', 'loginCheck', 'uses' => 'UserCenterController@Uncomment'));  // 获取用户未评论的订单
 # 用户账户模块
 Route::get('useraccount/site', array('before' => 'loginCheck', 'uses' => 'UserAccountController@userSite'));//用户收货地址页面
 
@@ -70,8 +76,11 @@ Route::post('collectshop', array('before' => 'loginCheck', 'uses' => 'MainContro
 Route::get('shop/{id}', 'ShopController@index');                // 商家页面
 Route::get('shop/{id}/comments', 'ShopController@shopComments');// 商家评论页
 Route::post('shop/addtocart', 'ShopController@addToCart');            // 添加一个菜单至购物车
-Route::post('shop/carinit', 'ShopController@cartInit');         // 购物车初始化
+Route::post('shop/cartInit', 'ShopController@cartInit');         // 购物车初始化
+Route::post('shop/cartSetCount', 'ShopController@cartSetCount');    // 设置某个商品在购物车的数量
 Route::get('userBarCart', 'ShopController@getUserBarCart');    // 获取购物车信息
+Route::post('shop/cartClear', 'ShopController@cartClear');  // 清空购物车
+Route::post('shop/cartDel', 'ShopController@cartDel');  // 从购物车删除
 //Route::post('collectshop', 'ShopController@collectShop');       // 收藏某个店铺
 //Route::post('collectmenu', 'ShopController@cancelShop');        // 取消收藏某个店铺
 
@@ -86,9 +95,7 @@ Route::post('collectmenu', array('before' => 'loginCheck', 'uses' => 'PersonalCo
 Route::post('confirmorder', array('before' => 'loginCheck', 'uses' => 'PersonalController@confirmOrder'));	// 确认收货
 Route::post('modifyorder', array('before' => 'loginCheck', 'uses' => 'PersonalController@modifyOrder'));	// 修改订单状态：0表示已提交未付款，1表示已付款未收货，2表示已收获，3表示取消订单
 
-
-
 #测试
-Route::post('test', 'ShopController@getUserBarCart');
-Route::get('test', 'ShopController@getUserBarCart');
+Route::post('test', 'ShopController@cartDel');
+Route::get('test', 'UserCenterController@Uncomment');
 

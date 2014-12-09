@@ -422,14 +422,14 @@ class MainController extends BaseController {
 		$url = array(
 				"my_place"      => "这里是地址",
 				"switch_palce"  => "##",
-				"logo"          => "http://localhost/haochigo/public",	// 网站主页地址
+				"logo"          => url('/'),	// 网站主页地址
 				"mobile"        => "123",                 				// 跳转到下载手机APP的地址
 				"my_ticket"     => 'order',                 			// 我的饿单的地址
 				"my_gift"       => 'gift',                				// 礼品中心地址
 				"feedback"      => 'feedback',                			// 反馈留言地址
 				"shop_chart"    => "cart",                				// 购物车地址
 				"user_mail"     => "mail",                				// 用户提醒的地址
-				"personal"      => "usercenter",                			// 个人中心地址
+				"personal"      => url('usercenter'),                			// 个人中心地址
 				"my_collection" => "profile/shop",               		// 我的收藏地址
 				"my_secure"     => "profile/security",              	// 安全设置的地址
 				"loginout"      => "loginout",              			// 退出登录的地址

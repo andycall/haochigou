@@ -7,7 +7,10 @@
  * shopComments($shop_id)					商家评论页
  *
  * addToCart()								添加一个菜单到购物车
+ * cartClear()								清空购物车
+ * cartDel()								从购物车删除
  * cartInit()								购物车初始化
+ * cartSetCount()							设置某个上i陪你在购物车里的数量
  * getAnnouncement($shop_id)				获取某个店铺的公告
  * getBestSeller($shop_id)					获取某个店铺的本周热卖
  * getCategory($shop_id)					获取店铺分类的具体内容
@@ -71,7 +74,7 @@ class ShopController extends BaseController {
 	 */
 	public function addToCart(){
 		$user = Auth::user();
-		$menu_id = Input::get('goods_id');
+		$menu_id = Input::get('good_id');
 		$shop_id = Input::get('shop_id');
 
 		$cartkey = md5($user->front_uid, $user->uid);
@@ -81,10 +84,21 @@ class ShopController extends BaseController {
 		if( Redis::llen($key) == 0){
 			Redis::lpush($key, $shop_id);
 			Redis::rpush($key, $menu_id);
-			return json_encode(array(
-				'status' => '200',
-				'msg'    => 'add shop and good finished'
-			));			
+
+			$shop = Shop::find($shop_id);
+			$menu = Menu::find($menu_id);
+			$data['success'] = 'true';
+			$data['data']['addedItem'] = array(
+				'goods_id'    => $menu_id,
+				'goods_name'  => $menu->title,
+				'goods_count' => 1,
+				'goods_price' => $menu->price
+			);
+			$data['data']['cart_all']   = $menu->price;
+			$data['data']['shop_id']    = $shop_id;
+			$data['data']['is_ready']   = ($shop->deliver_price <= $menu->price) ? 'true' : 'false';
+			$data['data']['card_count'] = 1;
+			return Response::json($data);
 		}elseif( Redis::lindex($key, 0) != $shop_id ) {
 			return json_encode(array(
 				'status' => '400',
@@ -93,10 +107,64 @@ class ShopController extends BaseController {
 		}else{
 			Redis::rpush($key, $menu_id);
 			
-			return json_encode(array(
-				'status' => '200',
-				'msg'    => 'add good finished'
-			));	
+			$ids  = array_count_values(Redis::lrange($key, 1, -1));
+			$shop = Shop::find($shop_id);
+			$menu = Menu::find($menu_id);
+			$menu_count = $ids[(string)$menu_id];
+			$data['success'] = 'true';
+			$data['data']['addedItem'] = array(
+				'goods_id'    => $menu_id,
+				'goods_name'  => $menu->title,
+				'goods_count' => $menu_count,
+				'goods_price' => $menu_count * $menu->price
+			);
+			$data['data']['cart_all'] = 0;
+			$data['data']['cart_card_count'] = 0;
+			foreach($ids as $id=>$count){
+				$good = Menu::find($id);
+				$data['data']['cart_card_count'] += $count;
+				$data['data']['cart_all'] += ($count * $good->price);
+			}
+			$data['data']['shop_id']  = $shop_id;
+			$data['data']['is_ready'] = ($shop->deliver_price <= $data['data']['cart_all']) ? 'true' : 'false';
+			return Response::json($data);
+		}
+	}
+
+	/**
+	 * 清空购物车
+	 */
+	public function cartClear(){
+		$user    = Auth::user();
+		$cartkey = md5($user->front_uid, $user->uid);
+		$key     = 'laravel:user:cart'.$cartkey;
+		if( Redis::del($key) ){
+			return Response::json(array(
+				'success' => 'true'
+			));
+		}	
+	}
+
+	/**
+	 * 从购物车删除
+	 */
+	public function cartDel(){
+		$user    = Auth::user();
+		$cartkey = md5($user->front_uid, $user->uid);
+		$key     = 'laravel:user:cart'.$cartkey;
+
+		$good_id = Input::get('good_id');
+		$shop_id = Redis::lrange($key, 0, 0);
+		if( Redis::lrem($key, 0, $good_id) ){
+			if( $shop_id[0] == $good_id ){
+				Redis::lpush($key, $shop_id);
+			}
+			if( Redis::llen($key) == 1){
+				Redis::del($key);
+			}
+			return Response::json(array(
+				'success' => 'true'
+			));
 		}
 	}
 
@@ -104,29 +172,61 @@ class ShopController extends BaseController {
 	 * 购物车初始化
 	 */
 	public function cartInit(){
-		$user = Auth::user();
+		$user    = Auth::user();
 		$cartkey = md5($user->front_uid, $user->uid);
-		$key = 'laravel:user:cart'.$cartkey;
+		$key     = 'laravel:user:cart'.$cartkey;
 
+		//var_dump(Redis::lrange($key, 0, -1));
 		$shop_id = Redis::lrange($key, 0, 0);
-		$ids = Redis::lrange($key, 1, -1);
-		$ids_unique = array_unique($ids);
+		$ids     = array_count_values(Redis::lrange($key, 1, -1));		
 
 		$output['success'] = 'true';
 		$output['data'] = array();
-		
-		foreach($ids_unique as $id){
+		foreach($ids as $id=>$count){
+
+			if( strlen($id) == 0) continue;	// 不知道为什么，反正就是可能会出现这种情况
 			$menu = Menu::find($id);
-			$count = count($ids);
 
 			array_push($output['data'], array(
-				'id' => $id,
+				'id'    => $id,
 				'price' => $menu->price * $count,
 				'count' => $count,
 				'title' => $menu->title
 			));
 		}
 		return $output;
+	}
+
+	/**
+	 * 设置某个商品在购物车里的数量
+	 * 此项操作必须是购物车至少有一件的情况
+	 */
+	public function cartSetCount(){
+		$user    = Auth::user();
+		$cartkey = md5($user->front_uid, $user->uid);
+		$key     = 'laravel:user:cart'.$cartkey;
+
+		$good_id = Input::get('good_id');
+		$shop_id = Input::get('shop_id');	// 不用
+		$count   = Input::get('count');
+
+		$ids = array_count_values(Redis::lrange($key, 1, -1));
+
+		$num = $count - $ids[$good_id];
+		if( $num > 0 ){
+			for($i = $num; $i > 0; $i--){
+				Redis::rpush($key, $good_id);
+			}
+		}elseif( $num < 0 ){
+			Redis::lrem($key, $num, $good_id);
+			if( Redis::llen($key) == 1){
+				Redis::del($key);
+			}
+		}// 相等就不作处理了s
+		//var_dump(Redis::lrange($key, 0, -1));
+		return Response::json(array(
+			'success' => 'true'
+		));
 	}
 
 	/**
@@ -231,7 +331,7 @@ class ShopController extends BaseController {
 					$onegood['goods_price']    = (float)$good->price;	// 商品价格
 					$onegood['goods_icon']     = $good->icon;			// 一些用户促销的图标
 					$onegood['goods_original'] = (float)$good->original_price;	// 如果是促销，这个用于显示原价
-					$onegood['good_sails']	   = $good->sold_num;
+					$onegood['good_sails']	   = (float)$good->sold_num;
 					array_push($classify_goods, $onegood);
 				}
 			}
@@ -414,7 +514,7 @@ class ShopController extends BaseController {
 
 			$one['good_name']  = $menu->title;
 			$one['user_name']  = $user->nickname;
-			$one['time']       = $comment->time;
+			$one['time']       = date('Y-m-d', $comment->time);
 			$one['content']    = $comment->content;
 			$one['good_price'] = $menu->price;
 #TODO：这里的评分居然是以图片形式的。。。
@@ -495,14 +595,14 @@ class ShopController extends BaseController {
 		$url = array(
 				"my_place"      => "这里是地址",
 				"switch_palce"  => "##",
-				"logo"          => "http://localhost/haochigo/public",	// 网站主页地址
+				"logo"          => url('/'),	// 网站主页地址
 				"mobile"        => "123",                 				// 跳转到下载手机APP的地址
 				"my_ticket"     => 'order',                 			// 我的饿单的地址
 				"my_gift"       => 'gift',                				// 礼品中心地址
 				"feedback"      => 'feedback',                			// 反馈留言地址
 				"shop_chart"    => "cart",                				// 购物车地址
 				"user_mail"     => "mail",                				// 用户提醒的地址
-				"personal"      => "profile",                			// 个人中心地址
+				"personal"      => url('usercenter'),                			// 个人中心地址
 				"my_collection" => "profile/shop",               		// 我的收藏地址
 				"my_secure"     => "profile/security",              	// 安全设置的地址
 				"loginout"      => "loginout",              			// 退出登录的地址
@@ -533,14 +633,11 @@ class ShopController extends BaseController {
 				$data['data']['state_msg'] = '店铺太忙了';
 			else 
 				$data['data']['state_msg'] = '';
-			var_dump(Redis::lrange($key, 0, -1));
-			$ids = Redis::lrange($key, 1, -1);
-			$ids_unique = array_unique($ids);
+
+			$ids = array_count_values(Redis::lrange($key, 1, -1));
 			$data['data']['goods'] = array();
-			foreach($ids_unique as $id){
-				
+			foreach($ids as $id=>$count){
 				$menu = Menu::find($id);
-				$count = count($ids);
 				$value = $menu->price * $count;
 				$data['data']['all_value'] += $value;
 
@@ -550,7 +647,7 @@ class ShopController extends BaseController {
 					'good_count' => $count
 				));
 			}
-			var_dump($data);
+			return Response::json($data);
 		}else{
 			return array(
 				'success' => 'false',
@@ -560,6 +657,5 @@ class ShopController extends BaseController {
 				'data' => array()
 			);
 		}
-
 	}
 }

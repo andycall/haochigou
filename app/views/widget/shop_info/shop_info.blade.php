@@ -1,3 +1,4 @@
+
 @for ($n = 0; $n < ceil(count($shops)/5); $n++)
     <div class="more_shops-row">
     @for ($i = $n * 5 ; $i < $n * 5 + 5 & $i < count($shops); $i++)
@@ -47,7 +48,7 @@
                     </div>
                     <div data-order_count="{{$shops[$i]['order_count']}}" data-shop_level="{{$shops[$i]['shop_level']}}" data-shop_type="{{$shops[$i]['shop_type']}}" data-is_opening="{{$shops[$i]['is_opening']}}" class="more_shops-row-book-right">
                         <div class="title">
-                            <p>{{$shops[$i]['shop_name']}}</p>
+                            <p>{{substr_cut($shops[$i]['shop_name'],6)}}</p>
                         </div>
     @if($shops[$i]['is_opening'])
                             <div class="busy">

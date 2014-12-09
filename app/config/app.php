@@ -191,4 +191,9 @@ return array(
 
 	),
 
+    /*
+     * captcha加密用key
+     **/
+    'cookie_key' => 'FAA98FFCAB9276F9017E91279225A8C8',
+
 );
