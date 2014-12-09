@@ -1,0 +1,35 @@
+--------------------Ajax ZONE --------------------
+在主页是正常全局搜索, 然后在特定商家会有搜索本店的功能
+
+
+   // 顶部栏搜索
+    type : "get"
+    url :  ""
+    output : {
+        success : "true" // 成功返回true, 失败返回false
+        state   : 200  // HTTP 状态码
+        nextSrc : ""  // 登录成功后的跳转地址
+        errMsg  : ""  // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+        no      : 0  // 错误号 ,错误号就出现在这, 如果没有, 那内容为空.
+        data    : [
+            {
+                goods_category : "美食" // 商品种类
+                shop_result : [
+                    {
+                        goods_name : "小包才肉汤" // 商品名称
+                        goods_id : ""             // 商品的id
+                        shop_name : "XXX商店"    // 商家名称(如果是本店搜索, 这个为空)
+                        goods_value: "16"        // 商品价格
+                        goods_url : ""          // 跳转到这个商家的某个商品 (商品定位采用hash路径表示, 页面中id元素可以用hash来进行定位, 后端只需将对应的id拼接到相应的路径中去)
+                        img_url : ""            // 商家logo地址 , 如果是种类是商家的话
+                    }
+                ]
+            }
+        ]
+
+    }
+    input : {
+        string : "db",
+        isLocal : "true" // 是否搜索本店
+        shop_id : ""     // 如果是本店, 则会带上shop_id
+    }

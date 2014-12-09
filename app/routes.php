@@ -48,7 +48,7 @@ Route::get('usercenter/collect_shop',array('before' => 'loginCheck', 'uses' => '
 
 Route::get('usercenter/collect_menu',array('before' => 'loginCheck', 'uses' => 'UserCenterController@menuCollect'));//收藏的菜品
 
-
+Route::get('usercenter/personal_uncomment', array('before', 'loginCheck', 'uses' => 'UserCenterController@Uncomment'));  // 获取用户未评论的订单
 # 用户账户模块
 Route::get('useraccount/site', array('before' => 'loginCheck', 'uses' => 'UserAccountController@userSite'));//用户收货地址页面
 
@@ -97,5 +97,5 @@ Route::post('modifyorder', array('before' => 'loginCheck', 'uses' => 'PersonalCo
 
 #测试
 Route::post('test', 'ShopController@cartDel');
-Route::get('test', 'ShopController@cartSetCount');
+Route::get('test', 'UserCenterController@Uncomment');
 

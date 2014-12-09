@@ -331,7 +331,7 @@ class ShopController extends BaseController {
 					$onegood['goods_price']    = (float)$good->price;	// 商品价格
 					$onegood['goods_icon']     = $good->icon;			// 一些用户促销的图标
 					$onegood['goods_original'] = (float)$good->original_price;	// 如果是促销，这个用于显示原价
-					$onegood['good_sails']	   = $good->sold_num;
+					$onegood['good_sails']	   = (float)$good->sold_num;
 					array_push($classify_goods, $onegood);
 				}
 			}
@@ -514,7 +514,7 @@ class ShopController extends BaseController {
 
 			$one['good_name']  = $menu->title;
 			$one['user_name']  = $user->nickname;
-			$one['time']       = $comment->time;
+			$one['time']       = date('Y-m-d', $comment->time);
 			$one['content']    = $comment->content;
 			$one['good_price'] = $menu->price;
 #TODO：这里的评分居然是以图片形式的。。。
@@ -595,14 +595,14 @@ class ShopController extends BaseController {
 		$url = array(
 				"my_place"      => "这里是地址",
 				"switch_palce"  => "##",
-				"logo"          => "http://localhost/haochigo/public",	// 网站主页地址
+				"logo"          => url('/'),	// 网站主页地址
 				"mobile"        => "123",                 				// 跳转到下载手机APP的地址
 				"my_ticket"     => 'order',                 			// 我的饿单的地址
 				"my_gift"       => 'gift',                				// 礼品中心地址
 				"feedback"      => 'feedback',                			// 反馈留言地址
 				"shop_chart"    => "cart",                				// 购物车地址
 				"user_mail"     => "mail",                				// 用户提醒的地址
-				"personal"      => "profile",                			// 个人中心地址
+				"personal"      => url('usercenter'),                			// 个人中心地址
 				"my_collection" => "profile/shop",               		// 我的收藏地址
 				"my_secure"     => "profile/security",              	// 安全设置的地址
 				"loginout"      => "loginout",              			// 退出登录的地址

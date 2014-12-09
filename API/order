@@ -1,0 +1,144 @@
+## 订单
+----------------- Blade Zone --------------
+
+type : "blade"
+output : {
+    "userbar" => [
+    			"url" => [
+    				"my_place" => "这里是地址",
+    				"switch_palce" => "##",
+    				"logo" => "123" ,                         // 网站主页地址
+    				"mobile" => "123",                 // 跳转到下载手机APP的地址
+    				"my_ticket" => "123",                 // 我的饿单的地址
+    				"my_gift"  => "123",                // 礼品中心地址
+    				"feedback" => "123",                // 反馈留言地址
+    				"shop_chart" => "123",                // 购物车地址
+    				"user_mail" => "123",                // 用户提醒的地址
+    				"personal" => "123",                // 个人中心地址
+    				"my_collection" => "123",               // 我的收藏地址
+    				"my_secure" => "123",              // 安全设置的地址
+    				"loginout" => "123",              // 退出登录的地址
+    				"switch_place" => "123"                  // 切换当前地址的地址
+    			]
+    		],
+
+    "data" => [
+        "shop_id" => ""  // 商家id
+        "shop_logo" => ""  // 商家logo图片地址
+        "shop_name" => ""  // 商家名称
+        "shop_href" => "" // 跳转到当前商家的地址
+        "shop_type" => ""  // 商家类型
+        "cart_list" => [
+            0 => [
+                good_name : "" // 商品名称
+                good_id : "" //  商品ID
+                good_price : "" // 商品价格
+                good_amount : "" // 商品数量
+                good_total : "" // 总计价格
+            ]
+        ],
+        "cart_amount" => "" // 商品总价格
+        "deliver_place" => "" // 送达地址 
+        "deliver_tel"   => "" // 送达电话18523016284
+        "deliver_nmae"  => ""  //送达姓名  董天成
+        "deliver_time" => [ 08:00, 09:00, 10:12, 12:30  ]  // 商家提供的送达时间 
+        "pay_method" => [
+            0 => [
+                is_default : ""  // 是否是默认的 0 是默认 1是非默认
+                method_name : "" // 付款方式名称
+            ]
+        ],
+
+        "pay_statues" => "" // 付款信息, 显示在顶部栏
+    ]
+}
+input {
+    "user_id" => "" // 用户名称
+    "shop_id" => "" // 商家id
+    "leave_message" => "" // 留下来的信息
+    "deliver_place" => "" // 送达地址
+    "deliver_user" => "" // 收外卖的人
+    "deliver_phone" => "" // 联系电话
+    "pay_method" => "" // 付款方式
+}
+
+
+
+------------------- Blade End --------------
+
+
+
+------------------ Ajax Zone -------------------
+
+// 请求短信验证码
+
+type : "post"
+url  : ""
+input : {
+    type : "sms" // 短信 sms是短信
+    phone : "" // 手机号码
+    csrf_token : "" // csrf 秘钥
+}
+
+output : {
+    success : "true"            // 成功返回true, 失败返回false
+    state   : 200               // HTTP 状态码
+    errMsg  : ""                // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+}
+
+// 短信验证码确认
+
+type : "post"
+url  : ""
+input : {
+    auth       : ""  //发送用户所填短信
+    csrf_token : "" // csrf 秘钥
+}
+
+output : {
+    success : "true"            // 成功返回true, 失败返回false
+    successMsg : ""             //验证成功后的消息
+    state   : 200               // HTTP 状态码
+    errMsg  : ""                // 验证错误错误, 错误信息就出现在这, 如果没有, 那内容为空.
+}
+
+
+// 美食篮子增加货物
+
+type : "post"
+url  : ""
+input : {
+    good_id : ""  // 商品id
+    csrf_token : "" // CSRF 秘钥
+    type : "add"  // 增加
+}
+output : {
+    success : "true"            // 成功返回true, 失败返回false
+    state   : 200               // HTTP 状态码
+    errMsg  : ""                // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+    auth    : "…………&*……*&￥%……￥%476d#￥%"            //赛回来的加密验证码
+}
+
+// 美食篮子减少货物
+
+type : "post"
+url  : ""
+input : {
+    good_id : "" // 商品id
+    csrf_token : "" // CSRF 秘钥
+    type : "reduce" // 删除
+}
+
+
+// 美食篮子删除货物
+
+type : "post"
+url  : ""
+input : {
+    good_id : "" // 商品id
+    csrf_token : "" // CSRF 秘钥
+    type : "delete" // 删除
+}
+
+------------------ Ajax End  -------------------
+

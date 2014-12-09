@@ -1,0 +1,87 @@
+登录与注册接口文档
+
+------------------- Blade Start ----------------------
+// 登录和注册
+type : "blade"
+output : {
+    auth_image : ""  // 验证码图片地址
+}
+
+
+
+// 找回密码
+type : "blade"
+output : {
+    find_password : ""  // 找回密码的链接
+}
+
+------------------- Blade End ----------------------
+
+
+
+
+------------------- Ajax ZONE   ----------------------------
+
+-------------切换图片验证码----------
+
+url:'/switch_auth'                          //为接口地址
+    type:"post"                              //提交类型
+    output:{
+        success : "true"                    // 成功返回true, 失败返回false
+        nextSrc : ""                        // 获取成功后的图片地址
+        errMsg  : ""                        // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+    }//后端返回数据
+input:{
+    'auth_way' : "image/sms"               //验证码类型 短信或图片
+    'telNumber': ""                        //有的话则是短信(电话号码)无的话就无
+    "timestemp": ""                        //时间戳后台禁止短信连续发送 前端设置30秒（防止修改）
+}//前端提交数据
+
+-------------登录----------------
+
+
+    url:'/login'                    //为接口地址
+    type:"post"                     //提交类型
+    output:{
+        success : "true"            // 成功返回true, 失败返回false
+        state   : 200               // HTTP 状态码
+        nextSrc : ""                // 登录成功后的跳转地址 (绝对地址)
+        errMsg  : {
+            inputMsg : "",          //表单填写错误 dom上显示的信息(不要过长)
+            otherMsg : ""           //alert弹出的错误信息
+        }                           // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+        no      : 0                 //错误类型 1.用户名/邮箱填写错误2.密码错误3.验证码错误4.电话号码错误
+    }//后端返回数据
+    input:{
+        login_way  : "normal/mobile" //登录方式 "normal/mobile"判断传过来的验证码是哪种类型
+        user_email : ""              // 手机号码或者邮箱
+        user_psw   : ""              // 用户密码
+        user_auth  : ""              // 用户验证码
+        user_remember : "true"       // 用户记住我
+    }//前端提交数据
+
+
+-------------注册----------------
+
+    url:'/register'//为接口地址
+    type:"post"//提交类型
+    output:{
+        success : "true"            // 成功返回true, 失败返回false
+        state   : 200               // HTTP 状态码
+        nextSrc : ""                // 登录成功后的跳转地址 (绝对地址)
+        errMsg  : {
+            inputMsg : "",          //表单填写错误 dom上显示的信息(不要过长)
+            otherMsg : ""           //alert弹出的错误信息
+        }                           // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+        no      : 0                 //错误类型 1.用户名/邮箱填写错误2.密码错误3.验证码错误4.电话号码错误
+    }//后端返回数据
+    input:{
+        user_auth  : ""            // 用户验证码
+        user_phone : ""            // 用户手机号码
+        user_psw   : ""            // 用户密码
+        user_email : ""            // 用户邮箱
+    }//前端提交数据
+
+
+
+------------------ Ajax End -------------------

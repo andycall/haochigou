@@ -1,0 +1,463 @@
+商家页面参考文档
+
+----------------------- Blade Start ---------------------------
+
+// 商家菜单页
+
+    type : "blade"
+    output : {
+        // 顶部栏
+        top_bar : {
+            url : {
+                return_back : ""               // 返回主页的地址
+                shop_url :   ""                // 当前商家的地址
+                comment_url : ""               // 商家评论页的地址
+                menu_url  : ""                 // 商家菜单的地址
+                photo_url : ""                 // 美食墙的地址
+                message_url : ""               // 商家留言的地址
+            }
+
+            data : {
+                shop_id : ""                    // 商家id
+                place_id : ""                   // 商家位置id
+                shop_logo : ""                  // 商家的logo图片地址
+                shop_name : ""                  // 商家名称
+                shop_type : ""                  // 商家类型
+                shop_level : {                  // 总共10个等级, 1个半星一个等级
+                    level_5 : "66"              // 评论为5星的比例
+                    level_4 : "17"              // 评论为4星的比例
+                    level_3 : "6"               // 评论为3星的比例
+                    level_2 : "2"               // 评论为2星的比例
+                    level_1 : "8"               // 评论为1星的比例
+                }
+                shop_total   : ""                // 总评价
+                comment_count : ""              // 评论人数
+                shop_statement : ""             // 商家简介
+                shop_time     : "09:50 - 13:30 / 16:00 - 19:30" // 商家开门时间 (纯字符串, 应该是商家自己写上去的)
+                shop_address  : ""              // 商家地址
+                deliver_begin : "19:30"         // 送餐开始时间
+                shop_distance : "400"           // 商家距离(米)
+                price_begin   : ""              // 起送价
+                is_collected : ""               // 是否被收藏了
+            }
+        }
+
+
+        // 美食分类 (主页的活动与商家添加的分类放在一起)
+
+        good_category : {
+            data : {
+                goods_category : [
+                    {
+                        classify_name : "10元管饱"  // 类别名称
+                        classify_name_abbr : "点餐就有红包拿！没办…"  // 类别名称简写
+                        classify_id   : ""          // 类别id
+                        classify_count : "23"       // 类别中有多少商品
+                        classify_icon  : ""         // 类别图标地址
+                    }
+                ],
+                "good_activity" => [
+                    [
+                        "activity_name" : "1元秒杀（限新用户）重庆",  // 活动名称
+                        "activity_id" : "123",                      // 活动id
+                        "activity_icon" : "",                       // 活动图标地址
+                        "activity_statement" : "1元秒杀爽到爆！"      // 活动简洁
+                    ]
+                ]
+            }
+        ]
+    }
+
+
+        // 分类内容
+
+        category : {
+            data : {
+                classify_sec : [
+                    {
+                         classify_name : "10元管饱"  // 类别名称
+                         classify_id   : ""          // 类别id
+                         classify_icon  : ""         // 类别图标地址
+                         activity_ads  : {           // 这个种类是不是活动, 不是则为空
+                            activity_name : ""       // 活动标题
+                            activity_statement : ""  // 活动描述
+                         }
+                         classify_images : [           // 有的类别会有图片, 如果没有,这个为空数组
+                            {
+                                goods_id : ""       // 商品id
+                                goods_image: ""     // 商品图片地址
+                                goods_name : ""     // 商品名称
+                                goods_level : ""    // 商品等级, 总共10个等级
+                                comment_count : ""  // 投票人数
+                                goods_sails : ""    // 商品销量
+                                goods_price : ""    // 商品价格
+                                goods_icon  : ""    // 一些用户促销的图标
+                                goods_original : "" // 如果是促销, 这个用于显示原价
+                            }
+                         ]
+                         classify_goods : [
+                            {
+                                goods_id : ""       // 商品id
+                                goods_name : ""     // 商品名称
+                                goods_level : ""    // 商品等级, 总共10个等级
+                                comment_count : ""  // 投票人数
+                                goods_price : ""    // 商品价格
+                                goods_icon  : ""    // 一些用户促销的图标
+                                goods_original : "" // 如果是促销, 这个用于显示原价
+                                good_sails : "123" // 一个月之内的销量
+                            }
+                         ]
+                    }
+                ]
+            }
+        }
+
+        // 餐厅公告
+
+        announcement : {
+            data : {
+                announce_content : ""              // 餐厅公告内容
+                start_price      : ""              // 起送价
+                activities       : [               // 商家活动
+                    {
+                        activity_name : "10元管饱", // 活动标题
+                        activity_icon : ""          // 活动图标
+                    }
+                ]
+
+            }
+        }
+
+        // 本周热卖 changed
+        best_seller :  [
+                [
+                    "goods_id" => "1234",        // 商品id
+                    "goods_name" => "李星颖",      // 商品名称
+                    "goods_level" => "7",     // 商品等级, 总共10个等级
+                    "comment_count" => "123",   // 投票人数
+                    "goods_price" => "78",     // 商品价格
+                    "shop_id" => "32453",     //Shop ID
+                    "shop_state"  => "true", // 商家是不是打烊了..
+                    "error_state" => ""     // 打烊信息
+                ],
+            ]
+
+        // 位置地图
+        shop_map :   {
+            data : {
+                map_url : ""         // 地图地址
+                distance: 123        //距离   米
+            }
+        }
+    }
+
+
+// 商家评价页
+
+    type : "blade"
+    output : {
+        // 顶部栏
+        top_bar : {
+            url : {
+                return_back : ""               // 返回主页的地址
+                shop_url :   ""                // 当前商家的地址
+                comment_url : ""               // 商家评论页的地址
+                menu_url  : ""                 // 商家菜单的地址
+                photo_url : ""                 // 美食墙的地址
+                message_url : ""               // 商家留言的地址
+                map_url : ""                   // 地图地址
+            }
+
+            data : {
+                shop_id : ""                    // 商家id
+                place_id : ""                   // 商家位置id
+                shop_logo : ""                  // 商家的logo图片地址
+                shop_name : ""                  // 商家名称
+                shop_type : ""                  // 商家类型
+                shop_level : {                  // 总共10个等级, 1个半星一个等级
+                    level_5 : "66"              // 评论为5星的比例
+                    level_4 : "17"              // 评论为4星的比例
+                    level_3 : "6"               // 评论为3星的比例
+                    level_2 : "2"               // 评论为2星的比例
+                    level_1 : "8"               // 评论为1星的比例
+                }
+                shop_total   : ""                // 总评价
+                comment_count : ""              // 评论人数
+                shop_statement : ""             // 商家简介
+                shop_time     : "09:50 - 13:30 / 16:00 - 19:30" // 商家开门时间 (纯字符串, 应该是商家自己写上去的)
+                shop_address  : ""              // 商家地址
+                deliver_begin : "19:30"         // 送餐开始时间
+                shop_distance : "400"           // 商家距离(米)
+                price_begin   : ""              // 起送价
+                is_collected : ""               // 是否被收藏了
+            }
+        }
+
+        // 商家评论页
+        comment : {
+            comment_all : {
+                comment_pages : "0"             // 评论的页数
+                comment_count : ""              // 所有评论的数量
+                comment_body : [                // 一次只取16个
+                    {
+                        goods_name : ""                 // 商品名称
+                        goods_price : ""                // 商品价格
+                        comment_level : ""              // 评论等级
+                        comment_content : ""            // 评论内容
+                        comment_person : ""             // 评论人
+                        comment_date : ""               // 评论时间
+                    }
+                ]
+            }
+        }
+
+        // 总评价
+        comment_summary : {
+            shop_level : {                  // 总共10个等级, 1个半星一个等级
+                level_5 : "66"              // 评论为5星的比例
+                level_4 : "17"              // 评论为4星的比例
+                level_3 : "6"               // 评论为3星的比例
+                level_2 : "2"               // 评论为2星的比例
+                level_1 : "8"               // 评论为1星的比例
+            }
+            shop_total   : ""               // 总评价
+            comment_count : ""              // 评论人数
+        }
+
+    }
+
+
+
+// 商家留言页
+
+----------------------- Blade End -----------------------------
+
+
+----------------------- Ajax  Start -----------------------------
+
+    // 收藏商家
+    type : "post"
+    url  : "",
+    input : { // 会放在queryString里面
+        shop_id : "123213",
+        place_id : "123213123"
+    }
+    output:{
+        success : "true"                // 成功返回true, 失败返回false
+        state   : 200                   // HTTP 状态码
+        nextSrc : ""                    // 登录成功后的跳转地址
+        errMsg  : ""                    // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+        no      : 0                     // 错误号 ,错误号就出现在这, 如果没有, 那内容为空.
+        data: {
+            shop_id : ""                    // 商家id
+            place_id : ""                   // 商家位置id
+            shop_logo : ""                  // 商家的logo图片地址
+            shop_name : ""                  // 商家名称
+            shop_type : ""                  // 商家类型
+            shop_level : {                  // 总共10个等级, 1个半星一个等级
+                level_5 : "66"              // 评论为5星的比例
+                level_4 : "17"              // 评论为4星的比例
+                level_3 : "6"               // 评论为3星的比例
+                level_2 : "2"               // 评论为2星的比例
+                level_1 : "8"               // 评论为1星的比例
+            }
+            shop_total   : ""                // 总评价
+            comment_count : ""              // 评论人数
+            shop_statement : ""             // 商家简介
+            shop_time     : "09:50 - 13:30 / 16:00 - 19:30" // 商家开门时间 (纯字符串, 应该是商家自己写上去的)
+            shop_address  : ""              // 商家地址
+            deliver_begin : "19:30"         // 送餐开始时间
+            shop_distance : "400"           // 商家距离(米)
+            price_begin   : ""              // 起送价
+            is_collected : "true"               // 是否被收藏了
+    }
+
+    // 取消收藏商家
+    type : "post"
+    url  : "",
+    input : { // 会放在queryString里面
+        shop_id : "123213",
+        place_id : "123213123"
+    }
+    output:{
+        success : "true" // 成功返回true, 失败返回false
+        state   : 200  // HTTP 状态码
+        nextSrc : ""  // 登录成功后的跳转地址
+        errMsg  : ""  // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+        no      : 0  // 错误号 ,错误号就出现在这, 如果没有, 那内容为空.
+    }
+
+    // 收藏商品
+        type : "post"
+        url  : "/collect",
+        input : { // 会放在queryString里面
+            shop_id : "123213",
+            goods_id : "123213123"
+        }
+        output:{
+            success : "true"                // 成功返回true, 失败返回false
+            state   : 200                   // HTTP 状态码
+            nextSrc : ""                    // 登录成功后的跳转地址
+            errMsg  : ""                    // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+            no      : 0                     // 错误号 ,错误号就出现在这, 如果没有, 那内容为空.
+        }
+
+    // 取消收藏商品
+    type : "post"
+    url  : "/delCollect",
+    input : { // 会放在queryString里面
+        shop_id : "123213",
+        goods_id : "123213123"
+    }
+    output:{
+        success : "true" // 成功返回true, 失败返回false
+        state   : 200  // HTTP 状态码
+        nextSrc : ""  // 登录成功后的跳转地址
+        errMsg  : ""  // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+        no      : 0  // 错误号 ,错误号就出现在这, 如果没有, 那内容为空.
+    }
+
+    //****************ADD**********
+    //购物车初始化
+    type : "post"
+    url  : ""
+    input : {}
+    output :
+        [
+            "success" => "true",
+            "data" => [
+                [
+                    "id" => "1234",
+                    "price" => "345",
+                    "count" => "3",
+                    "title" => "平菇牛肉小份"
+                ]
+            ]
+        ];
+    //*****************************
+
+
+    // 注意: 购物车里面只能添加一家商店内的商品
+    // 清空购物车
+    type : "post"
+    url  : ""
+    input : {
+        shop_id : "12323"
+    }
+    output : {
+        success : "true" // 成功返回true, 失败返回false
+        state   : 200  // HTTP 状态码
+        nextSrc : ""  // 登录成功后的跳转地址
+        errMsg  : ""  // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+        no      : 0  // 错误号 ,错误号就出现在这, 如果没有, 那内容为空.
+    }
+
+    // 注意: 购物车里面只能添加一家商店内的商品
+    // 在购物车内删除商品
+    type : "post"
+    url  : "/goods_comments"
+    input : {
+        shop_id : "123213"      // 商家id
+        goods_id : "123213"     // 商品id
+    }
+    output : {
+        success : "true" // 成功返回true, 失败返回false
+        state   : 200  // HTTP 状态码
+        nextSrc : ""  // 登录成功后的跳转地址
+        errMsg  : ""  // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+        no      : 0  // 错误号 ,错误号就出现在这, 如果没有, 那内容为空.
+    }
+
+    // 注意: 购物车里面只能添加一家商店内的商品
+    // 添加商品进购物车
+    type : "post"
+    url  : ""
+    input : {
+        shop_id : "12323"
+        goods_id : "12323"
+    }
+    output : {
+        success : "true"                // 成功返回true, 失败返回false
+        state   : 200                   // HTTP 状态码
+        nextSrc : ""                    // 登录成功后的跳转地址
+        errMsg  : ""                    // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+        no      : 0                     // 错误号 ,错误号就出现在这, 如果没有, 那内容为空.
+        data    : {
+            cart_all  : ""  // 所有的总价
+            is_ready  : ""  // 是否可以下单(有些商家会设定起步价)
+            card_count : "" // 所有东西的数量
+            cart_goods: [
+                {
+                    goods_name : "" // 商品名称
+                    goods_count : "" // 商品数量
+                    goods_price : "" // 商品价格
+                }
+            ]
+        }
+    }
+
+    // 获取一个商品的评论
+
+    type : "get"
+    url : ""
+    input : {
+        goods_id : ""       // 商品的id
+    }
+    output : {
+       success : "true"                // 成功返回true, 失败返回false
+       state   : 200                   // HTTP 状态码
+       nextSrc : ""                    // 登录成功后的跳转地址
+       errMsg  : ""                    // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+       no      : 0                     // 错误号 ,错误号就出现在这, 如果没有, 那内容为空.
+       data    : {
+          shop_level : {                  // 总共10个等级, 1个半星一个等级
+              level_5 : "66"              // 评论为5星的比例
+              level_4 : "17"              // 评论为4星的比例
+              level_3 : "6"               // 评论为3星的比例
+              level_2 : "2"               // 评论为2星的比例
+              level_1 : "8"               // 评论为1星的比例
+          }
+          shop_total   : ""               // 总评价
+          comment_total: ""               //多少人评价
+          comment_body : [                // 这里没分页了,有多少给多少吧.
+            {
+                comment_person : ""             // 评论人
+                comment_date : ""               // 评论时间
+                comment_level : ""              // 评论等级
+                comment_content : ""            // 评论内容
+            }
+          ]
+       }
+    }
+
+
+
+    // 评论切换分页
+    type : "get"
+    url : ""
+    input : {
+        shop_id : "12323" // 商家id
+        comment_pages : "0"  // 当前的页数
+    }
+    output : {
+        success : "true" // 成功返回true, 失败返回false
+        state   : 200  // HTTP 状态码
+        nextSrc : ""  // 登录成功后的跳转地址
+        errMsg  : ""  // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+        no      : 0  // 错误号 ,错误号就出现在这, 如果没有, 那内容为空.
+        data    : {
+            comment_pages : "1"                 // 新的页数
+            comment_body : [                   // 新的评论内容 一次只取16个
+                {
+                    goods_name : ""                 // 商品名称
+                    goods_price : ""                // 商品价格
+                    comment_level : ""              // 评论等级
+                    comment_content : ""            // 评论内容
+                    comment_person : ""             // 评论人
+                    comment_date : ""               // 评论时间
+                }
+            ]
+        }
+
+    }
+----------------------- Ajax  End   -----------------------------
