@@ -1,0 +1,71 @@
+页面顶部栏接口文档
+
+------------- Blade ZONE ----------------
+// 顶部栏
+type : "blade"
+output : {
+     userbar : {
+        url : {
+            logo : ""                          // 网站主页地址
+            mobile : ""                        // 跳转到下载手机APP的地址
+            my_ticket : ""                     // 我的饿单的地址
+            my_gift  : ""                      // 礼品中心地址
+            feedback : ""                      // 反馈留言地址
+            shop_chart : ""                    // 购物车地址
+            user_mail : ""                     // 用户提醒的地址
+            personal : ""                      // 个人中心地址
+            my_collection : ""                 // 我的收藏地址
+            my_place : ""                      // 我的地址
+            my_secure : ""                     // 安全设置的地址
+            loginout : ""                      // 退出登录的地址
+            switch_place : ""                  // 切换当前地址的地址
+        },
+        data : {
+            user_id  : ""                      // 当前用户id
+            username : ""                      // 当前用户的姓名
+            user_place : ""                    // 当前用户的地理位置
+        }
+    }
+}
+
+// 隐藏的顶部通知栏(用户通知信息)
+
+type : "blade"
+output : {
+    need_to_show : "true" // 是否要显示
+    message      : ""     // 显示的信息
+}
+
+
+------------- Blade End ----------------
+
+
+------------- Ajax Zone ----------------
+ // 注意: 购物车里面只能添加一家商店内的商品
+ // 用户点击顶部栏购物车发送的ajax
+    type : "get"
+    url  : ""
+    output : {
+        success : "true"                                // 成功
+        state  : 200                                    // HTTP 状态码
+        errMsg  : ""                                    // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+        no      : 0                                     // 错误号 ,错误号就出现在这, 如果没有, 那内容为空.
+        data : {
+            url : {
+               shop_url : ""                            // 点击商家, 跳转到相应的商家页面
+            },
+            shop_name : ""                              // "商店名称"
+            all_value : "16"                            // 商品总价格
+            goods : [
+                {
+                    good_name : "泡椒鸡胗煲仔饭",       // 名称
+                    good_value : "8",                   // 价格
+                    good_count : "1"                    // 数量
+                }
+            ],
+            shop_state : "0"                            // 0 是可以付款买外卖, 1 是由于某种原因, 买不了外卖
+            state_msg : ""                              // 为啥买不了, 如果能买, 就位空
+        }
+    }
+
+------------- Ajax End  ----------------

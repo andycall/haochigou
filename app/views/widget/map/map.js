@@ -10,6 +10,7 @@ define(['jquery', 'underscore', 'localMap/port'], function($, _, port){
 			d = document,
 			city_location = "重庆", // 默认位置
 			city_bound = {}; // 初始位置信息
+
 		// 获取用户位置信息
 		mapObj.getCityInfo = (function(){
 			mapObj.plugin(["AMap.CitySearch"], function() {
@@ -53,7 +54,6 @@ define(['jquery', 'underscore', 'localMap/port'], function($, _, port){
 
 			self.getCoder(X, Y, function(data){
 				//debugger;
-				console.log(data);
 				var template = _.template($("#point_template").html())({
 					data : data.regeocode.addressComponent
 				});
@@ -88,7 +88,7 @@ define(['jquery', 'underscore', 'localMap/port'], function($, _, port){
 
 				mapObj.plugin(["AMap.ToolBar"],function(){
 					var toolBar = new AMap.ToolBar({
-						offset : new  AMap.Pixel(45, 170)
+						offset : new  AMap.Pixel(5, 300)
 					});
 					mapObj.addControl(toolBar);
 				});
@@ -270,11 +270,16 @@ define(['jquery', 'underscore', 'localMap/port'], function($, _, port){
 						poil = self.poil;
 
 					//console.log(self.resultIndex, self.resultEnd);
+					if(poil.length < 10){
+						self.resultEnd = poil.length;
+					}
+
 					var poiArr = poil.slice(self.resultIndex, self.resultEnd);
 
 
-					var resultCount = poil.length / 10;
+					var resultCount = Math.ceil(poil.length / 10);
 
+						
 					var resultStr1 = _.template($("#place_template").html())({
 						resultCount : resultCount,
 						resultIndex : self.resultIndex,
@@ -289,8 +294,18 @@ define(['jquery', 'underscore', 'localMap/port'], function($, _, port){
 					city.html(resultStr1);
 					city.show();
 
-					$(".nextGroup").on('click', self.bindNext);
-					$(".prevGroup").on('click', self.bindPrev);
+					city.on('click', 'li', function(ev){
+			           var target = ev.currentTarget;
+			           if(target.className != 'secid') return;
+			           console.log(2);
+			           var dataMouseover = parseInt(target.dataset['mouseover']);
+			           console.log(dataMouseover);
+			           self.openMarkerTipById1(dataMouseover, target, resultCount);
+			           return false;
+			       	});
+
+					// $(".nextGroup").on('click', self.bindNext);
+					// $(".prevGroup").on('click', self.bindPrev);
 
 				};
 
@@ -346,7 +361,8 @@ define(['jquery', 'underscore', 'localMap/port'], function($, _, port){
 					// 向后端要订餐的数据
 
 					var restaurant = [],
-						restaurantResult = [];
+						restaurantResult = [],
+						real_data = {};
 
 
 					var poil = data.poiList.pois;
@@ -355,21 +371,24 @@ define(['jquery', 'underscore', 'localMap/port'], function($, _, port){
 						restaurant.push({ lat : poil[i].location.lat,  lng : poil[i].location.lng});
 					}
 
+					real_data['restaurant'] = poil;
+
+
 					$.ajax({
 						url: port['getRestaurant'],
 						type: 'POST',
-						data: JSON.stringify(restaurant),
+						data: JSON.stringify(real_data),
 						contentType: 'application/json; charset=utf-8',
 						dataType: 'json',
 						async: false,
 						success: function(data) {
-
+							console.log(poil);
 							autoComplete.windowsArr = [];
 							autoComplete.marker = [];
 							autoComplete.data = data;
 							autoComplete.resultIndex = 0;
 							autoComplete.resultEnd  = 10;
-							autoComplete.poil = poil;
+							autoComplete.poil = data;
 							autoComplete.restaurantResult = restaurantResult;
 
 							//清空地图上的InfoWindow和Marker
@@ -391,7 +410,7 @@ define(['jquery', 'underscore', 'localMap/port'], function($, _, port){
 							});
 
 
-							$("#search_list").on('click', 'span' , self.bindNext);
+							// $("#search_list").on('click', 'span' , self.bindNext);
 							$(".prevGroup").on('click', self.bindPrev);
 
 							city.on('mouseout', 'li', function(ev){
@@ -401,6 +420,8 @@ define(['jquery', 'underscore', 'localMap/port'], function($, _, port){
 									self.onmouseout_MarkerStyle(dataMouseOut, target);
 								}
 							});
+
+			               
 						}
 					});
 
@@ -414,10 +435,11 @@ define(['jquery', 'underscore', 'localMap/port'], function($, _, port){
 					if(that){
 						that.style.background = '#CAE1FF';
 					}
+					console.log(pointid, that, resultCount);
 
 					autoComplete.windowsArr[pointid].open(mapObj, autoComplete.marker[pointid]);
 
-					for(var i = 0; i < resultCount; i ++){
+					for(var i = 0; i <= resultCount; i ++){
 						$(".icon" + (i + 1)).each(function(index, value){
 							value.className = "icon icon" + ( i + 1 ) + "_b";
 						});
@@ -458,8 +480,8 @@ define(['jquery', 'underscore', 'localMap/port'], function($, _, port){
 						input = self.input,
 						result = self.result;
 
-					var lngX = d.location.getLng();
-					var latY = d.location.getLat();
+					var lngX = d.location['lng'];
+					var latY = d.location['lat'];
 					var markerOption = {
 						map:mapObj,
 						content : "<div class='icon icon" +  ( i + 1 )+ "_b'></div>",
@@ -470,7 +492,8 @@ define(['jquery', 'underscore', 'localMap/port'], function($, _, port){
 
 					var windowTemplate = _.template($("#windowInfo_template").html())({
 						i : i,
-						d : d
+						d : d,
+						jump_url : d['jump_url']
 					});
 
 					var infoWindow = new AMap.InfoWindow({
@@ -589,6 +612,7 @@ define(['jquery', 'underscore', 'localMap/port'], function($, _, port){
 
 					function fromContainerPixelToLngLat (left, top){
 						var ll = mapObj.containTolnglat(new AMap.Pixel(left ,top));
+						
 						return {lng: ll.getLng(), lat: ll.getLat()};
 					}
 
