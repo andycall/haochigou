@@ -431,7 +431,7 @@ class MainController extends BaseController {
 				"personal"      => url('usercenter'),                			// 个人中心地址
 				"my_collection" => "profile/shop",               		// 我的收藏地址
 				"my_secure"     => "profile/security",              	// 安全设置的地址
-				"loginout"      => "loginout",              			// 退出登录的地址
+				"loginout"      => url("logout"),              			// 退出登录的地址
 				"switch_place"  => "switch_place"                  		// 切换当前地址的地址
 		);
 		if( Auth::check() ){

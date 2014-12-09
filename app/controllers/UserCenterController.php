@@ -85,7 +85,7 @@ class UserCenterController extends BaseController{
 
         $data['sidebar'] = $this->sideBar();
 
-        $data['userbar']['url'] = $this->userBar();
+        $data['userbar'] = $this->userBar();
 
 
         return View::make("template.personal.personal_center")->with($data);
@@ -167,7 +167,7 @@ class UserCenterController extends BaseController{
 
         $data['sidebar'] = $this->sideBar();
 
-        $data['userbar']['url'] = $this->userBar();
+        $data['userbar'] = $this->userBar();
 
 
         return View::make("template.personal.personal_recent_month")->with($data);
@@ -250,7 +250,7 @@ class UserCenterController extends BaseController{
 
         $data['sidebar'] = $this->sideBar();
 
-        $data['userbar']['url'] = $this->userBar();
+        $data['userbar'] = $this->userBar();
 
         return View::make("template.personal.personal_after_month")->with($data);
 
@@ -295,7 +295,7 @@ class UserCenterController extends BaseController{
 
         $data['sidebar'] = $this->sideBar();
 
-        $data['userbar']['url'] = $this->userBar();
+        $data['userbar'] = $this->userBar();
 
         return View::make("template.personal.personal_collection_shop")->with($data);
 
@@ -335,7 +335,7 @@ class UserCenterController extends BaseController{
 
         $data['sidebar'] = $this->sideBar();
 
-        $data['userbar']['url'] = $this->userBar();
+        $data['userbar'] = $this->userBar();
 
         return View::make("template.personal.personal_collection_goods")->with($data);
 
@@ -347,7 +347,7 @@ class UserCenterController extends BaseController{
     public function Uncomment(){
         $orders = Order::where('state', 4)->get();
 
-        $data['userbar']['url'] = $this->userBar();
+        $data['userbar'] = $this->userBar();
         $data['sidebar'] = $this->sideBar();
         $data['uncomment']['deal_count'] = count($orders);
         $data['uncomment']['deal'] = array();
@@ -524,22 +524,38 @@ class UserCenterController extends BaseController{
 
 
     private function userBar(){
-        return array(
-            "my_place" => "这里是地址",
-            "switch_palce" => "##",
-            "logo" => "123" ,                         // 网站主页地址
-            "mobile" => "123",                 // 跳转到下载手机APP的地址
-            "my_ticket" => "123",                 // 我的饿单的地址
-            "my_gift"  => "123",                // 礼品中心地址
-            "feedback" => "123",                // 反馈留言地址
-            "shop_chart" => "123",                // 购物车地址
-            "user_mail" => "123",                // 用户提醒的地址
-            "personal" => "123",                // 个人中心地址
-            "my_collection" => "123",               // 我的收藏地址
-            "my_secure" => "123",              // 安全设置的地址
-            "loginout" => url("logout"),              // 退出登录的地址
-            "switch_place" => "123"                  // 切换当前地址的地址
+        $userbar = array();
+        $userbar['url'] = array(
+                "my_place"      => "这里是地址",
+                "switch_palce"  => "##",
+                "logo"          => url('/'),    // 网站主页地址
+                "mobile"        => "123",                               // 跳转到下载手机APP的地址
+                "my_ticket"     => 'order',                             // 我的饿单的地址
+                "my_gift"       => 'gift',                              // 礼品中心地址
+                "feedback"      => 'feedback',                          // 反馈留言地址
+                "shop_chart"    => "cart",                              // 购物车地址
+                "user_mail"     => "mail",                              // 用户提醒的地址
+                "personal"      => url('usercenter'),                           // 个人中心地址
+                "my_collection" => "profile/shop",                      // 我的收藏地址
+                "my_secure"     => "profile/security",                  // 安全设置的地址
+                "loginout"      => url("logout"),                       // 退出登录的地址
+                "switch_place"  => "switch_place"                       // 切换当前地址的地址
         );
+        if( Auth::check() ){
+            $user = Auth::user();
+            $userbar['data'] = array(
+                'user_id' => $user->front_uid,
+                'username' => $user->nickname,
+                'user_place' => ''
+            );          
+        } else{
+            $userbar['data'] = array(
+                'user_id' => 0,
+                'username' => '未登录用户',
+                'user_place' => '暂未获取地址'
+            );
+        }
+        return $userbar;
     }
 
 }
