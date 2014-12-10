@@ -1,4 +1,4 @@
-define(["jquery", "register/port"], function($, port){
+define(["jquery", "register/port", 'registerPort'], function($, port, registerPort){
     //注册表单
     /*
      *@include 验证
@@ -145,12 +145,7 @@ define(["jquery", "register/port"], function($, port){
                 }
 
                 if( res.success == 'true'){
-                    if(res.nextSrc){
-                        location.href = res.nextSrc;
-                    }else{
-                        alert("服务器异常，稍后再试");
-                    }
-                    
+	                location.href = registerPort['jump_port']
                 }else{
                     if( res.no || (res.no >= 1 && res.no <= 4) ){ //填写错误
 

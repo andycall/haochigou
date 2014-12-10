@@ -37,6 +37,33 @@ input:{
     "timestemp": ""                        //时间戳后台禁止短信连续发送 前端设置30秒（防止修改）
 }//前端提交数据
 
+
+-------------  发送短信验证码 -------------
+url : "/send_sms_auth"
+type : "post"
+output : {
+    success : "true"                    // 成功返回true, 失败返回false
+    errMsg  : ""                        // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+}
+input : {
+    "auth_way" : "sms", // 验证码类型（短信）
+    "telNumber" : ""  // 电话号码
+    "timestemp: : ""  // 时间戳后台禁止短信连续发送 前端设置30秒（防止修改）
+}
+
+------------- 验证短信验证码 ------------
+url : "/check_sms_auth"
+type : "post"
+output : {
+    success : "true"                    // 成功返回true, 失败返回false
+    errMsg  : ""                        // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+}
+input {
+    "auth_way" : "sms" // 验证码类型(短信)
+    "telNumber" : "" // 电话号码
+    "auth_number": '" // 验证码内容
+}
+
 -------------登录----------------
 
 

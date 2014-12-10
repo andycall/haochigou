@@ -1,4 +1,4 @@
-define([ "jquery", "register/port" ], function($, port) {
+define([ "jquery", "register/port", "registerPort" ], function($, port, registerPort) {
     //验证码ajax请求
     function getAuth(data) {
         $.post(port.switchAuth, data, function(res) {
@@ -52,7 +52,7 @@ define([ "jquery", "register/port" ], function($, port) {
                 } catch (err) {
                     return void alert("服务器异常，稍后再试");
                 }
-                if ("true" == res.success) res.nextSrc ? location.href = res.nextSrc : alert("服务器异常，稍后再试"); else if (res.no || res.no >= 1 && res.no <= 4) //填写错误
+                if ("true" == res.success) location.href = registerPort.jump_port; else if (res.no || res.no >= 1 && res.no <= 4) //填写错误
                 switch (res.no) {
                   //邮箱错误
                     case 1:

@@ -60,6 +60,18 @@
 	<a href="/login" class="login-link f-fr">登陆</a>
 </div>
 
+@section("script")
+    @parent
+    <script>
+        define('registerPort', function(){
+            return {
+                jump_port : "{{$jump_port}}"
+            }
+
+        });
+    </script>
+@stop
+
 @section("css")
     @parent
     {{HTML::style("/css/widget/register_form/register_form.css")}}
