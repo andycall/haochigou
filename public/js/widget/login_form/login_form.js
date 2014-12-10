@@ -48,7 +48,7 @@ define([ "jquery", "login/port" ], function($, port) {
             dataType: "json",
             data: data,
             success: function(res) {
-                if (console.log(res), "object" != typeof res) try {
+                if ("object" != typeof res) try {
                     res = $.parseJSON(res);
                 } catch (err) {
                     return void alert("服务器异常，稍后再试");
