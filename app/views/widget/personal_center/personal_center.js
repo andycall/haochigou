@@ -36,7 +36,7 @@ define(['personal/port', 'jquery', 'jquery.uploadify'], function(port, $) {
 			alert(data['errormsg']);
 		});
 	});
-	
+
 	$("#upload_btn").uploadify({
 		'swf': '/js/lib/uploadify.swf',                        //FLash文件路径
 		'uploader': port['imageUpload'], //处理ASHX页面
