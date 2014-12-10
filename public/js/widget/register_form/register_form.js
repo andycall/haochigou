@@ -1,7 +1,7 @@
 define([ "jquery", "register/port", "registerPort" ], function($, port, registerPort) {
     //验证码ajax请求
     function getAuth(data) {
-        $.post(port.switchAuth, data, function(res) {
+        $.post(data.auth_port, data, function(res) {
             if ("object" != typeof res) try {
                 res = $.parseJSON(res);
             } catch (err) {
@@ -92,6 +92,8 @@ define([ "jquery", "register/port", "registerPort" ], function($, port, register
     //短信验证码
     $smsBtn.on("click", function() {
         getAuth({
+            auth_port: port.sms_auth,
+            //短信验证port
             auth_way: "sms",
             timestemp: new Date().getTime(),
             //时间戳

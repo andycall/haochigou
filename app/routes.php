@@ -179,3 +179,20 @@ Route::get("/personal_modify_payment",function(){
     return View::make("template.personal.personal_modify_payment")->with($data);
 });
 
+##测试  =====验证码======
+Route::post("/sms_auth",function(){
+    $data = [
+        'success' => true
+    ];
+
+    return Response::json($data);
+});
+
+Route::post("/image_auth",function(){
+    $data = [
+            'success' => true,
+            'nextSrc' => 'http://img.store.sogou.com/net/a/08/link?appid=100520033&url=http%3A%2F%2Fwww.admin10000.com%2FUploadFiles%2FDocument%2F201202%2F20%2F20120220123258464881.JPG'
+        ];
+
+        return Response::json($data);
+});

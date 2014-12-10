@@ -7,7 +7,7 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
      * @include "ajax 登陆"
      * @include "验证码点击切换/发送验证码"
     */
-     
+
      var $smsBtn = $(".sms-btn");
 
 	console.log(loginPort);
@@ -15,12 +15,16 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
 
     //图片验证码
     $(".captcha-img").on("click",function(){
-        getAuth({ 'auth_way' : 'image' });
+        getAuth({
+            'auth_way' : 'image',
+            'auth_port': port.image_auth
+        });
     });
     //短信验证码
     $smsBtn.on("click",function(){
-        getAuth({ 
-            'auth_way'  : 'sms',
+        getAuth({
+            'auth_port' : port.sms_auth,     //短信验证port
+            'auth_way'  : 'sms',               //短信类型
             'timestemp' : new Date().getTime(),   //时间戳
             'telNumber' : $("#user-mobile").val()
         });
@@ -28,7 +32,7 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
 
     //验证码ajax请求
     function getAuth(data,callback){
-        $.post( port["switchAuth"], data, function(res){
+        $.post( data.auth_port, data, function(res){
             if( typeof res != 'object' ){
                 try{
                     res = $.parseJSON(res);
@@ -38,7 +42,7 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
                 }
             }
 
-            if( res.success == "true" ){
+            if( res.success ){
                 if(res.nextSrc){
                     if(data.auth_way == "image") $(".captcha-img").attr("src",res.nextSrc);
                 }else{

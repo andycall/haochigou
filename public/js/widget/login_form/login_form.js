@@ -1,13 +1,13 @@
 define([ "jquery", "login/port", "loginPort" ], function($, port, loginPort) {
     //验证码ajax请求
     function getAuth(data) {
-        $.post(port.switchAuth, data, function(res) {
+        $.post(data.auth_port, data, function(res) {
             if ("object" != typeof res) try {
                 res = $.parseJSON(res);
             } catch (err) {
                 return void alert("服务器数据异常，稍后再试");
             }
-            if ("true" == res.success) if (res.nextSrc) "image" == data.auth_way && $(".captcha-img").attr("src", res.nextSrc); else {
+            if (res.success) if (res.nextSrc) "image" == data.auth_way && $(".captcha-img").attr("src", res.nextSrc); else {
                 alert("短信已经发送，请注意接收验证码"), //计时禁止连续发送30秒
                 $smsBtn.attr("disabled", "disabled");
                 var count = 30, orginText = $smsBtn.text(), authTimer = setInterval(function() {
@@ -98,12 +98,16 @@ define([ "jquery", "login/port", "loginPort" ], function($, port, loginPort) {
     console.log(loginPort), //图片验证码
     $(".captcha-img").on("click", function() {
         getAuth({
-            auth_way: "image"
+            auth_way: "image",
+            auth_port: port.image_auth
         });
     }), //短信验证码
     $smsBtn.on("click", function() {
         getAuth({
+            auth_port: port.sms_auth,
+            //短信验证port
             auth_way: "sms",
+            //短信类型
             timestemp: new Date().getTime(),
             //时间戳
             telNumber: $("#user-mobile").val()
