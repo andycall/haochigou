@@ -451,5 +451,18 @@
     }
 
 
+// 个人中心修改用户名
+type : "post"
+url : "/change_user_name"
+input : {
+    user_name : "" //新的用户名
+}
+output : {
+    success : "true" // 成功返回true, 失败返回false
+    state   : 200  // HTTP 状态码
+    nextSrc : ""  // 登录成功后的跳转地址
+    errMsg  : ""  // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+    no      : 0  // 错误号 ,错误号就出现在这, 如果没有, 那内容为空.
+}
 
 ----------------------- Ajax  End   -----------------------------
