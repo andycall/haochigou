@@ -1,12 +1,13 @@
 require.config({
-	baseUrl : "/js/lib/",
+	baseUrl : "js/lib/",
 	shim : {
 		"underscore" : {
 			exports : "_"
 		}
 	},
 	paths : {
-		"map" : "../widget/map"
+		"map" : "../widget/map",
+		"search" : "../template/map"
 	}
 });
 
@@ -17,6 +18,7 @@ define([
 ], function($){
 	console.log("init");
 });
+
 
 
 

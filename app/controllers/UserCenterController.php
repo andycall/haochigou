@@ -85,7 +85,7 @@ class UserCenterController extends BaseController{
 
         $data['sidebar'] = $this->sideBar();
 
-        $data['userbar']['url'] = $this->userBar();
+        $data['userbar'] = $this->userBar();
 
 
         return View::make("template.personal.personal_center")->with($data);
@@ -108,6 +108,7 @@ class UserCenterController extends BaseController{
         $orderNum = $orderData->count();
 
         $data['recent_month']['deal_count'] = $orderNum;
+        $data['recent_month']['deal'] = array();
 
         $i = 0;
         foreach($orderData as $value){
@@ -166,7 +167,7 @@ class UserCenterController extends BaseController{
 
         $data['sidebar'] = $this->sideBar();
 
-        $data['userbar']['url'] = $this->userBar();
+        $data['userbar'] = $this->userBar();
 
 
         return View::make("template.personal.personal_recent_month")->with($data);
@@ -249,7 +250,7 @@ class UserCenterController extends BaseController{
 
         $data['sidebar'] = $this->sideBar();
 
-        $data['userbar']['url'] = $this->userBar();
+        $data['userbar'] = $this->userBar();
 
         return View::make("template.personal.personal_after_month")->with($data);
 
@@ -268,6 +269,8 @@ class UserCenterController extends BaseController{
         $data["shops"]["now_shop_count"] = $shopData->count();
 
         $data["shops"]["other_shop_count"] = 0;
+
+        $data["shops"]["now_place"] = array();
 
         $i = 0;
         foreach($shopData as $value){
@@ -292,7 +295,7 @@ class UserCenterController extends BaseController{
 
         $data['sidebar'] = $this->sideBar();
 
-        $data['userbar']['url'] = $this->userBar();
+        $data['userbar'] = $this->userBar();
 
         return View::make("template.personal.personal_collection_shop")->with($data);
 
@@ -332,11 +335,71 @@ class UserCenterController extends BaseController{
 
         $data['sidebar'] = $this->sideBar();
 
-        $data['userbar']['url'] = $this->userBar();
+        $data['userbar'] = $this->userBar();
 
         return View::make("template.personal.personal_collection_goods")->with($data);
 
+    }
 
+    /**
+     * 未评论页面
+     */
+    public function Uncomment(){
+        $orders = Order::where('state', 4)->get();
+
+        $data['userbar'] = $this->userBar();
+        $data['sidebar'] = $this->sideBar();
+        $data['uncomment']['deal_count'] = count($orders);
+        $data['uncomment']['deal'] = array();
+
+        foreach($orders as $order){
+            $shop = Shop::find($order->shop_id);
+            $one = array();
+            $one['shop_id']         = $order->shop_id;
+            $one['deal_id']         = $order->id;
+            $one['deal_statue']     = $order->state;
+            $one['same_again']      = '##';
+            $one['deal_is_return']  = '##';                 // 是否能退单
+            $one['deal_return']     = '##';                 // 退单链接
+            $one['deal_is_pre']     = $order->is_pre;       // 是否是预定单
+            $one['deal_pre_time']   = $order->arrivetime;   // 送餐时间
+            $one['deal_again']      = '##';                 // 商品的地址
+            $one['shop_name']       = $shop->name; // 商店的名称
+            $one['deal_number']     = $order->id;   // 订单号，先用订单ID代替
+            $one['deal_time']       = $order->ordertime; //订单时间
+            $one['deal_phone']      = $shop->linktel;//餐厅电话
+            $one['deliver_address'] = $order->receive_address;//订单送往地址
+            $one['deliver_phone']   = $order->receive_phone;
+            $one['deliver_remark']  = $order->beta;//订单备注
+            $one['deal_speed']      = 0;// 送餐速度，0没有评价1不满意2一般般3满意
+            $one['deal_satisfied']  = '';
+            $one['good']            = array();
+
+            $menus = array_count_values(explode(',', $order->order_menus));
+            foreach($menus as $menu_id=>$count){
+                $good = Menu::find($menu_id);
+                array_push($one['good'], array(
+                    'goods_id'      => $good->id,
+                    'goods_name'    => $good->title,
+                    'goods_value'   => $good->price, // 应该是单价
+                    'goods_amount'  => $count,
+                    'goods_total'   => $good->price * $count,
+                    'good_atisfied' => '##'      // 这个地方不应该出现满意度撒
+                ));
+            }
+            // others表示其他费用
+            $one['others'] = array( 
+                array(
+                    'item_name'   => '',
+                    'item_value'  => '',
+                    'item_amount' => '',
+                    'item_total'  => ''
+                )
+            );
+            $one['total'] = $order->total;
+            array_push($data['uncomment']['deal'], $one);
+        }
+        return View::make("template.personal.personal_uncomment")->with($data);
     }
 
 
@@ -448,7 +511,7 @@ class UserCenterController extends BaseController{
             "personal_center" => url("usercenter"),  // 个人中心的地址
             "personal_recent_month" => url("usercenter/recent_month"), // 最近一个月的地址
             "personal_after_month" => url("usercenter/after_month") , // 一个月之前
-            "personal_uncomment" => "#" ,  // 未点评的订单
+            "personal_uncomment" => url('usercenter/personal_uncomment'),  // 未点评的订单
             "personal_return" => "#",     // 退单中的订单
             "personal_collection_shop" => url("usercenter/collect_shop"),// 我收藏的餐厅的地址
             "personal_collection_goods" => url("usercenter/collect_menu"), // 我收藏的商品的地址
@@ -461,21 +524,38 @@ class UserCenterController extends BaseController{
 
 
     private function userBar(){
-        return array(
-            "my_place" => "这里是地址",
-            "switch_palce" => "##",
-            "logo" => "123" ,                         // 网站主页地址
-            "mobile" => "123",                 // 跳转到下载手机APP的地址
-            "my_ticket" => "123",                 // 我的饿单的地址
-            "my_gift"  => "123",                // 礼品中心地址
-            "feedback" => "123",                // 反馈留言地址
-            "shop_chart" => "123",                // 购物车地址
-            "user_mail" => "123",                // 用户提醒的地址
-            "personal" => "123",                // 个人中心地址
-            "my_collection" => "123",               // 我的收藏地址
-            "my_secure" => "123",              // 安全设置的地址
-            "loginout" => url("logout"),              // 退出登录的地址
-            "switch_place" => "123"                  // 切换当前地址的地址
+        $userbar = array();
+        $userbar['url'] = array(
+                "my_place"      => "这里是地址",
+                "switch_palce"  => "##",
+                "logo"          => url('/'),    // 网站主页地址
+                "mobile"        => "123",                               // 跳转到下载手机APP的地址
+                "my_ticket"     => 'order',                             // 我的饿单的地址
+                "my_gift"       => 'gift',                              // 礼品中心地址
+                "feedback"      => 'feedback',                          // 反馈留言地址
+                "shop_chart"    => "cart",                              // 购物车地址
+                "user_mail"     => "mail",                              // 用户提醒的地址
+                "personal"      => url('usercenter'),                           // 个人中心地址
+                "my_collection" => "profile/shop",                      // 我的收藏地址
+                "my_secure"     => "profile/security",                  // 安全设置的地址
+                "loginout"      => url("logout"),                       // 退出登录的地址
+                "switch_place"  => "switch_place"                       // 切换当前地址的地址
         );
+        if( Auth::check() ){
+            $user = Auth::user();
+            $userbar['data'] = array(
+                'user_id' => $user->front_uid,
+                'username' => $user->nickname,
+                'user_place' => ''
+            );          
+        } else{
+            $userbar['data'] = array(
+                'user_id' => 0,
+                'username' => '未登录用户',
+                'user_place' => '暂未获取地址'
+            );
+        }
+        return $userbar;
     }
+
 }

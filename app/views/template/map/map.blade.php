@@ -40,6 +40,7 @@
       <h2 class=""><%= d.name %></h2>
       <p><%= d.address %></p>
       <p>附近有<span>4</span>家餐厅</p>
+      <a href="<%= jump_url %>">去看看</a>
   </script>
 
   <!-- 头顶信息展示模板 -->

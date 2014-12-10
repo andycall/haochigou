@@ -1,5 +1,6 @@
-define(['jquery', 'underscore'], function($, _){
+define([ 'jquery', 'underscore', 'search/port'], function($, _, port){
 	console.log("map loaded");
+
 	var mapObj = (function(){
 		var mapObj = new AMap.Map("container",{
 				view: new AMap.View2D({
@@ -54,7 +55,6 @@ define(['jquery', 'underscore'], function($, _){
 
 			self.getCoder(X, Y, function(data){
 				//debugger;
-				console.log(data);
 				var template = _.template($("#point_template").html())({
 					data : data.regeocode.addressComponent
 				});
@@ -89,7 +89,7 @@ define(['jquery', 'underscore'], function($, _){
 
 				mapObj.plugin(["AMap.ToolBar"],function(){
 					var toolBar = new AMap.ToolBar({
-						offset : new  AMap.Pixel(45, 170)
+						offset : new  AMap.Pixel(5, 300)
 					});
 					mapObj.addControl(toolBar);
 				});
@@ -271,11 +271,16 @@ define(['jquery', 'underscore'], function($, _){
 						poil = self.poil;
 
 					//console.log(self.resultIndex, self.resultEnd);
+					if(poil.length < 10){
+						self.resultEnd = poil.length;
+					}
+
 					var poiArr = poil.slice(self.resultIndex, self.resultEnd);
 
 
-					var resultCount = poil.length / 10;
+					var resultCount = Math.ceil(poil.length / 10);
 
+						
 					var resultStr1 = _.template($("#place_template").html())({
 						resultCount : resultCount,
 						resultIndex : self.resultIndex,
@@ -290,8 +295,18 @@ define(['jquery', 'underscore'], function($, _){
 					city.html(resultStr1);
 					city.show();
 
-					$(".nextGroup").on('click', self.bindNext);
-					$(".prevGroup").on('click', self.bindPrev);
+					city.on('click', 'li', function(ev){
+			           var target = ev.currentTarget;
+			           if(target.className != 'secid') return;
+			           console.log(2);
+			           var dataMouseover = parseInt(target.dataset['mouseover']);
+			           console.log(dataMouseover);
+			           self.openMarkerTipById1(dataMouseover, target, resultCount);
+			           return false;
+			       	});
+
+					// $(".nextGroup").on('click', self.bindNext);
+					// $(".prevGroup").on('click', self.bindPrev);
 
 				};
 
@@ -341,70 +356,78 @@ define(['jquery', 'underscore'], function($, _){
 						input = $("#" + self.input),
 						city = $("#" + self.city);
 
-//                console.log(data);
+					console.log(data);
 					// 清空搜索缓存
 
 					// 向后端要订餐的数据
 
-					var restaurant = [];
+					var restaurant = [],
+						restaurantResult = [],
+						real_data = {};
+
 
 					var poil = data.poiList.pois;
 
 					for(var i = 0,len = poil.length; i < len; i ++){
-						restaurant.push([poil[i].location.A, poil[i].location.D]);
+						restaurant.push({ lat : poil[i].location.lat,  lng : poil[i].location.lng});
 					}
 
-					var restaurantResult = [];
+					real_data['restaurant'] = poil;
 
-					autoComplete.windowsArr = [];
-					autoComplete.marker = [];
-					autoComplete.data = data;
-					autoComplete.resultIndex = 0;
-					autoComplete.resultEnd  = 10;
-					autoComplete.poil = poil;
-					autoComplete.restaurantResult = restaurantResult;
 
-					//清空地图上的InfoWindow和Marker
-					mapObj.clearMap();
+					$.ajax({
+						url: port['getRestaurant'],
+						type: 'POST',
+						data: JSON.stringify(real_data),
+						contentType: 'application/json; charset=utf-8',
+						dataType: 'json',
+						async: false,
+						success: function(data) {
+							console.log(poil);
+							autoComplete.windowsArr = [];
+							autoComplete.marker = [];
+							autoComplete.data = data;
+							autoComplete.resultIndex = 0;
+							autoComplete.resultEnd  = 10;
+							autoComplete.poil = data;
+							autoComplete.restaurantResult = restaurantResult;
 
-					self.render();
+							//清空地图上的InfoWindow和Marker
+							mapObj.clearMap();
 
-					if(drag){
-						$(".drag-wrap").css({left : 450});
-						drag.funcs.updateDragPosition();
-					}
+							self.render();
 
-					city.on('mouseover', 'li', function(ev){
-						var target = ev.currentTarget;
-						if(target.className == 'secid'){
-							var dataMouseover = parseInt(target.dataset['mouseover']);
-							self.openMarkerTipById(dataMouseover, target);
+							if(drag){
+								$(".drag-wrap").css({left : 450});
+								drag.funcs.updateDragPosition();
+							}
+
+							city.on('mouseover', 'li', function(ev){
+								var target = ev.currentTarget;
+								if(target.className == 'secid'){
+									var dataMouseover = parseInt(target.dataset['mouseover']);
+									self.openMarkerTipById(dataMouseover, target);
+								}
+							});
+
+
+							// $("#search_list").on('click', 'span' , self.bindNext);
+							$(".prevGroup").on('click', self.bindPrev);
+
+							city.on('mouseout', 'li', function(ev){
+								var target = ev.currentTarget;
+								if(target.className == 'secid'){
+									var dataMouseOut = target.dataset['mouseout'];
+									self.onmouseout_MarkerStyle(dataMouseOut, target);
+								}
+							});
+
+			               
 						}
 					});
 
 
-					$("#search_list").on('click', 'span' , self.bindNext);
-					$(".prevGroup").on('click', self.bindPrev);
 
-					city.on('mouseout', 'li', function(ev){
-						var target = ev.currentTarget;
-						if(target.className == 'secid'){
-							var dataMouseOut = target.dataset['mouseout'];
-							self.onmouseout_MarkerStyle(dataMouseOut, target);
-						}
-					});
-
-//                city.on('click', 'li', function(ev){
-//                    var target = ev.currentTarget;
-//                    if(target.className != 'secid') return;
-//                    console.log(2);
-//
-//
-//                    var dataMouseover = parseInt(target.dataset['mouseover']);
-//                    console.log(dataMouseover);
-//                    self.openMarkerTipById1(dataMouseover, target, resultCount);
-//
-//                });
 				};
 
 				//鼠标滑过查询结果改变背景样式，根据id打开信息窗体
@@ -413,10 +436,11 @@ define(['jquery', 'underscore'], function($, _){
 					if(that){
 						that.style.background = '#CAE1FF';
 					}
+					console.log(pointid, that, resultCount);
 
 					autoComplete.windowsArr[pointid].open(mapObj, autoComplete.marker[pointid]);
 
-					for(var i = 0; i < resultCount; i ++){
+					for(var i = 0; i <= resultCount; i ++){
 						$(".icon" + (i + 1)).each(function(index, value){
 							value.className = "icon icon" + ( i + 1 ) + "_b";
 						});
@@ -457,8 +481,8 @@ define(['jquery', 'underscore'], function($, _){
 						input = self.input,
 						result = self.result;
 
-					var lngX = d.location.getLng();
-					var latY = d.location.getLat();
+					var lngX = d.location['lng'];
+					var latY = d.location['lat'];
 					var markerOption = {
 						map:mapObj,
 						content : "<div class='icon icon" +  ( i + 1 )+ "_b'></div>",
@@ -469,7 +493,8 @@ define(['jquery', 'underscore'], function($, _){
 
 					var windowTemplate = _.template($("#windowInfo_template").html())({
 						i : i,
-						d : d
+						d : d,
+						jump_url : d['jump_url']
 					});
 
 					var infoWindow = new AMap.InfoWindow({
@@ -588,6 +613,7 @@ define(['jquery', 'underscore'], function($, _){
 
 					function fromContainerPixelToLngLat (left, top){
 						var ll = mapObj.containTolnglat(new AMap.Pixel(left ,top));
+						
 						return {lng: ll.getLng(), lat: ll.getLat()};
 					}
 

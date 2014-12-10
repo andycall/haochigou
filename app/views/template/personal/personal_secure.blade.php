@@ -9,7 +9,7 @@
 @stop
 
 @section("sidebar")
-    @include("widget.sideBar.sideBar", array("active" => "secure"))
+    @include("widget.sidebar.sidebar", array("active" => "secure"))
 @stop
 
 @section("rightContent")

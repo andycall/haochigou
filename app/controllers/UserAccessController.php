@@ -3,16 +3,44 @@
 /*
  **用户个人认证模块
  */
+
+use Gregwar\Captcha\CaptchaBuilder;
+
 class UserAccessController extends BaseController{
 
     //注册接口
     public function register(){
+        if(Auth::check()){
+            echo json_encode(array(
+                'succcess'=>false,
+                'state'=>200,
+                'errMsg'=>array(
+                    'inputMsg'=>'您已登录'
+                ),
+                'no'=>2
+            ));
 
-        $mobile = Input::get('mobile');
-        $email = Input::get('email');
+            exit;
+        }
+
+        $mobile = Input::get('user_phone');
+        $email = Input::get('user_email');
+
+        //账号重复性检测
+        if(is_object($this->accountCheck($mobile)) || is_object($this->accountCheck($email))){
+            echo json_encode(array(
+                'success'=>false,
+                'state'=>200,
+                array(
+                    'inputMsg'=>'该手机号或邮箱已经被注册!'
+                )
+            ));
+
+            exit();
+        }
 
 
-        $password = Input::get('password');
+        $password = Input::get('user_psw');
         //对密码进行hash加密
         $password = Hash::make($password);
 
@@ -44,7 +72,14 @@ class UserAccessController extends BaseController{
 
 
         if($frontUser->save()){
-            echo "ok";
+
+            Auth::login($frontUser);//用户登录
+
+            echo json_encode(array(
+                'success'=>true,
+                'state'=>200,
+
+            ));
         }
 
     }
@@ -53,13 +88,26 @@ class UserAccessController extends BaseController{
     //登录接口
     public function login(){
 
+        if(Auth::check()){
+            echo json_encode(array(
+                'succcess'=>false,
+                'state'=>200,
+                'errMsg'=>array(
+                    'inputMsg'=>'该用户已登录，请不要重复登录'
+                ),
+                'no'=>2
+            ));
+
+            exit;
+        }
+
         $account = Input::get('user_email');
         $password = Input::get('user_psw');
 
         $accountCheck = $this->accountCheck($account);
         if(!is_object($accountCheck)){
             echo json_encode(array(
-                'success'=>'false',
+                'success'=>false,
                 'state'=>200,
                 'errMsg'=>array(
                     'inputMsg'=>'用户不存在'
@@ -76,7 +124,7 @@ class UserAccessController extends BaseController{
             Auth::login($accountCheck);
         }else{
             echo json_encode(array(
-                'succcess'=>'false',
+                'succcess'=>false,
                 'state'=>200,
                 'errMsg'=>array(
                     'inputMsg'=>'密码验证失败'
@@ -93,6 +141,46 @@ class UserAccessController extends BaseController{
 
 
     }
+
+
+    /*
+     * 生成图片验证码
+     **/
+    public function CaptchaMake(){
+        $code = (string)rand(1000,9999);
+
+        $builder = new CaptchaBuilder($code);
+        $builder->build();
+
+        $phrase = $builder->getPhrase();
+        $ip = $this->getIP();
+        $codeKey = md5($ip);
+        Cache::tags('register','code')->put($codeKey,$phrase,1);
+
+        header("Cache-Control: no-cache, must-revalidate");
+        header('Content-Type: image/jpeg');
+        $builder->output();
+        exit;
+    }
+
+
+    /*
+     * 修改图片验证码
+     **/
+    public function CaptchaChange(){
+        $ip = $this->getIP();
+        $codeKey = md5($ip);
+
+        $data = array(
+            //'code'=>Cache::tags('register','code')->get($codeKey),
+            'success'=>true,
+            'nextSrc'=>url('captcha'),
+            'errMsg'=>''
+        );
+
+        echo json_encode($data);
+    }
+
 
     //退出接口
     public function logout(){

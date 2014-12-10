@@ -33,6 +33,10 @@ class FrontUser extends Eloquent implements UserInterface, RemindableInterface{
     public function collectMenu(){
     	return $this->hasMany('CollectMenu', 'user_id', 'front_uid');
     }
+
+    public function order(){
+        return $this->hasMany('Order', 'front_user_id', 'front_uid');
+    }
 }
 
 

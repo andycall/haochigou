@@ -9,6 +9,20 @@ define([ "personal/port", "jquery", "jquery.uploadify" ], function(port, $) {
         }), $(this).addClass("active"), $(".recent_ticket").hide(), $(".recent_month").show();
     }), $(".avatar").on("click", function() {
         $("#upload_btn")[0].click();
+    }), $("#user_name").on("blur", function() {
+        var user_name = $(this).text();
+        console.log(user_name), $.ajax({
+            url: port.change_user_name,
+            type: "POST",
+            data: JSON.stringify({
+                user_name: user_name
+            }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: !1
+        }).fail(function(data) {
+            alert(data.errormsg);
+        });
     }), $("#upload_btn").uploadify({
         swf: "/js/lib/uploadify.swf",
         //FLash文件路径

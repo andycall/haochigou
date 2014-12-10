@@ -9,7 +9,7 @@
 @stop
 
 @section("form")
-    @include("widget.register_form.register_form")
+    @include("widget.register_form.register_form", array("jump_port" => "/login")) {{-- 跳转到登陆页面 --}}
 @stop
 
 @section("footer")

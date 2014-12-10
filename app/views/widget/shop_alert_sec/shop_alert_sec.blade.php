@@ -1,3 +1,4 @@
+
 @for ($i = 0; $i < count($shops); $i++)
     <div class="collection-row-wrapper" class="restaurant-{{$shops[$i]['shop_id']}}">
         <a href="{{$shops[$i]['shop_url']}}">
@@ -24,7 +25,13 @@
                 </div>
                 <div class="collection-row-book-right">
                     <div class="title">
-                        <p>{{$shops[$i]['shop_name']}}</p>
+                        <p>
+@if (mb_strlen($shops[$i]['shop_name']) > 6)
+                            {{mb_substr($shops[$i]['shop_name'],0,6)}}..
+@else
+                            {{$shops[$i]['shop_name']}}
+@endif
+                        </p>
                     </div>
 @if($shops[$i]['is_opening'])
                     <div class="busy">
