@@ -7,7 +7,7 @@ require.config({
 	},
 	paths : {
 		"map" : "../widget/map",
-		"localMap" : "../template/map"
+		"search" : "../template/map"
 	}
 });
 
@@ -18,6 +18,7 @@ define([
 ], function($){
 	console.log("init");
 });
+
 
 
 
