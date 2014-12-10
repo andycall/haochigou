@@ -12,7 +12,7 @@
 
 		{{-- 电话号码 --}}
 		<div class="u-input-item" id="register-user-mobile">
-			<input type="text" name="user-name" id="register-user-mobile" class="user-name box f-pr" placeholder="电话号码" minlength="5" required>
+			<input type="text" name="user-name" id="register-user-mobile-input" class="user-name box f-pr" placeholder="电话号码" minlength="5" required>
 			<div class="u-error-tip f-dn">请填写电话号码</div>
 		</div>
 

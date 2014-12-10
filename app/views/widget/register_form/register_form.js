@@ -1,4 +1,5 @@
 define(["jquery", "register/port", 'registerPort'], function($, port, registerPort){
+	console.log("register loaded");
     //注册表单
     /*
      *@include 验证
@@ -13,7 +14,7 @@ define(["jquery", "register/port", 'registerPort'], function($, port, registerPo
         getAuth({ 
             'auth_way'  : 'sms',
             'timestemp' : new Date().getTime(),   //时间戳
-            'telNumber' : $("#register-user-mobile").val()
+            'telNumber' : $("#register-user-mobile-input").val()
         });
     });
 
@@ -29,7 +30,7 @@ define(["jquery", "register/port", 'registerPort'], function($, port, registerPo
                 }
             }
 
-            if( res.success == "true"){
+            if( String(res.success) == "true"){
                 alert("短信已经发送，请注意接收验证码");
                     
                 //计时禁止连续发送30秒
@@ -144,7 +145,7 @@ define(["jquery", "register/port", 'registerPort'], function($, port, registerPo
                     }
                 }
 
-                if( res.success == 'true'){
+                if( String(res.success) == 'true'){
 	                location.href = registerPort['jump_port']
                 }else{
                     if( res.no || (res.no >= 1 && res.no <= 4) ){ //填写错误

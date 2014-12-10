@@ -22,6 +22,24 @@ define(['personal/port', 'jquery', 'jquery.uploadify'], function(port, $) {
 		$("#upload_btn")[0].click();
 	});
 
+	$("#user_name").on('blur', function(){
+		var user_name = $(this).text();
+		console.log(user_name);
+		$.ajax({
+			url: port['change_user_name'],
+			type: 'POST',
+			data: JSON.stringify({uer_name : user_name}),
+			contentType: 'application/json; charset=utf-8',
+			dataType: 'json',
+			async: false
+		}).complete(function(){
+
+		}).fail(function(){
+
+		});
+	});
+
+
 	$("#upload_btn").uploadify({
 		'swf': '/js/lib/uploadify.swf',                        //FLash文件路径
 		'uploader': port['imageUpload'], //处理ASHX页面
