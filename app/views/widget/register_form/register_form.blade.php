@@ -12,7 +12,7 @@
 
 		{{-- 电话号码 --}}
 		<div class="u-input-item" id="register-user-mobile">
-			<input type="text" name="user-name" id="register-user-mobile" class="user-name box f-pr" placeholder="电话号码" minlength="5" required>
+			<input type="text" name="user-name" id="register-user-mobile-input" class="user-name box f-pr" placeholder="电话号码" minlength="5" required>
 			<div class="u-error-tip f-dn">请填写电话号码</div>
 		</div>
 
@@ -59,6 +59,18 @@
 	{{-- 返回登陆链接 --}}
 	<a href="/login" class="login-link f-fr">登陆</a>
 </div>
+
+@section("script")
+    @parent
+    <script>
+        define('registerPort', function(){
+            return {
+                jump_port : "{{$jump_port}}"
+            }
+
+        });
+    </script>
+@stop
 
 @section("css")
     @parent

@@ -24,7 +24,7 @@ class MainController extends BaseController {
 	public function index(){
 		$data = array();
 
-		$data['userbar']['url'] = $this->getUserBar();
+		$data['userbar'] 		= $this->getUserBar();
 		$data['pic_swap'] 		= $this->getPicSwap();
 		$data['side_bar']       = $this->getSideBar(); // 右边功能栏
 		$data['my_store']       = $this->getMyStore(); // 我收藏的店铺
@@ -415,11 +415,10 @@ class MainController extends BaseController {
 
 	/**
 	 * userbar上面那一些列地址
-	 * @return [type] [description]
 	 */
 	public function getUserBar(){
-
-		$url = array(
+		$userbar = array();
+		$userbar['url'] = array(
 				"my_place"      => "这里是地址",
 				"switch_palce"  => "##",
 				"logo"          => url('/'),	// 网站主页地址
@@ -432,9 +431,23 @@ class MainController extends BaseController {
 				"personal"      => url('usercenter'),                			// 个人中心地址
 				"my_collection" => "profile/shop",               		// 我的收藏地址
 				"my_secure"     => "profile/security",              	// 安全设置的地址
-				"loginout"      => "loginout",              			// 退出登录的地址
+				"loginout"      => url("logout"),              			// 退出登录的地址
 				"switch_place"  => "switch_place"                  		// 切换当前地址的地址
 		);
-		return $url;
+		if( Auth::check() ){
+			$user = Auth::user();
+			$userbar['data'] = array(
+				'user_id' => $user->front_uid,
+				'username' => $user->nickname,
+				'user_place' => ''
+			);			
+		} else{
+			$userbar['data'] = array(
+				'user_id' => 0,
+				'username' => '未登录用户',
+				'user_place' => '暂未获取地址'
+			);
+		}
+		return $userbar;
 	}
 }

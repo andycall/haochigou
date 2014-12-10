@@ -9,6 +9,8 @@ define(function() {
         //评论送餐速度
         commentRestaurant: "/comment_restaurant",
         //评论送餐速度
-        commentCate: "/comment_cate"
+        commentCate: "/comment_cate",
+        //评论送餐速度,
+        change_user_name: "/change_user_name"
     };
 });
