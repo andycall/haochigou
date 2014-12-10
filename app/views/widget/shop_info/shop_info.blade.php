@@ -83,11 +83,11 @@
                                     <span>{{$shops[$i]['order_count']}}订单</span>
             @endif
                             </div>
-                            <div class="icon">
-            @for($m = 0; $m < count($shops[$i]['support_activity']); $m++)
-                                    <span title="{{$shop_list['data']['activity'][$shops[$i]['support_activity'][$m]]}}" style="background-position: 0 {{20-$shops[$i]['support_activity'][$m]*20}}px"></span>
-            @endfor
-                            </div>
+                            {{--<div class="icon">--}}
+            {{--@for($m = 0; $m < count($shops[$i]['support_activity']); $m++)--}}
+                                    {{--<span title="{{$shop_list['data']['activity'][$shops[$i]['support_activity'][$m]]}}" style="background-position: 0 {{20-$shops[$i]['support_activity'][$m]*20}}px"></span>--}}
+            {{--@endfor--}}
+                            {{--</div>--}}
         @endif
     @endif
                     </div>
@@ -102,14 +102,14 @@
         @elseif($shops[$i]['is_opening']==2)
                             <p class="close">餐厅太忙，暂不接受订单</p>
         @endif
-                        <ul>
-        @for($m = 0; $m < count($shops[$i]['support_activity']); $m++)
-                                <li>
-                                    <span class="icon" style="background-position: 0 {{20-$shops[$i]['support_activity'][$m]*20}}px"></span>
-                                    <span>{{$shop_list['data']['activity'][$shops[$i]['support_activity'][$m]]}}</span>
-                                </li>
-        @endfor
-                        </ul>
+                        {{--<ul>--}}
+        {{--@for($m = 0; $m < count($shops[$i]['support_activity']); $m++)--}}
+                                {{--<li>--}}
+                                    {{--<span class="icon" style="background-position: 0 {{20-$shops[$i]['support_activity'][$m]*20}}px"></span>--}}
+                                    {{--<span>{{$shop_list['data']['activity'][$shops[$i]['support_activity'][$m]]}}</span>--}}
+                                {{--</li>--}}
+        {{--@endfor--}}
+                        {{--</ul>--}}
                         <div class="divider" data-shop_summary="{{$shops[$i]['shop_summary']}}" data-business_hours="{{$shops[$i]['business_hours']}}" data-shop_address="{{$shops[$i]['shop_address']}}" data-deliver_state_start="{{$shops[$i]['deliver_state_start']}}" data-shop_announce="{{$shops[$i]['shop_announce']}}">
                             <p class="ann"><strong>公告:</strong>&nbsp;{{$shops[$i]['shop_announce']}}</p>
                             <p><strong>起送价:</strong>&nbsp;{{$shops[$i]['deliver_state_start']}}</p>
