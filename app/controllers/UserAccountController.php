@@ -163,6 +163,34 @@ class UserAccountController extends BaseController{
     }
 
 
+    /**
+     * 用户昵称修改
+     **/
+    public function nickNameChange(){
+        $newName = Input::get('user_name');
+
+        $nameChange = FrontUser::where('front_uid','=',$this->uid)->update(array('nickname'=>$newName));
+
+        if($nameChange){
+            echo json_encode(array(
+                'success'=>true,
+                'state'=>200,
+                'errMsg'=>'',
+                'no'=>''
+            ));
+        }else{
+            echo json_encode(array(
+                'success'=>false,
+                'state'=>200,
+                'errMsg'=>'修改失败',
+                'no'=>''
+            ));
+        }
+
+
+    }
+
+
     private function sideBar(){
         return array(
             "personal_center" => url("usercenter"),  // 个人中心的地址
