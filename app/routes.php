@@ -148,9 +148,9 @@ Route::post('modifyorder', array('before' => 'loginCheck', 'uses' => 'PersonalCo
 Route::post('test', 'ShopController@cartDel');
 Route::get('test/{shop_id}', 'ShopController@getCategory');
 
-<<<<<<< HEAD
 
-=======
+
+
 #测试
 Route::get("/personal_modify_payment",function(){
    $data = [
@@ -211,4 +211,4 @@ Route::post("/image_auth",function(){
 
         return Response::json($data);
 });
->>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
+
