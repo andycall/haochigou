@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b879347d-d48a-4708-b0bc-0618efd40881" name="Default" comment="" />
+    <list default="true" id="b879347d-d48a-4708-b0bc-0618efd40881" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/MainController.php" afterPath="$PROJECT_DIR$/app/controllers/MainController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/ShopController.php" afterPath="$PROJECT_DIR$/app/controllers/ShopController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/UserCenterController.php" afterPath="$PROJECT_DIR$/app/controllers/UserCenterController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/login_and_register" afterPath="$PROJECT_DIR$/API/login_and_register" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/login_form/login_form.blade.php" afterPath="$PROJECT_DIR$/app/views/widget/login_form/login_form.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/personal" afterPath="$PROJECT_DIR$/API/personal" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/personal_center/personal_center.blade.php" afterPath="$PROJECT_DIR$/app/views/widget/personal_center/personal_center.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/personal_center/personal_center.js" afterPath="$PROJECT_DIR$/app/views/widget/personal_center/personal_center.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/widget/personal_center/personal_center.js" afterPath="$PROJECT_DIR$/public/js/widget/personal_center/personal_center.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/template/personal/port.js" afterPath="$PROJECT_DIR$/app/views/template/personal/port.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/template/personal/port.js" afterPath="$PROJECT_DIR$/public/js/template/personal/port.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/template/login_register/register.blade.php" afterPath="$PROJECT_DIR$/app/views/template/login_register/register.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/register_form/register_form.blade.php" afterPath="$PROJECT_DIR$/app/views/widget/register_form/register_form.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/register_form/register_form.js" afterPath="$PROJECT_DIR$/app/views/widget/register_form/register_form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/widget/register_form/register_form.js" afterPath="$PROJECT_DIR$/public/js/widget/register_form/register_form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/userBar/userBar.blade.php" afterPath="$PROJECT_DIR$/app/views/widget/userBar/userBar.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="haochigo.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -25,21 +43,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="shop_info.blade.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="shop_info.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/widget/shop_info/shop_info.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.806452" vertical-offset="2046" max-vertical-offset="3036">
-              <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="111" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="shop_info.less" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/views/widget/shop_info/shop_info.less">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.70666665" vertical-offset="3875" max-vertical-offset="4796">
-              <caret line="193" column="28" selection-start-line="193" selection-start-column="28" selection-end-line="193" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.6554935" vertical-offset="2046" max-vertical-offset="3036">
+              <caret line="109" column="45" selection-start-line="109" selection-start-column="45" selection-end-line="109" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -759,18 +767,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/widget/shop_info/shop_info.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.806452" vertical-offset="2046" max-vertical-offset="3036">
-          <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="111" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/widget/shop_info/shop_info.less">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.70666665" vertical-offset="3875" max-vertical-offset="4796">
           <caret line="193" column="28" selection-start-line="193" selection-start-column="28" selection-end-line="193" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/widget/shop_info/shop_info.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6554935" vertical-offset="2046" max-vertical-offset="3036">
+          <caret line="109" column="45" selection-start-line="109" selection-start-column="45" selection-end-line="109" selection-end-column="45" />
           <folding />
         </state>
       </provider>
