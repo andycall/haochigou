@@ -543,19 +543,44 @@ class UserCenterController extends BaseController{
         );
         if( Auth::check() ){
             $user = Auth::user();
+            if( $user->nickname == NULL and $user->mobile == NULL){
+                $username = md5($user->email);
+            }elseif( $user->nickname == NULL ){
+                $username = md5($user->mobile);
+            }else{
+                $username = $user->nickname;
+            }
             $userbar['data'] = array(
                 'user_id' => $user->front_uid,
-                'username' => $user->nickname,
+                'username' => $username,
                 'user_place' => ''
             );          
         } else{
+            $ipkey = md5($this->getIP());            
             $userbar['data'] = array(
                 'user_id' => 0,
-                'username' => '未登录用户',
+                'username' => $ipkey,
                 'user_place' => '暂未获取地址'
             );
         }
         return $userbar;
+    }
+
+    //获取客户端ip地址
+    private function getIP(){
+        if(!empty($_SERVER["HTTP_CLIENT_IP"])){
+            $cip = $_SERVER["HTTP_CLIENT_IP"];
+        }
+        elseif(!empty($_SERVER["HTTP_X_FORWARDED_FOR"])){
+            $cip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+        }
+        elseif(!empty($_SERVER["REMOTE_ADDR"])){
+            $cip = $_SERVER["REMOTE_ADDR"];
+        }
+        else{
+            $cip = "无法获取！";
+        }
+        return $cip;
     }
 
 }

@@ -382,7 +382,7 @@ class ShopController extends BaseController {
 			$one = array();
 			if($group->activity_id == 1){		// 不是活动
 				$one['classify_name']      = $group->name;
-				$one['classify_name_abbr'] = $group->name_abbr;
+				$one['classify_name_abbr'] = (mb_strlen($group->name, 'utf8') > 10) ? mb_substr($group->name, 0, 3, 'utf8').'...' : $group->name;
 				$one['classify_id']        = $group->id;
 				$one['classify_count']     = Menu::where('shop_id', $shop_id)->where('group_id', $group->activity_id)->get()->count('shop_id');
 				$one['classify_icon']      = $group->icon;
@@ -614,22 +614,47 @@ class ShopController extends BaseController {
 				"loginout"      => url("logout"),              			// 退出登录的地址
 				"switch_place"  => "switch_place"                  		// 切换当前地址的地址
 		);
-		if( Auth::check() ){
-			$user = Auth::user();
-			$userbar['data'] = array(
-				'user_id' => $user->front_uid,
-				'username' => $user->nickname,
-				'user_place' => ''
-			);			
-		} else{
-			$userbar['data'] = array(
-				'user_id' => 0,
-				'username' => '未登录用户',
-				'user_place' => '暂未获取地址'
-			);
-		}
+        if( Auth::check() ){
+            $user = Auth::user();
+            if( $user->nickname == NULL and $user->mobile == NULL){
+                $username = md5($user->email);
+            }elseif( $user->nickname == NULL ){
+                $username = md5($user->mobile);
+            }else{
+                $username = $user->nickname;
+            }
+            $userbar['data'] = array(
+                'user_id' => $user->front_uid,
+                'username' => $username,
+                'user_place' => ''
+            );          
+        } else{
+            $ipkey = md5($this->getIP());            
+            $userbar['data'] = array(
+                'user_id' => 0,
+                'username' => $ipkey,
+                'user_place' => '暂未获取地址'
+            );
+        }
 		return $userbar;
 	}
+
+    //获取客户端ip地址
+    private function getIP(){
+        if(!empty($_SERVER["HTTP_CLIENT_IP"])){
+            $cip = $_SERVER["HTTP_CLIENT_IP"];
+        }
+        elseif(!empty($_SERVER["HTTP_X_FORWARDED_FOR"])){
+            $cip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+        }
+        elseif(!empty($_SERVER["REMOTE_ADDR"])){
+            $cip = $_SERVER["REMOTE_ADDR"];
+        }
+        else{
+            $cip = "无法获取！";
+        }
+        return $cip;
+    }
 
 	public function getUserBarCart(){
 		$user = Auth::user();
