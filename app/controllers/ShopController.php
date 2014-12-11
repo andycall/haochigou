@@ -288,6 +288,8 @@ class ShopController extends BaseController {
 
 		$shop = Shop::find($shop_id);
 		$categories = $shop->groups->all();
+		$i = $j = $k = 0;	// 数组的key，我也是醉了
+
 		foreach($categories as $group){
 			$one = array();
 
@@ -319,7 +321,8 @@ class ShopController extends BaseController {
 					$onegood['goods_icon']     = '';					// 没有就没有嘛
 					$onegood['goods_original'] = (float)$good->original_price;	// 如果是促销就显示原价
 					$onegood['good_sails']	   = (float)$good->sold_num;
-					array_push($classify_images, $onegood);
+					$classify_images[$j++] = $onegood;
+					//array_push($classify_images, $onegood);
 				}else{
 					$onegood['goods_id']       = $good->id;				// 商品id
 					$onegood['goods_image']    = $good->icon; 			// 商品图片地址
@@ -332,12 +335,14 @@ class ShopController extends BaseController {
 					$onegood['goods_icon']     = $good->icon;			// 一些用户促销的图标
 					$onegood['goods_original'] = (float)$good->original_price;	// 如果是促销，这个用于显示原价
 					$onegood['good_sails']	   = (float)$good->sold_num;
-					array_push($classify_goods, $onegood);
+					$classify_goods[$k++] = $onegood;
+					//array_push($classify_goods, $onegood);
 				}
 			}
 			$one['classify_images'] = $classify_images;
 			$one['classify_goods']  = $classify_goods;
-			array_push($result, $one);
+			$result[$i++] = $one;
+			//array_push($result, $one);
 		}
 		//var_dump($result);
 		return $result;

@@ -97,5 +97,5 @@ Route::post('modifyorder', array('before' => 'loginCheck', 'uses' => 'PersonalCo
 
 #测试
 Route::post('test', 'ShopController@cartDel');
-Route::get('test', 'UserCenterController@Uncomment');
+Route::get('test/{shop_id}', 'ShopController@getCategory');
 
