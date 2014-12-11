@@ -1,4 +1,5 @@
-define(["jquery", "register/port"], function($, port){
+define(["jquery", "register/port", 'registerPort'], function($, port, registerPort){
+	console.log("register loaded");
     //注册表单
     /*
      *@include 验证
@@ -10,16 +11,17 @@ define(["jquery", "register/port"], function($, port){
 
     //短信验证码
     $smsBtn.on("click",function(){
-        getAuth({ 
+        getAuth({
+            'auth_port' : port.sms_auth,     //短信验证port
             'auth_way'  : 'sms',
             'timestemp' : new Date().getTime(),   //时间戳
-            'telNumber' : $("#register-user-mobile").val()
+            'telNumber' : $("#register-user-mobile-input").val()
         });
     });
 
     //验证码ajax请求
     function getAuth(data,callback){
-        $.post(port["switchAuth"], data, function(res){
+        $.post(data.auth_port, data, function(res){
             if( typeof res != 'object' ){
                 try{
                     res = $.parseJSON(res);
@@ -29,7 +31,7 @@ define(["jquery", "register/port"], function($, port){
                 }
             }
 
-            if( res.success == "true"){
+            if( String(res.success) == "true"){
                 alert("短信已经发送，请注意接收验证码");
                     
                 //计时禁止连续发送30秒
@@ -99,7 +101,7 @@ define(["jquery", "register/port"], function($, port){
         }
 
         //验证验证密码
-        if( !regPwd.test(data.user_psw) ){-
+        if( !regPwd.test(data.user_psw) ){
             $errPwd.show();
             return false;
         }else{
@@ -144,13 +146,8 @@ define(["jquery", "register/port"], function($, port){
                     }
                 }
 
-                if( res.success == 'true'){
-                    if(res.nextSrc){
-                        location.href = res.nextSrc;
-                    }else{
-                        alert("服务器异常，稍后再试");
-                    }
-                    
+                if( String(res.success) == 'true'){
+	                location.href = registerPort['jump_port']
                 }else{
                     if( res.no || (res.no >= 1 && res.no <= 4) ){ //填写错误
 

@@ -38,7 +38,6 @@ define([ "jquery", "underscore", "localMap/port" ], function($, _, port) {
             var self = this;
             self.getCoder(X, Y, function(data) {
                 //debugger;
-                console.log(data);
                 var template = _.template($("#point_template").html())({
                     data: data.regeocode.addressComponent
                 }), infoWindow = new AMap.InfoWindow({
@@ -65,7 +64,7 @@ define([ "jquery", "underscore", "localMap/port" ], function($, _, port) {
                 mapObj.addControl(scale);
             })), toolbar && (console.log("toolbar"), mapObj.plugin([ "AMap.ToolBar" ], function() {
                 var toolBar = new AMap.ToolBar({
-                    offset: new AMap.Pixel(45, 170)
+                    offset: new AMap.Pixel(5, 300)
                 });
                 mapObj.addControl(toolBar);
             })), autoComplete ? (autoComplete.windowsArr = [], autoComplete.marker = [], autoComplete.keydown = function() {
@@ -148,15 +147,25 @@ define([ "jquery", "underscore", "localMap/port" ], function($, _, port) {
                 }
                 navigator.userAgent.indexOf("MSIE") > 0 && (document.getElementById(input).onpropertychange = self.autoSearch);
             }, autoComplete.render = function() {
-                var self = this, city = $("#" + self.city), poil = self.poil, poiArr = poil.slice(self.resultIndex, self.resultEnd), resultCount = poil.length / 10, resultStr1 = _.template($("#place_template").html())({
+                var self = this, city = $("#" + self.city), poil = self.poil;
+                //console.log(self.resultIndex, self.resultEnd);
+                poil.length < 10 && (self.resultEnd = poil.length);
+                var poiArr = poil.slice(self.resultIndex, self.resultEnd), resultCount = Math.ceil(poil.length / 10), resultStr1 = _.template($("#place_template").html())({
                     resultCount: resultCount,
                     resultIndex: self.resultIndex,
                     autoComplete: self,
                     poiArr: poiArr,
                     poil: poil
                 });
-                mapObj.setFitView(), city.html(resultStr1), city.show(), $(".nextGroup").on("click", self.bindNext), 
-                $(".prevGroup").on("click", self.bindPrev);
+                mapObj.setFitView(), city.html(resultStr1), city.show(), city.on("click", "li", function(ev) {
+                    var target = ev.currentTarget;
+                    if ("secid" == target.className) {
+                        console.log(2);
+                        var dataMouseover = parseInt(target.dataset.mouseover);
+                        return console.log(dataMouseover), self.openMarkerTipById1(dataMouseover, target, resultCount), 
+                        !1;
+                    }
+                });
             }, autoComplete.bindNext = function(ev) {
                 var self = autoComplete, city = $("#" + self.city), currentTarget = ev.currentTarget;
                 "nextGroup" != !currentTarget.className && (self.resultIndex += 10, self.resultEnd += 10, 
@@ -173,20 +182,20 @@ define([ "jquery", "underscore", "localMap/port" ], function($, _, port) {
             }, autoComplete.placeSearch_CallBack = function(data) {
                 var self = autoComplete, city = ($("#" + self.input), $("#" + self.city));
                 console.log(data);
-                for (var restaurant = [], restaurantResult = [], poil = data.poiList.pois, i = 0, len = poil.length; len > i; i++) restaurant.push({
+                for (var restaurant = [], restaurantResult = [], real_data = {}, poil = data.poiList.pois, i = 0, len = poil.length; len > i; i++) restaurant.push({
                     lat: poil[i].location.lat,
                     lng: poil[i].location.lng
                 });
-                $.ajax({
+                real_data.restaurant = poil, $.ajax({
                     url: port.getRestaurant,
                     type: "POST",
-                    data: JSON.stringify(restaurant),
+                    data: JSON.stringify(real_data),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     async: !1,
                     success: function(data) {
-                        autoComplete.windowsArr = [], autoComplete.marker = [], autoComplete.data = data, 
-                        autoComplete.resultIndex = 0, autoComplete.resultEnd = 10, autoComplete.poil = poil, 
+                        console.log(poil), autoComplete.windowsArr = [], autoComplete.marker = [], autoComplete.data = data, 
+                        autoComplete.resultIndex = 0, autoComplete.resultEnd = 10, autoComplete.poil = data, 
                         autoComplete.restaurantResult = restaurantResult, //清空地图上的InfoWindow和Marker
                         mapObj.clearMap(), self.render(), drag && ($(".drag-wrap").css({
                             left: 450
@@ -196,8 +205,8 @@ define([ "jquery", "underscore", "localMap/port" ], function($, _, port) {
                                 var dataMouseover = parseInt(target.dataset.mouseover);
                                 self.openMarkerTipById(dataMouseover, target);
                             }
-                        }), $("#search_list").on("click", "span", self.bindNext), $(".prevGroup").on("click", self.bindPrev), 
-                        city.on("mouseout", "li", function(ev) {
+                        }), // $("#search_list").on('click', 'span' , self.bindNext);
+                        $(".prevGroup").on("click", self.bindPrev), city.on("mouseout", "li", function(ev) {
                             var target = ev.currentTarget;
                             if ("secid" == target.className) {
                                 var dataMouseOut = target.dataset.mouseout;
@@ -207,8 +216,9 @@ define([ "jquery", "underscore", "localMap/port" ], function($, _, port) {
                     }
                 });
             }, autoComplete.openMarkerTipById1 = function(pointid, that, resultCount) {
-                that && (that.style.background = "#CAE1FF"), autoComplete.windowsArr[pointid].open(mapObj, autoComplete.marker[pointid]);
-                for (var i = 0; resultCount > i; i++) $(".icon" + (i + 1)).each(function(index, value) {
+                that && (that.style.background = "#CAE1FF"), console.log(pointid, that, resultCount), 
+                autoComplete.windowsArr[pointid].open(mapObj, autoComplete.marker[pointid]);
+                for (var i = 0; resultCount >= i; i++) $(".icon" + (i + 1)).each(function(index, value) {
                     value.className = "icon icon" + (i + 1) + "_b";
                 });
                 $(".icon" + (parseInt(pointid) + 1) + "_b").each(function(index, value) {
@@ -228,7 +238,7 @@ define([ "jquery", "underscore", "localMap/port" ], function($, _, port) {
                     value.className = "icon icon" + pointid + "_b";
                 });
             }, autoComplete.addmarker = function(i, d) {
-                var self = this, lngX = (self.input, self.result, d.location.getLng()), latY = d.location.getLat(), markerOption = {
+                var self = this, lngX = (self.input, self.result, d.location.lng), latY = d.location.lat, markerOption = {
                     map: mapObj,
                     content: "<div class='icon icon" + (i + 1) + "_b'></div>",
                     position: new AMap.LngLat(lngX, latY)
@@ -236,7 +246,8 @@ define([ "jquery", "underscore", "localMap/port" ], function($, _, port) {
                 autoComplete.marker.push(new AMap.LngLat(lngX, latY));
                 var windowTemplate = _.template($("#windowInfo_template").html())({
                     i: i,
-                    d: d
+                    d: d,
+                    jump_url: d.jump_url
                 }), infoWindow = new AMap.InfoWindow({
                     content: windowTemplate,
                     size: new AMap.Size(300, 0),

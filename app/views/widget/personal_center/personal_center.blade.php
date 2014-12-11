@@ -10,7 +10,7 @@
 
                 <div class="avatar"> <span id="upload_btn"></span></div>
                 <div class="ava_wrapper">
-                    <h5>{{$personal['user_name']}}</h5>
+                    <h5 id="user_name" contenteditable="true">{{$personal['user_name']}}</h5>
                     <div>
                         <span>安全等级</span>
                         <a class="user-level <?php

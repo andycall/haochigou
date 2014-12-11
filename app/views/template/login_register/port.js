@@ -2,7 +2,8 @@
 
 define(function(){
 	return {
-		"switchAuth" : "/switch_auth",   //点击切换验证码
+		"image_auth" : "/image_auth",   //图片验证码
+		"sms_auth"  :         "/sms_auth" ,    //短信验证码
 		"login"         : "/login",             //登陆
 		"register"       : "/register"        //注册
 	}

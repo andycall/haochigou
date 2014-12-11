@@ -1,13 +1,13 @@
-define([ "jquery", "register/port" ], function($, port) {
+define([ "jquery", "register/port", "registerPort" ], function($, port, registerPort) {
     //验证码ajax请求
     function getAuth(data) {
-        $.post(port.switchAuth, data, function(res) {
+        $.post(data.auth_port, data, function(res) {
             if ("object" != typeof res) try {
                 res = $.parseJSON(res);
             } catch (err) {
                 return void alert("服务器数据异常，稍后再试");
             }
-            if ("true" == res.success) {
+            if ("true" == String(res.success)) {
                 alert("短信已经发送，请注意接收验证码"), //计时禁止连续发送30秒
                 $smsBtn.attr("disabled", "disabled");
                 var count = 30, orginText = $smsBtn.text(), authTimer = setInterval(function() {
@@ -36,7 +36,7 @@ define([ "jquery", "register/port" ], function($, port) {
         return console.log(data.user_phone), regTel.test(data.user_phone) ? ($errMobile.hide(), 
         regEmail.test(data.user_email) ? ($errEmail.hide(), regPwd.test(data.user_psw) ? ($errPwd.hide(), 
         data.user_psw != $divUserRePwd.find("input").val() ? ($errRePwd.show(), !1) : ($errRePwd.hide(), 
-        regAuth.test(data.user_auth) ? ($errAuth.hide(), !0) : ($errAuth.show(), !1))) : (-$errPwd.show(), 
+        regAuth.test(data.user_auth) ? ($errAuth.hide(), !0) : ($errAuth.show(), !1))) : ($errPwd.show(), 
         !1)) : ($errEmail.show(), !1)) : ($errMobile.show(), !1);
     }
     //ajax
@@ -52,7 +52,7 @@ define([ "jquery", "register/port" ], function($, port) {
                 } catch (err) {
                     return void alert("服务器异常，稍后再试");
                 }
-                if ("true" == res.success) res.nextSrc ? location.href = res.nextSrc : alert("服务器异常，稍后再试"); else if (res.no || res.no >= 1 && res.no <= 4) //填写错误
+                if ("true" == String(res.success)) location.href = registerPort.jump_port; else if (res.no || res.no >= 1 && res.no <= 4) //填写错误
                 switch (res.no) {
                   //邮箱错误
                     case 1:
@@ -81,6 +81,7 @@ define([ "jquery", "register/port" ], function($, port) {
             }
         });
     }
+    console.log("register loaded");
     //注册表单
     /*
      *@include 验证
@@ -91,10 +92,12 @@ define([ "jquery", "register/port" ], function($, port) {
     //短信验证码
     $smsBtn.on("click", function() {
         getAuth({
+            auth_port: port.sms_auth,
+            //短信验证port
             auth_way: "sms",
             timestemp: new Date().getTime(),
             //时间戳
-            telNumber: $("#register-user-mobile").val()
+            telNumber: $("#register-user-mobile-input").val()
         });
     }), //输入框绑定事件,每次获得焦点时隐藏提示
     $("#register-form input").on("focus", function() {

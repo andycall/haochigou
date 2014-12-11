@@ -1,5 +1,6 @@
-define(['jquery', 'underscore', 'localMap/port'], function($, _, port){
+define([ 'jquery', 'underscore', 'search/port'], function($, _, port){
 	console.log("map loaded");
+
 	var mapObj = (function(){
 		var mapObj = new AMap.Map("container",{
 				view: new AMap.View2D({
