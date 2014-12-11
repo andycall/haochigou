@@ -53,7 +53,6 @@ define(['jquery','order/port'], function($,port){
 		if( !$this.hasClass("ui_disabled") && !$this.hasClass("ui_selected") ){ 
 			$(".cpayment-choice").removeClass("ui_selected");
 			$this.addClass('ui_selected');
-
 			$reallyForm.find(".order-way").val( $this.attr("data-pay-way") );
 		}
 	});
