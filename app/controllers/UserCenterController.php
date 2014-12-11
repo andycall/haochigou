@@ -517,7 +517,7 @@ class UserCenterController extends BaseController{
             "personal_collection_goods" => url("usercenter/collect_menu"), // 我收藏的商品的地址
             "personal_my_site" => url("useraccount/site") ,  // 我的地址
             "personal_change_password" => url("personal_change_password"), // 修改密码
-            "personal_secure"=> url("personal_secure"),        // 安全设置
+            "personal_secure"=> url("useraccount/personal_secure"),        // 安全设置
             "personal_details" => "#"       // 收支明细
         );
     }
@@ -530,7 +530,7 @@ class UserCenterController extends BaseController{
                 "switch_palce"  => "##",
                 "logo"          => url('/'),    // 网站主页地址
                 "mobile"        => "123",                               // 跳转到下载手机APP的地址
-                "my_ticket"     => 'order',                             // 我的饿单的地址
+                "my_ticket"     => url('usercenter/recent_month'),                        // 我的饿单的地址
                 "my_gift"       => 'gift',                              // 礼品中心地址
                 "feedback"      => 'feedback',                          // 反馈留言地址
                 "shop_chart"    => "cart",                              // 购物车地址

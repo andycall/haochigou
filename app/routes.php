@@ -92,15 +92,20 @@ Route::get('usercenter/personal_uncomment', array('before', 'loginCheck', 'uses'
 # 用户账户模块
 Route::get('useraccount/site', array('before' => 'loginCheck', 'uses' => 'UserAccountController@userSite'));//用户收货地址页面
 
+Route::get('useraccount/site/{id}', array('before' => 'loginCheck', 'uses' => 'UserAccountController@userSite'));//用户收货地址编辑页面
+
 Route::post('useraccount/site', array('before' => 'loginCheck', 'uses' => 'UserAccountController@userSiteEdit'));//用户收货地址编辑&新增接口
+
+Route::post('useraccount/site/{id}', array('before' => 'loginCheck', 'uses' => 'UserAccountController@userSiteEdit'));//用户收货地址编辑&新增接口
 
 Route::get('useraccount/sitedelete/{id}', array('before' => 'loginCheck', 'uses' => 'UserAccountController@siteDelete'));//用户收货地址删除接口
 
 Route::post('/change_user_name',array('before' => 'loginCheck', 'uses' => 'UserAccountController@nickNameChange'));//用户昵称修改接口
 
-Route::get("/map", function(){
-    return View::make("template.map.map");
-});
+Route::get('useraccount/password_change', array('before' => 'loginCheck', 'uses' => 'UserAccountController@passwordChange'));//用户修改登录密码页面
+
+Route::get('useraccount/personal_secure', array('before' => 'loginCheck', 'uses' => 'UserAccountController@userSecurity'));//用户安全设置页面
+
 #登录验证
 Route::filter('loginCheck', function()
 {
@@ -143,34 +148,4 @@ Route::post('modifyorder', array('before' => 'loginCheck', 'uses' => 'PersonalCo
 Route::post('test', 'ShopController@cartDel');
 Route::get('test', 'UserCenterController@Uncomment');
 
-Route::post("mapSearch", function(){
-    $data = [
-        0 => [
-            "id" => "B00178WI1P",
-            "name" => "重庆市",
-            "type" => "地名地址信息;普通地名;省级地名",
-            "location" => [
-                "B" => 29.56301,
-                "r" => 106.551557,
-                "lng" => 106.551557,
-                "lat" => 29.56301
-            ],
-            "jump_url" => "http://baidu.com" // 点击之后的跳转地址
-        ],
-        1 => [
-            "id" => "B00178WI1P",
-            "name" => "重庆市",
-            "type" => "地名地址信息;普通地名;省级地名",
-            "location" => [
-                "B" => 29.56301,
-                "r" => 106.551557,
-                "lat" => 29.549747,
-                "lng" =>106.547669
-            ],
-            "jump_url" => "http://taobao.com" // 点击之后的跳转地址
-        ],
-    ];
 
-    return Response::json($data);
-
-});
