@@ -2,11 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b879347d-d48a-4708-b0bc-0618efd40881" name="Default" comment="">
+<<<<<<< HEAD
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/UserAccountController.php" afterPath="$PROJECT_DIR$/app/controllers/UserAccountController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/UserCenterController.php" afterPath="$PROJECT_DIR$/app/controllers/UserCenterController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/database.php" afterPath="$PROJECT_DIR$/app/config/database.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/personal_my_site/personal_my_site.blade.php" afterPath="$PROJECT_DIR$/app/views/widget/personal_my_site/personal_my_site.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes.php" afterPath="$PROJECT_DIR$/app/routes.php" />
+=======
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/MainController.php" afterPath="$PROJECT_DIR$/app/controllers/MainController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/ShopController.php" afterPath="$PROJECT_DIR$/app/controllers/ShopController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/UserCenterController.php" afterPath="$PROJECT_DIR$/app/controllers/UserCenterController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/login_and_register" afterPath="$PROJECT_DIR$/API/login_and_register" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/login_form/login_form.blade.php" afterPath="$PROJECT_DIR$/app/views/widget/login_form/login_form.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/personal" afterPath="$PROJECT_DIR$/API/personal" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/personal_center/personal_center.blade.php" afterPath="$PROJECT_DIR$/app/views/widget/personal_center/personal_center.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/personal_center/personal_center.js" afterPath="$PROJECT_DIR$/app/views/widget/personal_center/personal_center.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/widget/personal_center/personal_center.js" afterPath="$PROJECT_DIR$/public/js/widget/personal_center/personal_center.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/template/personal/port.js" afterPath="$PROJECT_DIR$/app/views/template/personal/port.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/template/personal/port.js" afterPath="$PROJECT_DIR$/public/js/template/personal/port.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/template/login_register/register.blade.php" afterPath="$PROJECT_DIR$/app/views/template/login_register/register.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/register_form/register_form.blade.php" afterPath="$PROJECT_DIR$/app/views/widget/register_form/register_form.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/register_form/register_form.js" afterPath="$PROJECT_DIR$/app/views/widget/register_form/register_form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/widget/register_form/register_form.js" afterPath="$PROJECT_DIR$/public/js/widget/register_form/register_form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/userBar/userBar.blade.php" afterPath="$PROJECT_DIR$/app/views/widget/userBar/userBar.blade.php" />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="haochigo.iws" />
@@ -32,6 +51,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+<<<<<<< HEAD
       <file leaf-file-name="UserCenterController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/UserCenterController.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -77,6 +97,13 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="3812" max-vertical-offset="7110">
               <caret line="274" column="0" selection-start-line="274" selection-start-column="0" selection-end-line="274" selection-end-column="0" />
+=======
+      <file leaf-file-name="shop_info.blade.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/widget/shop_info/shop_info.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6554935" vertical-offset="2046" max-vertical-offset="3036">
+              <caret line="109" column="45" selection-start-line="109" selection-start-column="45" selection-end-line="109" selection-end-column="45" />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
               <folding />
             </state>
           </provider>
@@ -96,18 +123,31 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/app/models/ReceiveAddr.php" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/app/controllers/UserAccessController.php" />
         <option value="$PROJECT_DIR$/app/views/template/home/home.blade.php" />
         <option value="$PROJECT_DIR$/app/views/widget/shop_info/shop_info.blade.php" />
+=======
+        <option value="$PROJECT_DIR$/app/controllers/UserCenterController.php" />
+        <option value="$PROJECT_DIR$/app/controllers/UserAccountController.php" />
+        <option value="$PROJECT_DIR$/app/controllers/UserAccessController.php" />
+        <option value="$PROJECT_DIR$/app/routes.php" />
+        <option value="$PROJECT_DIR$/app/config/database.php" />
+        <option value="$PROJECT_DIR$/app/views/template/home/home.blade.php" />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
         <option value="$PROJECT_DIR$/app/views/layout/home.blade.php" />
         <option value="$PROJECT_DIR$/app/views/widget/shop_sec/shop_sec.blade.php" />
         <option value="$PROJECT_DIR$/app/views/widget/shop_alert_sec/shop_alert_sec.blade.php" />
         <option value="$PROJECT_DIR$/app/views/widget/shop_list/shop_list.css" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/app/config/database.php" />
         <option value="$PROJECT_DIR$/app/views/widget/personal_my_site/personal_my_site.blade.php" />
         <option value="$PROJECT_DIR$/app/controllers/UserCenterController.php" />
         <option value="$PROJECT_DIR$/app/routes.php" />
         <option value="$PROJECT_DIR$/app/controllers/UserAccountController.php" />
+=======
+        <option value="$PROJECT_DIR$/app/views/widget/shop_info/shop_info.blade.php" />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
       </list>
     </option>
   </component>
@@ -153,10 +193,15 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
+<<<<<<< HEAD
     <option name="x" value="40" />
     <option name="y" value="22" />
     <option name="width" value="1400" />
     <option name="height" value="755" />
+=======
+    <option name="width" value="1920" />
+    <option name="height" value="1040" />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -184,7 +229,10 @@
       <sortByType />
     </navigator>
     <panes>
+<<<<<<< HEAD
       <pane id="Scope" />
+=======
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -213,6 +261,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+<<<<<<< HEAD
               <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -227,6 +276,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+=======
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -275,7 +326,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+<<<<<<< HEAD
               <option name="myItemId" value="personal_my_site" />
+=======
+              <option name="myItemId" value="shop_list" />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -296,6 +351,7 @@
               <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+<<<<<<< HEAD
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -312,6 +368,14 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="controllers" />
+=======
+            <PATH_ELEMENT>
+              <option name="myItemId" value="widget" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="shop_info" />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -329,6 +393,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+<<<<<<< HEAD
               <option name="myItemId" value="config" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -344,11 +409,18 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="API" />
+=======
+              <option name="myItemId" value="views" />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+<<<<<<< HEAD
+=======
+      <pane id="Scope" />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -371,9 +443,12 @@
       <BehatRunner />
       <method />
     </configuration>
+<<<<<<< HEAD
     <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
+=======
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <node-options />
       <gulpfile />
@@ -382,6 +457,12 @@
       <envs />
       <method />
     </configuration>
+<<<<<<< HEAD
+=======
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
     <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
@@ -418,17 +499,30 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
     <frame x="40" y="22" width="1400" height="755" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Grunt" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32893288" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32944608" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+=======
+    <frame x="0" y="0" width="1920" height="1040" extended-state="0" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Grunt" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32857144" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32857144" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32967034" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15214285" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+=======
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15430108" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -460,9 +554,15 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25537634" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+<<<<<<< HEAD
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -486,6 +586,51 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
+=======
+    <entry file="file://$PROJECT_DIR$/app/controllers/ShopController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3210" max-vertical-offset="6585">
+          <caret line="268" column="52" selection-start-line="268" selection-start-column="12" selection-end-line="268" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/ReceiveAddr.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="285">
+          <caret line="12" column="31" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="791" max-vertical-offset="1425">
+          <caret line="52" column="23" selection-start-line="52" selection-start-column="23" selection-end-line="52" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/UserCenterController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7290">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/UserAccountController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="585" max-vertical-offset="2700">
+          <caret line="39" column="32" selection-start-line="39" selection-start-column="32" selection-end-line="39" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/ReceiveAddr.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="285">
+          <caret line="12" column="31" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
     <entry file="file://$PROJECT_DIR$/app/models/BUser.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="315">
@@ -584,6 +729,23 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+=======
+    <entry file="file://$PROJECT_DIR$/app/controllers/UserAccountController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2441" max-vertical-offset="3090">
+          <caret line="189" column="57" selection-start-line="189" selection-start-column="57" selection-end-line="189" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/UserCenterController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2246" max-vertical-offset="7290">
+          <caret line="451" column="0" selection-start-line="451" selection-start-column="0" selection-end-line="451" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
     <entry file="file://$PROJECT_DIR$/app/controllers/UserAccessController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="3060">
@@ -591,6 +753,16 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+=======
+    <entry file="file://$PROJECT_DIR$/app/config/database.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1276" max-vertical-offset="3080">
+          <caret line="87" column="32" selection-start-line="87" selection-start-column="32" selection-end-line="87" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
     <entry file="file://$PROJECT_DIR$/.idea/scopes/scope_settings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="220">
@@ -647,6 +819,16 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+=======
+    <entry file="file://$PROJECT_DIR$/app/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1290323" vertical-offset="1707" max-vertical-offset="2244">
+          <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
     <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="46.04" vertical-offset="1151" max-vertical-offset="1694">
@@ -705,6 +887,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/template/home/home.blade.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="870">
           <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
         </state>
@@ -714,46 +897,82 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="750" max-vertical-offset="2070">
           <caret line="50" column="43" selection-start-line="50" selection-start-column="33" selection-end-line="50" selection-end-column="43" />
+=======
+        <state vertical-scroll-proportion="0.0" vertical-offset="396" max-vertical-offset="1276">
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layout/home.blade.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="615">
           <caret line="22" column="35" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
+=======
+        <state vertical-scroll-proportion="0.0" vertical-offset="484" max-vertical-offset="902">
+          <caret line="22" column="35" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
+          <folding />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/widget/shop_sec/shop_sec.blade.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="1290">
           <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="6" selection-end-column="9" />
+=======
+        <state vertical-scroll-proportion="0.0" vertical-offset="66" max-vertical-offset="1892">
+          <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="6" selection-end-column="9" />
+          <folding />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/widget/shop_alert_sec/shop_alert_sec.blade.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0" vertical-offset="1815" max-vertical-offset="2460">
           <caret line="121" column="22" selection-start-line="121" selection-start-column="22" selection-end-line="122" selection-end-column="36" />
+=======
+        <state vertical-scroll-proportion="0.0" vertical-offset="2442" max-vertical-offset="3608">
+          <caret line="121" column="22" selection-start-line="121" selection-start-column="22" selection-end-line="122" selection-end-column="36" />
+          <folding />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/widget/cate_list/cate_list.css">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="8385">
           <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
+=======
+        <state vertical-scroll-proportion="0.0" vertical-offset="2141" max-vertical-offset="12298">
+          <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
+          <folding />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/widget/cate_list/cate_list.blade.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1425">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+        <state vertical-scroll-proportion="0.0" vertical-offset="29" max-vertical-offset="2090">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/widget/shop_list/shop_list.blade.php">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0" vertical-offset="690" max-vertical-offset="2940">
           <caret line="46" column="16" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="16" />
         </state>
@@ -785,10 +1004,15 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.541667" vertical-offset="731" max-vertical-offset="2100">
           <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="73" selection-end-column="10" />
+=======
+        <state vertical-scroll-proportion="0.9013035" vertical-offset="528" max-vertical-offset="4312">
+          <caret line="46" column="16" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="16" />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/public/js/template/personal/personal_verify_phone.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="658">
@@ -833,22 +1057,42 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.166667" vertical-offset="1346" max-vertical-offset="2355">
           <caret line="106" column="39" selection-start-line="106" selection-start-column="39" selection-end-line="106" selection-end-column="39" />
+=======
+    <entry file="file://$PROJECT_DIR$/app/views/widget/shop_list/shop_list.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.1101549" vertical-offset="1379" max-vertical-offset="2794">
+          <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/API/personal">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3812" max-vertical-offset="7110">
           <caret line="274" column="0" selection-start-line="274" selection-start-column="0" selection-end-line="274" selection-end-column="0" />
+=======
+    <entry file="file://$PROJECT_DIR$/app/views/widget/shop_info/shop_info.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.70666665" vertical-offset="3875" max-vertical-offset="4796">
+          <caret line="193" column="28" selection-start-line="193" selection-start-column="28" selection-end-line="193" selection-end-column="28" />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/controllers/UserAccountController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.1182965" vertical-offset="3086" max-vertical-offset="4725">
           <caret line="253" column="8" selection-start-line="253" selection-start-column="8" selection-end-line="253" selection-end-column="8" />
+=======
+    <entry file="file://$PROJECT_DIR$/app/views/widget/shop_info/shop_info.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6554935" vertical-offset="2046" max-vertical-offset="3036">
+          <caret line="109" column="45" selection-start-line="109" selection-start-column="45" selection-end-line="109" selection-end-column="45" />
+>>>>>>> d28b24484c14e8f13c80206fca23504c17f0c70f
           <folding />
         </state>
       </provider>

@@ -288,6 +288,8 @@ class ShopController extends BaseController {
 
 		$shop = Shop::find($shop_id);
 		$categories = $shop->groups->all();
+		$i = $j = $k = 0;	// 数组的key，我也是醉了
+
 		foreach($categories as $group){
 			$one = array();
 
@@ -319,7 +321,8 @@ class ShopController extends BaseController {
 					$onegood['goods_icon']     = '';					// 没有就没有嘛
 					$onegood['goods_original'] = (float)$good->original_price;	// 如果是促销就显示原价
 					$onegood['good_sails']	   = (float)$good->sold_num;
-					array_push($classify_images, $onegood);
+					$classify_images[$j++] = $onegood;
+					//array_push($classify_images, $onegood);
 				}else{
 					$onegood['goods_id']       = $good->id;				// 商品id
 					$onegood['goods_image']    = $good->icon; 			// 商品图片地址
@@ -332,12 +335,14 @@ class ShopController extends BaseController {
 					$onegood['goods_icon']     = $good->icon;			// 一些用户促销的图标
 					$onegood['goods_original'] = (float)$good->original_price;	// 如果是促销，这个用于显示原价
 					$onegood['good_sails']	   = (float)$good->sold_num;
-					array_push($classify_goods, $onegood);
+					$classify_goods[$k++] = $onegood;
+					//array_push($classify_goods, $onegood);
 				}
 			}
 			$one['classify_images'] = $classify_images;
 			$one['classify_goods']  = $classify_goods;
-			array_push($result, $one);
+			$result[$i++] = $one;
+			//array_push($result, $one);
 		}
 		//var_dump($result);
 		return $result;
@@ -377,7 +382,7 @@ class ShopController extends BaseController {
 			$one = array();
 			if($group->activity_id == 1){		// 不是活动
 				$one['classify_name']      = $group->name;
-				$one['classify_name_abbr'] = $group->name_abbr;
+				$one['classify_name_abbr'] = (mb_strlen($group->name, 'utf8') > 10) ? mb_substr($group->name, 0, 3, 'utf8').'...' : $group->name;
 				$one['classify_id']        = $group->id;
 				$one['classify_count']     = Menu::where('shop_id', $shop_id)->where('group_id', $group->activity_id)->get()->count('shop_id');
 				$one['classify_icon']      = $group->icon;
@@ -609,22 +614,47 @@ class ShopController extends BaseController {
 				"loginout"      => url("logout"),              			// 退出登录的地址
 				"switch_place"  => "switch_place"                  		// 切换当前地址的地址
 		);
-		if( Auth::check() ){
-			$user = Auth::user();
-			$userbar['data'] = array(
-				'user_id' => $user->front_uid,
-				'username' => $user->nickname,
-				'user_place' => ''
-			);			
-		} else{
-			$userbar['data'] = array(
-				'user_id' => 0,
-				'username' => '未登录用户',
-				'user_place' => '暂未获取地址'
-			);
-		}
+        if( Auth::check() ){
+            $user = Auth::user();
+            if( $user->nickname == NULL and $user->mobile == NULL){
+                $username = md5($user->email);
+            }elseif( $user->nickname == NULL ){
+                $username = md5($user->mobile);
+            }else{
+                $username = $user->nickname;
+            }
+            $userbar['data'] = array(
+                'user_id' => $user->front_uid,
+                'username' => $username,
+                'user_place' => ''
+            );          
+        } else{
+            $ipkey = md5($this->getIP());            
+            $userbar['data'] = array(
+                'user_id' => 0,
+                'username' => $ipkey,
+                'user_place' => '暂未获取地址'
+            );
+        }
 		return $userbar;
 	}
+
+    //获取客户端ip地址
+    private function getIP(){
+        if(!empty($_SERVER["HTTP_CLIENT_IP"])){
+            $cip = $_SERVER["HTTP_CLIENT_IP"];
+        }
+        elseif(!empty($_SERVER["HTTP_X_FORWARDED_FOR"])){
+            $cip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+        }
+        elseif(!empty($_SERVER["REMOTE_ADDR"])){
+            $cip = $_SERVER["REMOTE_ADDR"];
+        }
+        else{
+            $cip = "无法获取！";
+        }
+        return $cip;
+    }
 
 	public function getUserBarCart(){
 		$user = Auth::user();
