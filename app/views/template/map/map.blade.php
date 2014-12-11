@@ -15,7 +15,7 @@
               <div class="icon icon<%= i + 1 %>_b"></div>
               <h2><%= poiArr[i].name %></h2>
               <span><%= poiArr[i].address %></span>
-              <p>还有N个城市</p>
+              <p>附件有<%= restaurantCount[i] %> 个</p>
           </li>
           <% } %>
 
@@ -39,7 +39,7 @@
   <script type="text/template" id="windowInfo_template">
       <h2 class=""><%= d.name %></h2>
       <p><%= d.address %></p>
-      <p>附近有<span>4</span>家餐厅</p>
+      <p>附近有<span><%= restaurantCount[i] %></span>家餐厅</p>
       <a href="<%= jump_url %>">去看看</a>
   </script>
 
@@ -47,7 +47,7 @@
   <script type="text/template" id="point_template">
       <h2 class=""><%= data.district %></h2>
       <p><%= data.street %> <%= data.streetNumber %>号</p>
-      <p>附近有<span>4</span>家餐厅</p>
+      <p>附近有<span><%= count %></span>家餐厅</p>
   </script>
 
 

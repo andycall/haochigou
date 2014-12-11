@@ -7,35 +7,16 @@ Route::get("/map", function(){
 });
 
 Route::post("mapSearch", function(){
-	$data = [
-		0 => [
-			"id" => "B00178WI1P",
-			"name" => "重庆市",
-			"type" => "地名地址信息;普通地名;省级地名",
-			"location" => [
-				"B" => 29.56301,
-				"r" => 106.551557,
-				"lng" => 106.551557,
-				"lat" => 29.56301
-			],
-			"jump_url" => "http://baidu.com" // 点击之后的跳转地址
-		],
-		1 => [
-			"id" => "B00178WI1P",
-			"name" => "重庆市",
-			"type" => "地名地址信息;普通地名;省级地名",
-			"location" => [
-				"B" => 29.56301,
-				"r" => 106.551557,
-				"lat" => 29.549747,
-				"lng" =>106.547669
-			],
-			"jump_url" => "http://taobao.com" // 点击之后的跳转地址
-		],
-	];
+	$data = [1,2,2,3,3,3,4,5,6,7,8,1,2,3,4,4,5,6,7,8];
 
 	return Response::json($data);
 
+});
+
+Route::post("mapSearch2", function(){
+	$data = [1];
+
+	return Response::json($data);
 });
 
 # 登陆与注册
