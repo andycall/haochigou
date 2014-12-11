@@ -1,7 +1,7 @@
 define([ "jquery", "register/port", "registerPort" ], function($, port, registerPort) {
     //验证码ajax请求
     function getAuth(data) {
-        $.post(port.switchAuth, data, function(res) {
+        $.post(data.auth_port, data, function(res) {
             if ("object" != typeof res) try {
                 res = $.parseJSON(res);
             } catch (err) {
@@ -36,7 +36,7 @@ define([ "jquery", "register/port", "registerPort" ], function($, port, register
         return console.log(data.user_phone), regTel.test(data.user_phone) ? ($errMobile.hide(), 
         regEmail.test(data.user_email) ? ($errEmail.hide(), regPwd.test(data.user_psw) ? ($errPwd.hide(), 
         data.user_psw != $divUserRePwd.find("input").val() ? ($errRePwd.show(), !1) : ($errRePwd.hide(), 
-        regAuth.test(data.user_auth) ? ($errAuth.hide(), !0) : ($errAuth.show(), !1))) : (-$errPwd.show(), 
+        regAuth.test(data.user_auth) ? ($errAuth.hide(), !0) : ($errAuth.show(), !1))) : ($errPwd.show(), 
         !1)) : ($errEmail.show(), !1)) : ($errMobile.show(), !1);
     }
     //ajax
@@ -92,6 +92,8 @@ define([ "jquery", "register/port", "registerPort" ], function($, port, register
     //短信验证码
     $smsBtn.on("click", function() {
         getAuth({
+            auth_port: port.sms_auth,
+            //短信验证port
             auth_way: "sms",
             timestemp: new Date().getTime(),
             //时间戳

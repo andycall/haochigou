@@ -517,7 +517,7 @@ class UserCenterController extends BaseController{
             "personal_collection_goods" => url("usercenter/collect_menu"), // 我收藏的商品的地址
             "personal_my_site" => url("useraccount/site") ,  // 我的地址
             "personal_change_password" => url("personal_change_password"), // 修改密码
-            "personal_secure"=> url("personal_secure"),        // 安全设置
+            "personal_secure"=> url("useraccount/personal_secure"),        // 安全设置
             "personal_details" => "#"       // 收支明细
         );
     }
@@ -530,7 +530,7 @@ class UserCenterController extends BaseController{
                 "switch_palce"  => "##",
                 "logo"          => url('/'),    // 网站主页地址
                 "mobile"        => "123",                               // 跳转到下载手机APP的地址
-                "my_ticket"     => 'order',                             // 我的饿单的地址
+                "my_ticket"     => url('usercenter/recent_month'),                        // 我的饿单的地址
                 "my_gift"       => 'gift',                              // 礼品中心地址
                 "feedback"      => 'feedback',                          // 反馈留言地址
                 "shop_chart"    => "cart",                              // 购物车地址
@@ -543,19 +543,44 @@ class UserCenterController extends BaseController{
         );
         if( Auth::check() ){
             $user = Auth::user();
+            if( $user->nickname == NULL and $user->mobile == NULL){
+                $username = md5($user->email);
+            }elseif( $user->nickname == NULL ){
+                $username = md5($user->mobile);
+            }else{
+                $username = $user->nickname;
+            }
             $userbar['data'] = array(
                 'user_id' => $user->front_uid,
-                'username' => $user->nickname,
+                'username' => $username,
                 'user_place' => ''
             );          
         } else{
+            $ipkey = md5($this->getIP());            
             $userbar['data'] = array(
                 'user_id' => 0,
-                'username' => '未登录用户',
+                'username' => $ipkey,
                 'user_place' => '暂未获取地址'
             );
         }
         return $userbar;
+    }
+
+    //获取客户端ip地址
+    private function getIP(){
+        if(!empty($_SERVER["HTTP_CLIENT_IP"])){
+            $cip = $_SERVER["HTTP_CLIENT_IP"];
+        }
+        elseif(!empty($_SERVER["HTTP_X_FORWARDED_FOR"])){
+            $cip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+        }
+        elseif(!empty($_SERVER["REMOTE_ADDR"])){
+            $cip = $_SERVER["REMOTE_ADDR"];
+        }
+        else{
+            $cip = "无法获取！";
+        }
+        return $cip;
     }
 
 }

@@ -11,7 +11,8 @@ define(["jquery", "register/port", 'registerPort'], function($, port, registerPo
 
     //短信验证码
     $smsBtn.on("click",function(){
-        getAuth({ 
+        getAuth({
+            'auth_port' : port.sms_auth,     //短信验证port
             'auth_way'  : 'sms',
             'timestemp' : new Date().getTime(),   //时间戳
             'telNumber' : $("#register-user-mobile-input").val()
@@ -20,7 +21,7 @@ define(["jquery", "register/port", 'registerPort'], function($, port, registerPo
 
     //验证码ajax请求
     function getAuth(data,callback){
-        $.post(port["switchAuth"], data, function(res){
+        $.post(data.auth_port, data, function(res){
             if( typeof res != 'object' ){
                 try{
                     res = $.parseJSON(res);
@@ -100,7 +101,7 @@ define(["jquery", "register/port", 'registerPort'], function($, port, registerPo
         }
 
         //验证验证密码
-        if( !regPwd.test(data.user_psw) ){-
+        if( !regPwd.test(data.user_psw) ){
             $errPwd.show();
             return false;
         }else{

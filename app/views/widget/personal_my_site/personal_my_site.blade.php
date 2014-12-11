@@ -17,7 +17,7 @@
         <tbody>
         @foreach($deliver_address['sites'] as $key=>$value)
             <tr>
-                <td>董天成</td>
+                <td>{{$value['address_receive_name']}}</td>
                 <td>{{$value['address_details']}}</td>
                 <td>{{$value['deliver_phone']}}</td>
                 <td>{{$value['spare_phone']}}</td>
@@ -35,10 +35,10 @@
     <h3>新增/编辑送餐地址</h3>
 
 
-    {{ Form::open(array('url' => 'foo/bar', "method" => "post", "id" => "order_form")); }}
+    {{ Form::open(array('url' => 'useraccount/site', "method" => "post", "id" => "order_form")); }}
         <div class="form_block">
             <label for="address_details"><span class="required_mark">*</span>姓名</label>
-            <input type="text" class="input_box" id="user_name" name="" value=""/>
+            <input type="text" class="input_box" id="user_name" name="user_name" value="{{$deliver_address['address_receive_name']}}"/>
             <span class="error_box">请填写用户姓名</span>
             <p>（请填写用户姓名）</p>
         </div>
