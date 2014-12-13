@@ -1,4 +1,4 @@
-define([ 'jquery', 'underscore', 'search/port'], function($, _, port){
+define([ 'jquery', 'underscore', 'search/port', "JSON"], function($, _, port){
 	console.log("map loaded");
 
 	var mapObj = (function(){
@@ -50,13 +50,14 @@ define([ 'jquery', 'underscore', 'search/port'], function($, _, port){
 		};
 
 		// 坐标信息显示框
-		mapObj.pointWindow = function(X, Y){
+		mapObj.pointWindow = function(X, Y, count){
 			var self = this;
 
 			self.getCoder(X, Y, function(data){
 				//debugger;
 				var template = _.template($("#point_template").html())({
-					data : data.regeocode.addressComponent
+					data : data.regeocode.addressComponent,
+					count : count
 				});
 
 				var infoWindow = new AMap.InfoWindow({
@@ -157,6 +158,7 @@ define([ 'jquery', 'underscore', 'search/port'], function($, _, port){
 						//查询成功时返回查询结果
 						if ( keywords.length > 0) {
 							AMap.event.addListener(auto,"complete", function(data){
+								console.log(data);
 								self.autocomplete_CallBack.call(self, data);
 							});
 							auto.search(keywords);
@@ -225,6 +227,7 @@ define([ 'jquery', 'underscore', 'search/port'], function($, _, port){
 
 				//从输入提示框中选择关键字并查询
 				autoComplete.selectResult = function (index) {
+					console.log(index);
 					var self = this,
 						input = self.input,
 						result = self.result;
@@ -246,10 +249,10 @@ define([ 'jquery', 'underscore', 'search/port'], function($, _, port){
 					//根据选择的输入提示关键字查询
 					mapObj.plugin(["AMap.PlaceSearch"], function() {
 						var msearch = new AMap.PlaceSearch({
-							pageSize : 40
+							pageSize : 20
 						});  //构造地点查询类
 						AMap.event.addListener(msearch, "complete", self.placeSearch_CallBack); //查询成功时的回调函数
-						msearch.setCity(cityCode);
+						//msearch.setCity(cityCode);
 						msearch.search(text);  //关键字查询
 					});
 				};
@@ -268,7 +271,8 @@ define([ 'jquery', 'underscore', 'search/port'], function($, _, port){
 				autoComplete.render = function(){
 					var self = this,
 						city = $("#" + self.city),
-						poil = self.poil;
+						poil = self.poil,
+						restaurantCount = self.restaurantCount;
 
 					//console.log(self.resultIndex, self.resultEnd);
 					if(poil.length < 10){
@@ -286,7 +290,8 @@ define([ 'jquery', 'underscore', 'search/port'], function($, _, port){
 						resultIndex : self.resultIndex,
 						autoComplete : self,
 						poiArr      : poiArr,
-						poil        : poil
+						poil        : poil,
+						restaurantCount : restaurantCount
 					});
 
 
@@ -356,7 +361,6 @@ define([ 'jquery', 'underscore', 'search/port'], function($, _, port){
 						input = $("#" + self.input),
 						city = $("#" + self.city);
 
-					console.log(data);
 					// 清空搜索缓存
 
 					// 向后端要订餐的数据
@@ -369,27 +373,26 @@ define([ 'jquery', 'underscore', 'search/port'], function($, _, port){
 					var poil = data.poiList.pois;
 
 					for(var i = 0,len = poil.length; i < len; i ++){
-						restaurant.push({ lat : poil[i].location.lat,  lng : poil[i].location.lng});
+						//restaurant.push({ lat : poil[i].location.lat,  lng : poil[i].location.lng});
+						restaurant.push([poil[i].location.lng, poil[i].location.lat]);
 					}
-
-					real_data['restaurant'] = poil;
-
 
 					$.ajax({
 						url: port['getRestaurant'],
 						type: 'POST',
-						data: JSON.stringify(real_data),
+						data: JSON.encode({restaurant : restaurant}),
 						contentType: 'application/json; charset=utf-8',
 						dataType: 'json',
 						async: false,
 						success: function(data) {
-							console.log(poil);
+
+							autoComplete.restaurantCount = data;
 							autoComplete.windowsArr = [];
 							autoComplete.marker = [];
 							autoComplete.data = data;
 							autoComplete.resultIndex = 0;
 							autoComplete.resultEnd  = 10;
-							autoComplete.poil = data;
+							autoComplete.poil = poil;
 							autoComplete.restaurantResult = restaurantResult;
 
 							//清空地图上的InfoWindow和Marker
@@ -421,13 +424,8 @@ define([ 'jquery', 'underscore', 'search/port'], function($, _, port){
 									self.onmouseout_MarkerStyle(dataMouseOut, target);
 								}
 							});
-
-			               
 						}
 					});
-
-
-
 				};
 
 				//鼠标滑过查询结果改变背景样式，根据id打开信息窗体
@@ -479,7 +477,8 @@ define([ 'jquery', 'underscore', 'search/port'], function($, _, port){
 				autoComplete.addmarker = function(i, d){
 					var self = this,
 						input = self.input,
-						result = self.result;
+						result = self.result,
+						restaurantCount = self.restaurantCount;
 
 					var lngX = d.location['lng'];
 					var latY = d.location['lat'];
@@ -494,7 +493,8 @@ define([ 'jquery', 'underscore', 'search/port'], function($, _, port){
 					var windowTemplate = _.template($("#windowInfo_template").html())({
 						i : i,
 						d : d,
-						jump_url : d['jump_url']
+						jump_url : d['jump_url'],
+						restaurantCount : restaurantCount
 					});
 
 					var infoWindow = new AMap.InfoWindow({
@@ -557,55 +557,69 @@ define([ 'jquery', 'underscore', 'search/port'], function($, _, port){
 //                        console.log(_dNode.offset().left - _patchContOffset.left, _dNode.offset().top - _patchContOffset.top);
 							_dNode.attr('data-lat', containerPixelPos.lat);
 							_dNode.attr('data-lng', containerPixelPos.lng);
-							var marker = new AMap.Marker({
-								icon: new AMap.Icon({    //复杂图标
-									size: new AMap.Size(28, 34),//图标大小
-									image: "./images/map-sprites.png", //大图地址
-									imageOffset: new AMap.Pixel(0, -140)//相对于大图的取图位置
-								}),
-								position: new AMap.LngLat(containerPixelPos.lng, containerPixelPos.lat),
-								draggable:true, //点标记可拖拽
-								cursor:'move',  //鼠标悬停点标记时的鼠标样式
-								raiseOnDrag: true//鼠标拖拽点标记时开启点标记离开地图的效果
+
+							var coordinate = [[containerPixelPos.lng, containerPixelPos.lat]];
+
+							$.ajax({
+								url: port['getRestaurant'],
+								type: 'POST',
+								data: JSON.encode({ restaurant :  coordinate}),
+								contentType: 'application/json; charset=utf-8',
+								dataType: 'json',
+								async: false,
+								success: function(data) {
+									var marker = new AMap.Marker({
+										icon: new AMap.Icon({    //复杂图标
+											size: new AMap.Size(28, 34),//图标大小
+											image: "./images/map-sprites.png", //大图地址
+											imageOffset: new AMap.Pixel(0, -140)//相对于大图的取图位置
+										}),
+										position: new AMap.LngLat(containerPixelPos.lng, containerPixelPos.lat),
+										draggable:true, //点标记可拖拽
+										cursor:'move',  //鼠标悬停点标记时的鼠标样式
+										raiseOnDrag: true//鼠标拖拽点标记时开启点标记离开地图的效果
+									});
+
+									marker.setMap(mapObj);  //在地图上添加点
+
+									//实例化信息窗体
+									var infoWindow = new AMap.InfoWindow({
+										isCustom: true,  //使用自定义窗体
+										content: mapObj.pointWindow(containerPixelPos.lng, containerPixelPos.lat, data[0]),
+										offset: new AMap.Pixel(110, -25)//-113, -140
+									});
+
+
+									AMap.event.addListener(marker, 'mouseup', function(e){ //鼠标点击marker弹出自定义的信息窗体
+										var self = $(e.target.da.bd.contentDom);
+										var o = self.offset();
+										var containerPixelPos = fromContainerPixelToLngLat(o.left - _patchContOffset.left + 7, o.top - _patchContOffset.top + 2 * self.height());
+										var infoWindow = new AMap.InfoWindow({
+											isCustom: true,  //使用自定义窗体
+											content: mapObj.pointWindow(containerPixelPos.lng, containerPixelPos.lat, data[0]),
+											offset: new AMap.Pixel(110, -25)//-113, -140
+										});
+										return false;
+									});
+
+									AMap.event.addListener(marker, 'click', function(e){ //鼠标点击marker弹出自定义的信息窗体
+										var self = $(e.target.da.bd.contentDom);
+										var o = self.offset();
+										var containerPixelPos = fromContainerPixelToLngLat(o.left - _patchContOffset.left + 7, o.top - _patchContOffset.top + self.height());
+										var infoWindow = new AMap.InfoWindow({
+											isCustom: true,  //使用自定义窗体
+											content: mapObj.pointWindow(containerPixelPos.lng, containerPixelPos.lat, data[0]),
+											offset: new AMap.Pixel(110, -25)//-113, -140
+										});
+
+										return false;
+									});
+
+									_cont.off('mousemove');
+									_cont.off('mouseup');
+									_dNode.css({top: 0, left: 0});
+								}
 							});
-							marker.setMap(mapObj);  //在地图上添加点
-
-							//实例化信息窗体
-							var infoWindow = new AMap.InfoWindow({
-								isCustom: true,  //使用自定义窗体
-								content: mapObj.pointWindow(containerPixelPos.lng, containerPixelPos.lat),
-								offset: new AMap.Pixel(110, -25)//-113, -140
-							});
-
-
-							AMap.event.addListener(marker, 'mouseup', function(e){ //鼠标点击marker弹出自定义的信息窗体
-                                var self = $(e.target.da.bd.contentDom);
-                                var o = self.offset();
-                                var containerPixelPos = fromContainerPixelToLngLat(o.left - _patchContOffset.left + 7, o.top - _patchContOffset.top + 2 * self.height());
-                                var infoWindow = new AMap.InfoWindow({
-                                    isCustom: true,  //使用自定义窗体
-                                    content: mapObj.pointWindow(containerPixelPos.lng, containerPixelPos.lat),
-                                    offset: new AMap.Pixel(110, -25)//-113, -140
-                                });
-                                return false;
-                            });
-
-                            AMap.event.addListener(marker, 'click', function(e){ //鼠标点击marker弹出自定义的信息窗体
-                                var self = $(e.target.da.bd.contentDom);
-                                var o = self.offset();
-                                var containerPixelPos = fromContainerPixelToLngLat(o.left - _patchContOffset.left + 7, o.top - _patchContOffset.top + self.height());
-                                var infoWindow = new AMap.InfoWindow({
-                                    isCustom: true,  //使用自定义窗体
-                                    content: mapObj.pointWindow(containerPixelPos.lng, containerPixelPos.lat),
-                                    offset: new AMap.Pixel(110, -25)//-113, -140
-                                });
-
-                                return false;
-                            });
-
-							_cont.off('mousemove');
-							_cont.off('mouseup');
-							_dNode.css({top: 0, left: 0});
 						}
 					}
 
