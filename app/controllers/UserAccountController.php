@@ -210,6 +210,35 @@ class UserAccountController extends BaseController{
 
         $data['userbar'] = $this->userBar();
 
+        $oldPassword = Input::get('original_password');
+        $newPassword = Input::get('new_password');
+        if(!empty($oldPassword) && !empty($newPassword)){
+            $userModel = FrontUser::find($this->uid);
+
+            if(!Hash::check($oldPassword,$userModel->user->password)){
+                echo json_encode(array(
+                    'success'=>false,
+                    'state'=>200,
+                    'errMsg'=>'密码验证失败',
+
+                ));
+
+                exit;
+            }else{
+                $userModel->user->password = Hash::make($newPassword);
+                $userModel->user->save();
+
+                echo json_encode(array(
+                    'success'=>true,
+                    'state'=>200,
+                    'errMsg'=>'',
+
+                ));
+
+                exit;
+            }
+        }
+
         return View::make("template.personal.personal_change_password")->with($data);
     }
 

@@ -80,6 +80,7 @@ Route::get('useraccount/sitedelete/{id}', array('before' => 'loginCheck', 'uses'
 Route::post('/change_user_name',array('before' => 'loginCheck', 'uses' => 'UserAccountController@nickNameChange'));//用户昵称修改接口
 
 Route::get('useraccount/password_change', array('before' => 'loginCheck', 'uses' => 'UserAccountController@passwordChange'));//用户修改登录密码页面
+Route::post('useraccount/password_change', array('before' => 'loginCheck', 'uses' => 'UserAccountController@passwordChange'));//用户修改登录密码接口
 
 Route::get('useraccount/personal_secure', array('before' => 'loginCheck', 'uses' => 'UserAccountController@userSecurity'));//用户安全设置页面
 

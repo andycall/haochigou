@@ -10,7 +10,7 @@ class MapController extends BaseController{
      * 根据前端的商铺坐标信息获取商铺数据
      **/
     public function shopsGet(){
-        $locations = Input::get('local');
+        $locations = Input::get('restaurant');
         $locations = json_decode($locations);
 
         if(empty($locations) || !is_array($locations)){
