@@ -6,12 +6,7 @@ Route::get("/map", function(){
 	return View::make("template.map.map");
 });
 
-Route::post("mapSearch", function(){
-	$data = [1,2,2,3,3,3,4,5,6,7,8,1,2,3,4,4,5,6,7,8];
-
-	return Response::json($data);
-
-});
+Route::post("mapSearch",'MapController@shopsGet');
 
 Route::post("mapSearch2", function(){
 	$data = [1];
