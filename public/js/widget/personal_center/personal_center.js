@@ -52,8 +52,10 @@ define([ "personal/port", "jquery", "jquery.uploadify" ], function(port, $) {
         onQueueComplete: function(event, data) {
             //所有队列完成后事件
             //ShowUpFiles(guid, type, show_div);
-            var nextSrc = data.nextSrc;
-            window.location.href = nextSrc;
+            var img = data.img;
+            $(".avatar").css({
+                background: "url(" + img + ") no-repeat scroll 0 -230px transparent"
+            });
         },
         onUploadError: function(event, queueId, fileObj, errorObj) {
             alert(errorObj.type + "：" + errorObj.info);
