@@ -49,9 +49,10 @@ Route::get("/register", function(){
     return View::make("template.login_register.register")->with($data);
 
 });
-Route::post('switch_auth','UserAccessController@CaptchaChange');
+Route::post('image_auth','UserAccessController@CaptchaChange');
 
 Route::post('loginAjax','UserAccessController@login');
+Route::post('login','UserAccessController@login');
 
 Route::get("/login", function(){
     $data = [
@@ -203,12 +204,12 @@ Route::post("/sms_auth",function(){
     return Response::json($data);
 });
 
-Route::post("/image_auth",function(){
-    $data = [
-            'success' => true,
-            'nextSrc' => 'http://img.store.sogou.com/net/a/08/link?appid=100520033&url=http%3A%2F%2Fwww.admin10000.com%2FUploadFiles%2FDocument%2F201202%2F20%2F20120220123258464881.JPG'
-        ];
-
-        return Response::json($data);
-});
+//Route::post("/image_auth",function(){
+//    $data = [
+//            'success' => true,
+//            'nextSrc' => 'http://img.store.sogou.com/net/a/08/link?appid=100520033&url=http%3A%2F%2Fwww.admin10000.com%2FUploadFiles%2FDocument%2F201202%2F20%2F20120220123258464881.JPG'
+//        ];
+//
+//        return Response::json($data);
+//});
 
