@@ -235,7 +235,6 @@ class UserAccountController extends BaseController{
 
                 ));
 
-                exit;
             }
         }
 
