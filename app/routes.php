@@ -6,12 +6,7 @@ Route::get("/map", function(){
 	return View::make("template.map.map");
 });
 
-Route::post("mapSearch", function(){
-	$data = [1,2,2,3,3,3,4,5,6,7,8,1,2,3,4,4,5,6,7,8];
-
-	return Response::json($data);
-
-});
+Route::post("mapSearch",'MapController@shopsGet');
 
 Route::post("mapSearch2", function(){
 	$data = [1];
@@ -30,9 +25,10 @@ Route::get("/register", function(){
     return View::make("template.login_register.register")->with($data);
 
 });
-Route::post('switch_auth','UserAccessController@CaptchaChange');
+Route::post('image_auth','UserAccessController@CaptchaChange');
 
 Route::post('loginAjax','UserAccessController@login');
+Route::post('login','UserAccessController@login');
 
 Route::get("/login", function(){
     $data = [
@@ -84,6 +80,7 @@ Route::get('useraccount/sitedelete/{id}', array('before' => 'loginCheck', 'uses'
 Route::post('/change_user_name',array('before' => 'loginCheck', 'uses' => 'UserAccountController@nickNameChange'));//用户昵称修改接口
 
 Route::get('useraccount/password_change', array('before' => 'loginCheck', 'uses' => 'UserAccountController@passwordChange'));//用户修改登录密码页面
+Route::post('useraccount/password_change', array('before' => 'loginCheck', 'uses' => 'UserAccountController@passwordChange'));//用户修改登录密码接口
 
 Route::get('useraccount/personal_secure', array('before' => 'loginCheck', 'uses' => 'UserAccountController@userSecurity'));//用户安全设置页面
 
@@ -184,12 +181,12 @@ Route::post("/sms_auth",function(){
     return Response::json($data);
 });
 
-Route::post("/image_auth",function(){
-    $data = [
-            'success' => true,
-            'nextSrc' => 'http://img.store.sogou.com/net/a/08/link?appid=100520033&url=http%3A%2F%2Fwww.admin10000.com%2FUploadFiles%2FDocument%2F201202%2F20%2F20120220123258464881.JPG'
-        ];
-
-        return Response::json($data);
-});
+//Route::post("/image_auth",function(){
+//    $data = [
+//            'success' => true,
+//            'nextSrc' => 'http://img.store.sogou.com/net/a/08/link?appid=100520033&url=http%3A%2F%2Fwww.admin10000.com%2FUploadFiles%2FDocument%2F201202%2F20%2F20120220123258464881.JPG'
+//        ];
+//
+//        return Response::json($data);
+//});
 

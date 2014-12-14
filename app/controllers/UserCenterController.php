@@ -516,7 +516,7 @@ class UserCenterController extends BaseController{
             "personal_collection_shop" => url("usercenter/collect_shop"),// 我收藏的餐厅的地址
             "personal_collection_goods" => url("usercenter/collect_menu"), // 我收藏的商品的地址
             "personal_my_site" => url("useraccount/site") ,  // 我的地址
-            "personal_change_password" => url("personal_change_password"), // 修改密码
+            "personal_change_password" => url("useraccount/password_change"), // 修改密码
             "personal_secure"=> url("useraccount/personal_secure"),        // 安全设置
             "personal_details" => "#"       // 收支明细
         );
