@@ -56,7 +56,7 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => '42.62.101.36',
 			'database'  => 'haochigo',
-			'username'  => 'root',
+			'username'  => 'haochigo',
 			'password'  => 'vector2014',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
