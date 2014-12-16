@@ -2,9 +2,9 @@
 .idea/**
 
 # elm
-app/config/database.php
-
 elm/
+
+app/config/database.php
 
 
 # Logs
