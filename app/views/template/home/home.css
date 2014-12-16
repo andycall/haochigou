@@ -495,14 +495,14 @@ a {
 }
 .more_info.more_info_right .tip {
   left: -5px;
-  background: url("../../../images/bg.gif") no-repeat transparent scroll 0 -810px;
+  background: url("../../../images/bg.png") no-repeat transparent scroll 0 -810px;
 }
 .more_info.more_info_left {
   left: -370px;
 }
 .more_info.more_info_left .tip {
   left: 360px;
-  background: url("../../../images/bg.gif") no-repeat transparent scroll 0 -819px;
+  background: url("../../../images/bg.png") no-repeat transparent scroll 0 -819px;
 }
 .more_info p {
   color: #333 !important;

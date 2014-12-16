@@ -5,6 +5,8 @@
 
 elm/
 
+app/config/database.php
+
 
 # Logs
 logs

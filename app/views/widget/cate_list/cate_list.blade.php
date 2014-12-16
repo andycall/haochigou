@@ -1,6 +1,6 @@
 
 <div class="menu_toolbar">
-    <div class="toolbar_text" data-classify_id="">
+    <div class="toolbar_text" data-classify_id="{{$category['data']['classify_sec'][0]['classify_id']}}">
         <span>{{$category['data']['classify_sec'][0]['classify_name']}}</span>
         <img class="icon-rst-badge" src="" alt="" title=""/>
     </div>

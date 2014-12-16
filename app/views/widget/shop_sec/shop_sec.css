@@ -24,10 +24,10 @@
   width: 14px;
   height: 14px;
   display: none;
-  background: url("../../../images/bg.gif") no-repeat -550px -773px;
+  background: url("../../../images/bg.png") no-repeat -550px -773px;
 }
  .collection-row-book .collection-row-book-close:hover {
-  background: url("../../../images/bg.gif") no-repeat -148px -1019px;
+  background: url("../../../images/bg.png") no-repeat -148px -1019px;
 }
 .collection-row-book .collection-row-book-left {
   float: left;
@@ -115,7 +115,7 @@
   float: left;
   width: 61px;
   height: 14px;
-  background: url("../../../images/bg.gif") no-repeat;
+  background: url("../../../images/bg.png") no-repeat;
   margin-top: 2px;
   margin-right: 2px;
 }
@@ -150,13 +150,14 @@
      height: 92px;
  }
  .collection .collection-row .collection-row-none .add {
-     background: #ffffff url("../../../images/bg.gif") no-repeat -112px -94px;
+     background: #ffffff url("../../../images/bg.png") no-repeat -112px -94px;
      border-left: 1px solid white;
      border-right: 1px solid white;
      text-align: left;
      height: 92px;
  }
  .collection .collection-row .collection-row-none .add:hover {
-     background: #ffffff url("../../../images/bg.gif") no-repeat -303px -94px;
+     background: #ffffff url("../../../images/bg.png") no-repeat -303px -94px;
  }
+
 
