@@ -44,7 +44,7 @@ Route::get('logout','UserAccessController@logout');                      // 退�
 
 #消息发送
 Route::get('message','UserAccessController@sendMessage');
-Route::post('message','UserAccessController@MessageCheck');
+Route::post('/sms_auth','UserAccessController@sendMessage');
 
 #头像上传
 Route::post('userphoto','UserCenterController@portraitUpload');
@@ -173,13 +173,13 @@ Route::get("/personal_modify_payment",function(){
 });
 
 ##测试  =====验证码======
-Route::post("/sms_auth",function(){
-    $data = [
-        'success' => true
-    ];
-
-    return Response::json($data);
-});
+//Route::post("/sms_auth",function(){
+//    $data = [
+//        'success' => true
+//    ];
+//
+//    return Response::json($data);
+//});
 
 //Route::post("/image_auth",function(){
 //    $data = [

@@ -1,1 +1,1 @@
-define([ "jquery", "underscore" ], function() {});
+define(["jquery","underscore"],function(){});
