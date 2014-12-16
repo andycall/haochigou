@@ -1,1 +1,121 @@
-define(["jquery","register/port","registerPort"],function(a,b,c){function d(b){a.post(b.auth_port,b,function(b){if("object"!=typeof b)try{b=a.parseJSON(b)}catch(c){return void alert("服务器数据异常，稍后再试")}if("true"==String(b.success)){alert("短信已经发送，请注意接收验证码"),g.attr("disabled","disabled");var d=30,e=g.text(),f=setInterval(function(){g.text(d--+"秒后可再发送"),1>d&&(g.text(e).removeAttr("disabled"),clearInterval(f))},1e3)}else!b.success&&b.errMsg&&alert(b.errMsg)})}function e(b){a(".u-error-tip").hide();var c=i.find(".u-error-tip"),d=h.find(".u-error-tip"),e=j.find(".u-error-tip"),f=l.find(".u-error-tip"),g=k.find(".u-error-tip"),m=/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/,n=/^[a-z0-9A-Z]+$/,o=/^[\d]{11}$/,p=/^[\w]{6,20}$/;return console.log(b.user_phone),o.test(b.user_phone)?(d.hide(),m.test(b.user_email)?(g.hide(),p.test(b.user_psw)?(c.hide(),b.user_psw!=j.find("input").val()?(e.show(),!1):(e.hide(),n.test(b.user_auth)?(f.hide(),!0):(f.show(),!1))):(c.show(),!1)):(g.show(),!1)):(d.show(),!1)}function f(d){a.ajax({url:b.register,type:"post",dataType:"json",data:d,success:function(b){if("object"!=typeof b)try{b=a.parseJSON(b)}catch(d){return void alert("服务器异常，稍后再试")}if("true"==String(b.success))location.href=c.jump_port;else if(b.no||b.no>=1&&b.no<=4)switch(b.no){case 1:showInputError(k,b.errMsg.inputMsg);break;case 2:showInputError($divUserPWd,b.errMsg.inputMsg);break;case 3:!function(){"mobile"==loginWay&&showInputError($divUserTel,b.errMsg.inputMsg)}();break;case 4:!function(){"normal"==loginWay?showInputError($divAuth1,b.errMsg.inputMsg):"mobile"==loginWay&&showInputError($divAuth2,b.errMsg.inputMsg)}()}else b.errMsg&&b.errMsg.otherMsg&&alert(b.errMsg.otherMsg)}})}console.log("register loaded");var g=a(".sms-btn");g.on("click",function(){d({auth_port:b.sms_auth,auth_way:"sms",timestemp:(new Date).getTime(),telNumber:a("#register-user-mobile-input").val()})}),a("#register-form input").on("focus",function(){a(".u-error-tip").hide()});var h=a("#register-user-mobile"),i=a("#user-pwd"),j=a("#user-re-pwd"),k=a("#register-user-email"),l=a("#register-user-auth");a("#register-form").on("submit",function(a){a.preventDefault();var b={user_phone:h.find("input").val(),user_psw:i.find("input").val(),user_email:k.find("input").val(),user_auth:l.find("input").val()};return e(b)?(f(b),!1):!1})});
+define([ "jquery", "register/port", "registerPort" ], function($, port, registerPort) {
+    //验证码ajax请求
+    function getAuth(data) {
+        $.post(data.auth_port, data, function(res) {
+            if ("object" != typeof res) try {
+                res = $.parseJSON(res);
+            } catch (err) {
+                return void alert("服务器数据异常，稍后再试");
+            }
+            if (res.success) {
+                alert("短信已经发送，请注意接收验证码"), //计时禁止连续发送30秒
+                $smsBtn.attr("disabled", "disabled");
+                var count = 30, orginText = $smsBtn.text(), authTimer = setInterval(function() {
+                    $smsBtn.text(count-- + "秒后可再发送"), 1 > count && ($smsBtn.text(orginText).removeAttr("disabled"), 
+                    clearInterval(authTimer));
+                }, 1e3);
+            } else alert(!res.success && res.errMsg ? res.errMsg : "发送错误");
+        });
+    }
+    //验证所填数据4
+    function checkRegister(data) {
+        //先隐藏原来的errtip
+        $(".u-error-tip").hide();
+        //normal err tip
+        var $errPwd = $divUserPwd.find(".u-error-tip"), $errMobile = $divUserMobile.find(".u-error-tip"), $errRePwd = $divUserRePwd.find(".u-error-tip"), $errAuth = $divAuth.find(".u-error-tip"), $errEmail = $divUserEmail.find(".u-error-tip"), regEmail = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/, //邮箱验证
+        regAuth = /^[a-z0-9A-Z]+$/, //验证码 0-9，a-z
+        regTel = /^[\d]{11}$/, //电话号码目前仅支持11位
+        regPwd = /^[\w]{6,20}$/;
+        //验证电话号码
+        //密码 大于六位 0-9a-zA-Z_
+        //验证电话号码
+        //验证邮箱
+        //验证验证密码
+        //验证验证密码是否相同
+        //验证码
+        return console.log(data.user_phone), regTel.test(data.user_phone) ? ($errMobile.hide(), 
+        regEmail.test(data.user_email) ? ($errEmail.hide(), regPwd.test(data.user_psw) ? ($errPwd.hide(), 
+        data.user_psw != $divUserRePwd.find("input").val() ? ($errRePwd.show(), !1) : ($errRePwd.hide(), 
+        regAuth.test(data.user_auth) ? ($errAuth.hide(), !0) : ($errAuth.show(), !1))) : ($errPwd.show(), 
+        !1)) : ($errEmail.show(), !1)) : ($errMobile.show(), !1);
+    }
+    //ajax
+    function ajaxForm(data) {
+        $.ajax({
+            url: port.register,
+            type: "post",
+            dataType: "json",
+            data: data,
+            success: function(res) {
+                if ("object" != typeof res) try {
+                    res = $.parseJSON(res);
+                } catch (err) {
+                    return void alert("服务器异常，稍后再试");
+                }
+                if ("true" == String(res.success)) location.href = registerPort.jump_port; else if (res.no || res.no >= 1 && res.no <= 4) //填写错误
+                switch (res.no) {
+                  //邮箱错误
+                    case 1:
+                    showInputError($divUserEmail, res.errMsg.inputMsg);
+                    break;
+
+                  //密码错误
+                    case 2:
+                    showInputError($divUserPWd, res.errMsg.inputMsg);
+                    break;
+
+                  //电话号码码错误
+                    case 3:
+                    !function() {
+                        "mobile" == loginWay && showInputError($divUserTel, res.errMsg.inputMsg);
+                    }();
+                    break;
+
+                  //验证码错误
+                    case 4:
+                    !function() {
+                        "normal" == loginWay ? showInputError($divAuth1, res.errMsg.inputMsg) : "mobile" == loginWay && showInputError($divAuth2, res.errMsg.inputMsg);
+                    }();
+                } else res.errMsg && res.errMsg.otherMsg && //其它错误
+                alert(res.errMsg.otherMsg);
+            }
+        });
+    }
+    console.log("register loaded");
+    //注册表单
+    /*
+     *@include 验证
+     *@include ajax
+     *@inclde 点击验证码切换/发送验证码
+    */
+    var $smsBtn = $(".sms-btn");
+    //短信验证码
+    $smsBtn.on("click", function() {
+        return /^[\d]{11}$/.test($("#register-user-mobile-input").val()) ? void getAuth({
+            auth_port: port.sms_auth,
+            //短信验证port
+            auth_way: "sms",
+            timestemp: new Date().getTime(),
+            //时间戳
+            telNumber: $("#register-user-mobile-input").val()
+        }) : void $("#register-user-mobile").find(".u-error-tip").show();
+    }), //输入框绑定事件,每次获得焦点时隐藏提示
+    $("#register-form input").on("focus", function() {
+        $(".u-error-tip").hide();
+    });
+    var $divUserMobile = $("#register-user-mobile"), $divUserPwd = $("#user-pwd"), $divUserRePwd = $("#user-re-pwd"), $divUserEmail = $("#register-user-email"), $divAuth = $("#register-user-auth");
+    //提交表单
+    $("#register-form").on("submit", function(ev) {
+        ev.preventDefault();
+        var data = {
+            user_phone: $divUserMobile.find("input").val(),
+            //电话号码
+            user_psw: $divUserPwd.find("input").val(),
+            //密码
+            user_email: $divUserEmail.find("input").val(),
+            //邮箱
+            user_auth: $divAuth.find("input").val()
+        };
+        return checkRegister(data) ? (ajaxForm(data), !1) : !1;
+    });
+});

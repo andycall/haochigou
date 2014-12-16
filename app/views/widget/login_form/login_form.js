@@ -22,6 +22,10 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
     });
     //短信验证码
     $smsBtn.on("click",function(){
+        if( !/^[\d]{11}$/.test($("#user-mobile").val() ) ){
+            $("#login-user-mobile").find(".u-error-tip").show();
+            return ;
+        }
         getAuth({
             'auth_port' : port.sms_auth,     //短信验证port
             'auth_way'  : 'sms',               //短信类型
@@ -44,7 +48,7 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
 
             if( res.success ){
                 if(res.nextSrc){
-                    if(data.auth_way == "image") $(".captcha-img").attr("src",res.nextSrc);
+                    $(".captcha-img").attr("src",res.nextSrc);
                 }else{
                     alert("短信已经发送，请注意接收验证码");
                     
@@ -65,6 +69,8 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
                 }
             }else if( !res.success && res.errMsg){
                 alert(res.errMsg);
+            }else{
+                alert("发送错误");
             }
         });
     }
