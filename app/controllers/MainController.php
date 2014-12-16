@@ -423,7 +423,7 @@ class MainController extends BaseController {
 				"switch_palce"  => url('map'),
 				"logo"          => url('/'),	// 网站主页地址
 				"mobile"        => "123",                 				// 跳转到下载手机APP的地址
-				"my_ticket"     => 'order',                 			// 我的饿单的地址
+				"my_ticket"     => url('usercenter/recent_month'),      // 我的饿单的地址
 				"my_gift"       => 'gift',                				// 礼品中心地址
 				"feedback"      => 'feedback',                			// 反馈留言地址
 				"shop_chart"    => "cart",                				// 购物车地址
