@@ -54,12 +54,11 @@ class UserAccessController extends BaseController{
 
 
         if($user->save()){
-            $uid = $user->id;
+            $uid = $user->uid;
         }else{
             echo "user base Error";
             exit;
         }
-
 
         $frontUser = new FrontUser;
         $frontUser->uid = $uid;
@@ -104,6 +103,26 @@ class UserAccessController extends BaseController{
         $account = Input::get('user_email');
         $password = Input::get('user_psw');
 
+        $rememberMe = Input::get('user_remember');
+
+        $captcha = Input::get('user_auth');
+        $ip = $this->getIP();
+        $codeKey = md5($ip);
+        $captchaCode = Cache::tags('register','code')->get($codeKey);
+
+        if($captcha != $captchaCode){
+            echo json_encode(array(
+                'success'=>false,
+                'state'=>200,
+                'errMsg'=>array(
+                    'inputMsg'=>'验证码验证失败'
+                ),
+                'no'=>1
+            ));
+
+            exit();
+        }
+
         $accountCheck = $this->accountCheck($account);
         if(!is_object($accountCheck)){
             echo json_encode(array(
@@ -121,7 +140,13 @@ class UserAccessController extends BaseController{
         $passwordCheck = Hash::check($password,$accountCheck->user->password);
 
         if($passwordCheck){
-            Auth::login($accountCheck);
+            if($rememberMe == 'true'){
+                Auth::login($accountCheck,true);
+            }else{
+                Auth::login($accountCheck);
+            }
+
+
         }else{
             echo json_encode(array(
                 'succcess'=>false,
