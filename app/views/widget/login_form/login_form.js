@@ -38,7 +38,6 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
                     return ;
                 }
             }
-
             if( res.success ){
                 if(res.nextSrc){
                      $(".captcha-img").attr("src",res.nextSrc);
