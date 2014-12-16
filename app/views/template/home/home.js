@@ -27,7 +27,6 @@ require.config({
 define([
 	'userBar/userBar',
 	"nav/nav",
-	"ads/ads",
     "my_collection/my_collection",
     "my_collection_alert/my_collection_alert",
 	"footer/footer",
@@ -39,5 +38,11 @@ define([
 	"shop_info/shop_info"
 ], function($){
 	console.log("init");
+	//当页面准备改变时
+	window.history.pushState({
+		title: 'Home',
+		url: location.href
+	}, document.title, location.href);
+
 });
 

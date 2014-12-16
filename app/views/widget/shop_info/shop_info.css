@@ -23,7 +23,7 @@
   position: relative;
 }
 .more_shops-row .more_shops-row-book .collect_star {
-  background: transparent url("../../../images/bg.gif") repeat scroll -480px -776px;
+  background: transparent url("../../../images/bg.png") repeat scroll -480px -776px;
   height: 22px;
   width: 20px;
   position: absolute;
@@ -48,12 +48,12 @@
   text-decoration: underline;
 }
 .more_shops-row .more_shops-row-book .collect {
-  background: url("../../../images/bg.gif") no-repeat -121px -779px #f8f8f8;
+  background: url("../../../images/bg.png") no-repeat -121px -779px #f8f8f8;
   width: 40px;
   color: #0088c8;
 }
 .more_shops-row .more_shops-row-book .uncollect {
-  background: url("../../../images/bg.gif") no-repeat -202px -779px #f8f8f8;
+  background: url("../../../images/bg.png") no-repeat -202px -779px #f8f8f8;
   width: 60px;
   color: #0088c8;
 }
@@ -156,7 +156,7 @@
   float: left;
   width: 61px;
   height: 14px;
-  background: url("../../../images/bg.gif") no-repeat;
+  background: url("../../../images/bg.png") no-repeat;
   margin-top: 2px;
   margin-right: 2px;
 }
@@ -197,12 +197,12 @@
   height: 92px;
 }
 .more_shops-row .more_shops-row-none .add {
-  background: #ffffff url("../../../images/bg.gif") no-repeat -112px -94px;
+  background: #ffffff url("../../../images/bg.png") no-repeat -112px -94px;
   border-left: 1px solid white;
   border-right: 1px solid white;
   text-align: left;
   height: 92px;
 }
 .more_shops-row .more_shops-row-none .add:hover {
-  background: #ffffff url("../../../images/bg.gif") no-repeat -303px -94px;
+  background: #ffffff url("../../../images/bg.png") no-repeat -303px -94px;
 }

@@ -17,9 +17,9 @@
     <nav class="tb-nav">
         <ul class="tb-site-nav" role="navigation">
             <li><a class="tb-site-nav-link" href="{{{$userbar['url']['my_ticket']}}}">我的饿单</a></li>
-            <li><a class="tb-site-nav-link" href="{{{$userbar['url']['my_gift']}}}">礼品中心</a></li>
-            <li><a class="tb-site-nav-link" href="{{{$userbar['url']['feedback']}}}">反馈留言</a></li>
-            <li class="tb-hr"><a class="tb-site-nav-link last" href="##">附近团购</a></li>
+            <li><a class="tb-site-nav-link" href="{{{$userbar['url']['my_gift']}}}" style="visibility: hidden">礼品中心</a></li>
+            <li><a class="tb-site-nav-link" href="{{{$userbar['url']['feedback']}}}" style="visibility: hidden">反馈留言</a></li>
+            <li class="tb-hr" style="visibility: hidden;"><a class="tb-site-nav-link last" href="##" style="visibility: hidden">附近团购</a></li>
         </ul>
         <div class="tb-cart">
             <a href="##" class="tb-cart-link">
@@ -31,16 +31,16 @@
                 </div>
             </div>
         </div>
-        <div class="tb-msg">
-            <a href="##" class="tb-msg-link">
-               <i class="icon-msg"></i>
-            </a>
-            <div class="tb-msg-dropdown-wrapper">
-               <div class="tb-msg-dropdown">
-                   <div class="f-loading"></div>
-               </div>
-            </div>
-        </div>
+        {{--<div class="tb-msg">--}}
+            {{--<a href="##" class="tb-msg-link">--}}
+               {{--<i class="icon-msg"></i>--}}
+            {{--</a>--}}
+            {{--<div class="tb-msg-dropdown-wrapper">--}}
+               {{--<div class="tb-msg-dropdown">--}}
+                   {{--<div class="f-loading"></div>--}}
+               {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
         <div class="topbar-user-nav">
             <a href="##" class="tb-username"><?php echo mb_substr($userbar['data']['username'], 0, 5); ?><i class="caret"></i></a>
             <ul class="tb-user-dropdown">

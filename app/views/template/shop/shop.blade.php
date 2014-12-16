@@ -24,7 +24,7 @@
     {{-- 本周热卖 --}}
     @include("widget/hot_sails/hot_sails")
     {{-- 商店地图 --}}
-    @include("widget/shop_map/shop_map")
+    {{--@include("widget/shop_map/shop_map")--}}
 @stop
 
 
