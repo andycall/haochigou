@@ -6,36 +6,12 @@ Route::get("/map", function(){
 	return View::make("template.map.map");
 });
 
-Route::post("mapSearch", function(){
-	$data = [
-		0 => [
-			"id" => "B00178WI1P",
-			"name" => "重庆市",
-			"type" => "地名地址信息;普通地名;省级地名",
-			"location" => [
-				"B" => 29.56301,
-				"r" => 106.551557,
-				"lng" => 106.551557,
-				"lat" => 29.56301
-			],
-			"jump_url" => "http://baidu.com" // 点击之后的跳转地址
-		],
-		1 => [
-			"id" => "B00178WI1P",
-			"name" => "重庆市",
-			"type" => "地名地址信息;普通地名;省级地名",
-			"location" => [
-				"B" => 29.56301,
-				"r" => 106.551557,
-				"lat" => 29.549747,
-				"lng" =>106.547669
-			],
-			"jump_url" => "http://taobao.com" // 点击之后的跳转地址
-		],
-	];
+Route::post("mapSearch",'MapController@shopsGet');
+
+Route::post("mapSearch2", function(){
+	$data = [1];
 
 	return Response::json($data);
-
 });
 
 # 登陆与注册
@@ -49,9 +25,10 @@ Route::get("/register", function(){
     return View::make("template.login_register.register")->with($data);
 
 });
-Route::post('switch_auth','UserAccessController@CaptchaChange');
+Route::post('image_auth','UserAccessController@CaptchaChange');
 
 Route::post('loginAjax','UserAccessController@login');
+Route::post('login','UserAccessController@login');
 
 Route::get("/login", function(){
     $data = [
@@ -67,7 +44,7 @@ Route::get('logout','UserAccessController@logout');                      // 退�
 
 #消息发送
 Route::get('message','UserAccessController@sendMessage');
-Route::post('message','UserAccessController@MessageCheck');
+Route::post('/sms_auth','UserAccessController@sendMessage');
 
 #头像上传
 Route::post('userphoto','UserCenterController@portraitUpload');
@@ -86,13 +63,26 @@ Route::get('usercenter/collect_shop',array('before' => 'loginCheck', 'uses' => '
 Route::get('usercenter/collect_menu',array('before' => 'loginCheck', 'uses' => 'UserCenterController@menuCollect'));//收藏的菜品
 
 Route::get('usercenter/personal_uncomment', array('before', 'loginCheck', 'uses' => 'UserCenterController@Uncomment'));  // 获取用户未评论的订单
+
+
+
 # 用户账户模块
 Route::get('useraccount/site', array('before' => 'loginCheck', 'uses' => 'UserAccountController@userSite'));//用户收货地址页面
 
+Route::get('useraccount/site/{id}', array('before' => 'loginCheck', 'uses' => 'UserAccountController@userSite'));//用户收货地址编辑页面
+
 Route::post('useraccount/site', array('before' => 'loginCheck', 'uses' => 'UserAccountController@userSiteEdit'));//用户收货地址编辑&新增接口
+
+Route::post('useraccount/site/{id}', array('before' => 'loginCheck', 'uses' => 'UserAccountController@userSiteEdit'));//用户收货地址编辑&新增接口
 
 Route::get('useraccount/sitedelete/{id}', array('before' => 'loginCheck', 'uses' => 'UserAccountController@siteDelete'));//用户收货地址删除接口
 
+Route::post('/change_user_name',array('before' => 'loginCheck', 'uses' => 'UserAccountController@nickNameChange'));//用户昵称修改接口
+
+Route::get('useraccount/password_change', array('before' => 'loginCheck', 'uses' => 'UserAccountController@passwordChange'));//用户修改登录密码页面
+Route::post('useraccount/password_change', array('before' => 'loginCheck', 'uses' => 'UserAccountController@passwordChange'));//用户修改登录密码接口
+
+Route::get('useraccount/personal_secure', array('before' => 'loginCheck', 'uses' => 'UserAccountController@userSecurity'));//用户安全设置页面
 
 #登录验证
 Route::filter('loginCheck', function()
@@ -134,7 +124,10 @@ Route::post('modifyorder', array('before' => 'loginCheck', 'uses' => 'PersonalCo
 
 #测试
 Route::post('test', 'ShopController@cartDel');
-Route::get('test', 'UserCenterController@Uncomment');
+Route::get('test/{shop_id}', 'ShopController@getCategory');
+
+
+
 
 #测试
 Route::get("/personal_modify_payment",function(){
@@ -180,19 +173,20 @@ Route::get("/personal_modify_payment",function(){
 });
 
 ##测试  =====验证码======
-Route::post("/sms_auth",function(){
-    $data = [
-        'success' => true
-    ];
+//Route::post("/sms_auth",function(){
+//    $data = [
+//        'success' => true
+//    ];
+//
+//    return Response::json($data);
+//});
 
-    return Response::json($data);
-});
+//Route::post("/image_auth",function(){
+//    $data = [
+//            'success' => true,
+//            'nextSrc' => 'http://img.store.sogou.com/net/a/08/link?appid=100520033&url=http%3A%2F%2Fwww.admin10000.com%2FUploadFiles%2FDocument%2F201202%2F20%2F20120220123258464881.JPG'
+//        ];
+//
+//        return Response::json($data);
+//});
 
-Route::post("/image_auth",function(){
-    $data = [
-            'success' => true,
-            'nextSrc' => 'http://img.store.sogou.com/net/a/08/link?appid=100520033&url=http%3A%2F%2Fwww.admin10000.com%2FUploadFiles%2FDocument%2F201202%2F20%2F20120220123258464881.JPG'
-        ];
-
-        return Response::json($data);
-});

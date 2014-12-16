@@ -20,6 +20,25 @@ module.exports = function(grunt) {
         },
         files: ['<%= config.js %>', '<%= config.css %>', '<%= config.image %>']
     },
+   uglify : {
+        buildall: {//任务三：按原文件结构压缩js文件夹内所有JS文件
+            files: [{
+                expand:true,
+                cwd:'public/js',//js目录下
+                src:'**/*.js',//所有js文件
+                dest: "public/js"//输出到此目录下
+            }]
+        }
+    }, 
+    cssmin: {
+      minify: {
+        expand: true,        // 启用下面的选项
+        cwd: 'public/css/',    // 指定待压缩的文件路径
+        src: ['*.css', '!*.min.css'],    // 匹配相对于cwd目录下的所有css文件(排除.min.css文件)
+        dest: 'public/css/',    // 生成的压缩文件存放的路径
+        ext: '.min.css'        // 生成的文件都使用.min.css替换原有扩展名，生成文件存放于dest指定的目录中
+      }
+    },
 
 	imagemin : {
 		static: {
@@ -100,19 +119,7 @@ module.exports = function(grunt) {
 	                rename: getPathFromDepth("public/js", src, depth,needTag)
 	              }
             ]
-          },
-          //beatify: {
-          //  options: {
-          //    beautify: true,
-          //    mangle: false
-          //  },
-          //  files: [
-          //    {
-          //      expand: true,
-          //      filter: 'isFile',
-          //      src: src
-          //    }]
-          //}
+          }
         };
 
 //        runMap.push("jshint");

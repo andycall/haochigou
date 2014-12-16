@@ -54,47 +54,47 @@
         <a href="{{$top_bar['url']['shop_url']}}" class="{{{ $active=="meun" ? 'onclick' : "" }}}">菜单</a>
         <a href="{{$top_bar['url']['comment_url']}}" class="{{{ $active=="comment" ? 'onclick' : "" }}}">评价</a>
     </div>
-    <div class="res_panel">
-        <div class="res_data_block">
-            <div class="res_data caret" style="border: none">
-@if($top_bar['data']['price_begin'])
-                <b>{{$top_bar['data']['price_begin']}}</b>
-@else
-                <b>0</b>
-@endif
-                <span>起送价/元</span>
-            </div>
-            <div class="res_dropdown">
-                <div class="res_detail deliver">
-                    <h4>额外说明</h4>
-                    <p>{{$top_bar['data']['shop_remark']}}</p>
-                </div>
-            </div>
-        </div>
-        <div class="res_data_block">
-            <div class="res_data caret">
-@if($top_bar['data']['shop_distance'])
-                <b>{{$top_bar['data']['shop_distance']}}</b>
-@else
-                <b>0</b>
-@endif
-                <span>餐厅距离/米</span>
-            </div>
-            <div class="res_dropdown">
-                <div class="res_detail map">
-                    <img src="{{$top_bar['url']['map_url']}}"/>
-                </div>
-            </div>
-        </div>
-@if($top_bar['data']['deliver_begin'])
-        <div class="res_data_block">
-            <div class="res_data">
-                <b>{{$top_bar['data']['deliver_begin']}}</b>
-                <span class="green">开始送餐时间</span>
-            </div>
-        </div>
-@endif
-    </div>
+    {{--<div class="res_panel">--}}
+        {{--<div class="res_data_block">--}}
+            {{--<div class="res_data caret" style="border: none">--}}
+{{--@if($top_bar['data']['price_begin'])--}}
+                {{--<b>{{$top_bar['data']['price_begin']}}</b>--}}
+{{--@else--}}
+                {{--<b>0</b>--}}
+{{--@endif--}}
+                {{--<span>起送价/元</span>--}}
+            {{--</div>--}}
+            {{--<div class="res_dropdown">--}}
+                {{--<div class="res_detail deliver">--}}
+                    {{--<h4>额外说明</h4>--}}
+                    {{--<p>{{$top_bar['data']['shop_remark']}}</p>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+        {{--<div class="res_data_block">--}}
+            {{--<div class="res_data caret">--}}
+{{--@if($top_bar['data']['shop_distance'])--}}
+                {{--<b>{{$top_bar['data']['shop_distance']}}</b>--}}
+{{--@else--}}
+                {{--<b>0</b>--}}
+{{--@endif--}}
+                {{--<span>餐厅距离/米</span>--}}
+            {{--</div>--}}
+            {{--<div class="res_dropdown">--}}
+                {{--<div class="res_detail map">--}}
+                    {{--<img src="{{$top_bar['url']['map_url']}}"/>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+{{--@if($top_bar['data']['deliver_begin'])--}}
+        {{--<div class="res_data_block">--}}
+            {{--<div class="res_data">--}}
+                {{--<b>{{$top_bar['data']['deliver_begin']}}</b>--}}
+                {{--<span class="green">开始送餐时间</span>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+{{--@endif--}}
+    {{--</div>--}}
 </div>
 
 @section("css")

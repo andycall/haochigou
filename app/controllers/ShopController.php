@@ -73,12 +73,15 @@ class ShopController extends BaseController {
 	 * 目前只实现了已经登录用户的添加
 	 */
 	public function addToCart(){
-		$user = Auth::user();
 		$menu_id = Input::get('good_id');
 		$shop_id = Input::get('shop_id');
 
-		$cartkey = md5($user->front_uid, $user->uid);
-		$key = 'laravel:user:cart'.$cartkey;
+		if( Auth::check() ){
+			$cartkey = Auth::user()->front_uid;
+		}else{
+			$cartkey = $this->getIP();
+		}
+		$key = 'laravel:user:'.$cartkey.':cart';
 
 		// 第一个元素为店铺的ID，购物车里只能放一个店铺的东西
 		if( Redis::llen($key) == 0){
@@ -135,9 +138,12 @@ class ShopController extends BaseController {
 	 * 清空购物车
 	 */
 	public function cartClear(){
-		$user    = Auth::user();
-		$cartkey = md5($user->front_uid, $user->uid);
-		$key     = 'laravel:user:cart'.$cartkey;
+		if( Auth::check() ){
+			$cartkey = Auth::user()->front_uid;
+		}else{
+			$cartkey = $this->getIP();
+		}
+		$key = 'laravel:user:'.$cartkey.':cart';
 		if( Redis::del($key) ){
 			return Response::json(array(
 				'success' => 'true'
@@ -149,9 +155,12 @@ class ShopController extends BaseController {
 	 * 从购物车删除
 	 */
 	public function cartDel(){
-		$user    = Auth::user();
-		$cartkey = md5($user->front_uid, $user->uid);
-		$key     = 'laravel:user:cart'.$cartkey;
+		if( Auth::check() ){
+			$cartkey = Auth::user()->front_uid;
+		}else{
+			$cartkey = $this->getIP();
+		}
+		$key = 'laravel:user:'.$cartkey.':cart';
 
 		$good_id = Input::get('good_id');
 		$shop_id = Redis::lrange($key, 0, 0);
@@ -172,9 +181,12 @@ class ShopController extends BaseController {
 	 * 购物车初始化
 	 */
 	public function cartInit(){
-		$user    = Auth::user();
-		$cartkey = md5($user->front_uid, $user->uid);
-		$key     = 'laravel:user:cart'.$cartkey;
+		if( Auth::check() ){
+			$cartkey = Auth::user()->front_uid;
+		}else{
+			$cartkey = $this->getIP();
+		}
+		$key = 'laravel:user:'.$cartkey.':cart';
 
 		//var_dump(Redis::lrange($key, 0, -1));
 		$shop_id = Redis::lrange($key, 0, 0);
@@ -202,9 +214,12 @@ class ShopController extends BaseController {
 	 * 此项操作必须是购物车至少有一件的情况
 	 */
 	public function cartSetCount(){
-		$user    = Auth::user();
-		$cartkey = md5($user->front_uid, $user->uid);
-		$key     = 'laravel:user:cart'.$cartkey;
+		if( Auth::check() ){
+			$cartkey = Auth::user()->front_uid;
+		}else{
+			$cartkey = $this->getIP();
+		}
+		$key = 'laravel:user:'.$cartkey.':cart';
 
 		$good_id = Input::get('good_id');
 		$shop_id = Input::get('shop_id');	// 不用
@@ -239,8 +254,16 @@ class ShopController extends BaseController {
 		
 		$data['announce_content'] = $shop->announcement;
 		$data['start_price']      = $shop->begin_price;
-		$data['activities']       = array();
+		$data['activities']       = array(
+			array(
+				'activity_name' => '满58起送',
+				'activity_icon' => ''
+			)
+		);
+		return $data;
 
+
+		/* 取消了活动
 		$menus = $shop->groups()->get();
 		foreach($menus as $menu){
 			if($menu->activity_id != 1){
@@ -253,7 +276,7 @@ class ShopController extends BaseController {
 				array_push($data['activities'], $oneact);
 			}
 		}
-		return $data;
+		*/
 	}
 
 	/**
@@ -288,6 +311,8 @@ class ShopController extends BaseController {
 
 		$shop = Shop::find($shop_id);
 		$categories = $shop->groups->all();
+		$i = $j = $k = 0;	// 数组的key，我也是醉了
+
 		foreach($categories as $group){
 			$one = array();
 
@@ -295,6 +320,9 @@ class ShopController extends BaseController {
 			$one['classify_id']   = $group->id;
 			$one['classify_icon'] = $group->icon;
 
+			$one['activity_ads']['activity_name'] = '';
+			$one['activity_ads']['activity_statement'] = '';
+			/* 不要活动了
 			if($group->activity_id == 1 ){
 				$one['activity_ads']['activity_name'] = '';
 				$one['activity_ads']['activity_statement'] = '';
@@ -303,10 +331,12 @@ class ShopController extends BaseController {
 				$one['activity_ads']['activity_name'] = $act->name;
 				$one['activity_ads']['activity_statement'] = $act->intro;
 			}
+			*/
 
 			$goods           = Menu::where('shop_id', $shop_id)->where('group_id', $group->id)->get();
 			$classify_images = array();
 			$classify_goods  = array();
+			$j = $k = 0;
 			foreach($goods as $good){
 				$onegood = array();				
 
@@ -319,7 +349,8 @@ class ShopController extends BaseController {
 					$onegood['goods_icon']     = '';					// 没有就没有嘛
 					$onegood['goods_original'] = (float)$good->original_price;	// 如果是促销就显示原价
 					$onegood['good_sails']	   = (float)$good->sold_num;
-					array_push($classify_images, $onegood);
+					$classify_images[$j++] = $onegood;
+					//array_push($classify_images, $onegood);
 				}else{
 					$onegood['goods_id']       = $good->id;				// 商品id
 					$onegood['goods_image']    = $good->icon; 			// 商品图片地址
@@ -332,14 +363,16 @@ class ShopController extends BaseController {
 					$onegood['goods_icon']     = $good->icon;			// 一些用户促销的图标
 					$onegood['goods_original'] = (float)$good->original_price;	// 如果是促销，这个用于显示原价
 					$onegood['good_sails']	   = (float)$good->sold_num;
-					array_push($classify_goods, $onegood);
+					$classify_goods[$k++] = $onegood;
+					//array_push($classify_goods, $onegood);
 				}
 			}
 			$one['classify_images'] = $classify_images;
 			$one['classify_goods']  = $classify_goods;
-			array_push($result, $one);
+			$result[$i++] = $one;
+			//array_push($result, $one);
 		}
-		//var_dump($result);
+//		var_dump($result);
 		return $result;
 	}
 
@@ -375,9 +408,18 @@ class ShopController extends BaseController {
 		$good_activity  = array();
 		foreach($groups as $group){
 			$one = array();
+
+			$one['classify_name']      = $group->name;
+			$one['classify_name_abbr'] = (mb_strlen($group->name, 'utf8') > 10) ? mb_substr($group->name, 0, 3, 'utf8').'...' : $group->name;
+			$one['classify_id']        = $group->id;
+			$one['classify_count']     = Menu::where('shop_id', $shop_id)->where('group_id', $group->id)->get()->count('shop_id');
+			$one['classify_icon']      = $group->icon;
+			array_push($goods_category, $one);
+
+			/* 不要活动了
 			if($group->activity_id == 1){		// 不是活动
 				$one['classify_name']      = $group->name;
-				$one['classify_name_abbr'] = $group->name_abbr;
+				$one['classify_name_abbr'] = (mb_strlen($group->name, 'utf8') > 10) ? mb_substr($group->name, 0, 3, 'utf8').'...' : $group->name;
 				$one['classify_id']        = $group->id;
 				$one['classify_count']     = Menu::where('shop_id', $shop_id)->where('group_id', $group->activity_id)->get()->count('shop_id');
 				$one['classify_icon']      = $group->icon;
@@ -390,6 +432,7 @@ class ShopController extends BaseController {
 				$one['activity_statement'] = $act->intro;
 				array_push($good_activity, $one);
 			}
+			*/
 		}
 		$data['goods_category'] = $goods_category;
 		$data['good_activity']  = $good_activity;
@@ -595,41 +638,68 @@ class ShopController extends BaseController {
 		$userbar = array();
 		$userbar['url'] = array(
 				"my_place"      => "这里是地址",
-				"switch_palce"  => "##",
+				"switch_palce"  => url('map'),
 				"logo"          => url('/'),	// 网站主页地址
 				"mobile"        => "123",                 				// 跳转到下载手机APP的地址
-				"my_ticket"     => 'order',                 			// 我的饿单的地址
+				"my_ticket"     => url('usercenter/recent_month'),                 			// 我的饿单的地址
 				"my_gift"       => 'gift',                				// 礼品中心地址
 				"feedback"      => 'feedback',                			// 反馈留言地址
 				"shop_chart"    => "cart",                				// 购物车地址
 				"user_mail"     => "mail",                				// 用户提醒的地址
 				"personal"      => url('usercenter'),                			// 个人中心地址
-				"my_collection" => "profile/shop",               		// 我的收藏地址
-				"my_secure"     => "profile/security",              	// 安全设置的地址
+				"my_collection" => url('usercenter/collect_shop'),               		// 我的收藏地址
+				"my_secure"     => url('useraccount/personal_secure'),              	// 安全设置的地址
 				"loginout"      => url("logout"),              			// 退出登录的地址
-				"switch_place"  => "switch_place"                  		// 切换当前地址的地址
 		);
-		if( Auth::check() ){
-			$user = Auth::user();
-			$userbar['data'] = array(
-				'user_id' => $user->front_uid,
-				'username' => $user->nickname,
-				'user_place' => ''
-			);			
-		} else{
-			$userbar['data'] = array(
-				'user_id' => 0,
-				'username' => '未登录用户',
-				'user_place' => '暂未获取地址'
-			);
-		}
+        if( Auth::check() ){
+            $user = Auth::user();
+            if( $user->nickname == NULL and $user->mobile == NULL){
+                $username = md5($user->email);
+            }elseif( $user->nickname == NULL ){
+                $username = md5($user->mobile);
+            }else{
+                $username = $user->nickname;
+            }
+            $userbar['data'] = array(
+                'user_id' => $user->front_uid,
+                'username' => $username,
+                'user_place' => ''
+            );          
+        } else{
+            $ipkey = md5($this->getIP());            
+            $userbar['data'] = array(
+                'user_id' => 0,
+                'username' => $ipkey,
+                'user_place' => '暂未获取地址'
+            );
+        }
 		return $userbar;
 	}
 
+    //获取客户端ip地址
+    private function getIP(){
+        if(!empty($_SERVER["HTTP_CLIENT_IP"])){
+            $cip = $_SERVER["HTTP_CLIENT_IP"];
+        }
+        elseif(!empty($_SERVER["HTTP_X_FORWARDED_FOR"])){
+            $cip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+        }
+        elseif(!empty($_SERVER["REMOTE_ADDR"])){
+            $cip = $_SERVER["REMOTE_ADDR"];
+        }
+        else{
+            $cip = "无法获取！";
+        }
+        return $cip;
+    }
+
 	public function getUserBarCart(){
-		$user = Auth::user();
-		$cartkey = md5($user->front_uid, $user->uid);
-		$key = 'laravel:user:cart'.$cartkey;
+		if( Auth::check() ){
+			$cartkey = Auth::user()->front_uid;
+		}else{
+			$cartkey = $this->getIP();
+		}
+		$key = 'laravel:user:'.$cartkey.':cart';
 
 		if( $shop_id = Redis::lindex($key, 0)){
 			$data['successs'] = 'true';

@@ -66,7 +66,7 @@ p {
       border-width: 8px;
       border-color: #df4d3f transparent transparent; }
     .content_form .login-bd .u-input-item .login-captcha {
-      width: 170px; }
+      width: 125px; }
     .content_form .login-bd .u-input-item .captcha-img {
       margin: 1px 0 0;
       height: 40px;
@@ -129,5 +129,3 @@ p {
       text-decoration: none; }
     .content_form .login-ft .register-link:hover {
       text-decoration: underline; }
-
-/*# sourceMappingURL=login_form.css.map */

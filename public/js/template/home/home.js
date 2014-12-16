@@ -22,6 +22,10 @@ require.config({
         tools: "../tools"
     }
 }), // 加载项目所需的所有依赖项
-define([ "userBar/userBar", "nav/nav", "ads/ads", "my_collection/my_collection", "my_collection_alert/my_collection_alert", "footer/footer", "more_shops/more_shops", "shop_list/shop_list", "swipe/swipe", "shop_sec/shop_sec", "shop_uncollected/shop_uncollected", "shop_info/shop_info" ], function() {
-    console.log("init");
+define([ "userBar/userBar", "nav/nav", "my_collection/my_collection", "my_collection_alert/my_collection_alert", "footer/footer", "more_shops/more_shops", "shop_list/shop_list", "swipe/swipe", "shop_sec/shop_sec", "shop_uncollected/shop_uncollected", "shop_info/shop_info" ], function() {
+    console.log("init"), //当页面准备改变时
+    window.history.pushState({
+        title: "Home",
+        url: location.href
+    }, document.title, location.href);
 });

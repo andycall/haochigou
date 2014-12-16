@@ -1,3 +1,1 @@
-define([ "jquery" ], function() {
-    console.log("deliver time loaded");
-});
+define(["jquery"],function(){console.log("deliver time loaded")});

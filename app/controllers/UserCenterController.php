@@ -516,8 +516,8 @@ class UserCenterController extends BaseController{
             "personal_collection_shop" => url("usercenter/collect_shop"),// 我收藏的餐厅的地址
             "personal_collection_goods" => url("usercenter/collect_menu"), // 我收藏的商品的地址
             "personal_my_site" => url("useraccount/site") ,  // 我的地址
-            "personal_change_password" => url("personal_change_password"), // 修改密码
-            "personal_secure"=> url("personal_secure"),        // 安全设置
+            "personal_change_password" => url("useraccount/password_change"), // 修改密码
+            "personal_secure"=> url("useraccount/personal_secure"),        // 安全设置
             "personal_details" => "#"       // 收支明细
         );
     }
@@ -527,35 +527,59 @@ class UserCenterController extends BaseController{
         $userbar = array();
         $userbar['url'] = array(
                 "my_place"      => "这里是地址",
-                "switch_palce"  => "##",
+                "switch_palce"  => url('map'),
                 "logo"          => url('/'),    // 网站主页地址
-                "mobile"        => "123",                               // 跳转到下载手机APP的地址
-                "my_ticket"     => 'order',                             // 我的饿单的地址
-                "my_gift"       => 'gift',                              // 礼品中心地址
-                "feedback"      => 'feedback',                          // 反馈留言地址
-                "shop_chart"    => "cart",                              // 购物车地址
-                "user_mail"     => "mail",                              // 用户提醒的地址
-                "personal"      => url('usercenter'),                           // 个人中心地址
-                "my_collection" => "profile/shop",                      // 我的收藏地址
-                "my_secure"     => "profile/security",                  // 安全设置的地址
-                "loginout"      => url("logout"),                       // 退出登录的地址
-                "switch_place"  => "switch_place"                       // 切换当前地址的地址
+                "mobile"        => "123",                           // 跳转到下载手机APP的地址
+                "my_ticket"     => url('usercenter/recent_month'),  // 我的饿单的地址
+                "my_gift"       => 'gift',                          // 礼品中心地址
+                "feedback"      => 'feedback',                      // 反馈留言地址
+                "shop_chart"    => "cart",                          // 购物车地址
+                "user_mail"     => "mail",                          // 用户提醒的地址
+                "personal"      => url('usercenter'),               // 个人中心地址
+                "my_collection" => url('usercenter/collect_shop'),                  // 我的收藏地址
+                "my_secure"     => url('useraccount/personal_secure'),              // 安全设置的地址
+                "loginout"      => url("logout"),                   // 退出登录的地址
         );
         if( Auth::check() ){
             $user = Auth::user();
+            if( $user->nickname == NULL and $user->mobile == NULL){
+                $username = md5($user->email);
+            }elseif( $user->nickname == NULL ){
+                $username = md5($user->mobile);
+            }else{
+                $username = $user->nickname;
+            }
             $userbar['data'] = array(
                 'user_id' => $user->front_uid,
-                'username' => $user->nickname,
+                'username' => $username,
                 'user_place' => ''
             );          
         } else{
+            $ipkey = md5($this->getIP());            
             $userbar['data'] = array(
                 'user_id' => 0,
-                'username' => '未登录用户',
+                'username' => $ipkey,
                 'user_place' => '暂未获取地址'
             );
         }
         return $userbar;
+    }
+
+    //获取客户端ip地址
+    private function getIP(){
+        if(!empty($_SERVER["HTTP_CLIENT_IP"])){
+            $cip = $_SERVER["HTTP_CLIENT_IP"];
+        }
+        elseif(!empty($_SERVER["HTTP_X_FORWARDED_FOR"])){
+            $cip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+        }
+        elseif(!empty($_SERVER["REMOTE_ADDR"])){
+            $cip = $_SERVER["REMOTE_ADDR"];
+        }
+        else{
+            $cip = "无法获取！";
+        }
+        return $cip;
     }
 
 }
