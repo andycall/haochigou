@@ -2,6 +2,7 @@
 .idea/**
 
 # elm
+app/config/database.php
 
 elm/
 
