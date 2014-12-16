@@ -96,7 +96,6 @@ class UserAccessController extends BaseController{
                 ),
                 'no'=>2
             ));
-
             exit;
         }
 
@@ -133,7 +132,6 @@ class UserAccessController extends BaseController{
                 ),
                 'no'=>1
             ));
-
             exit();
         }
 
@@ -163,10 +161,7 @@ class UserAccessController extends BaseController{
             'state'=>200,
             'nextSrc'=>url('usercenter'),
        ));
-
-
     }
-
 
     /*
      * 生成图片验证码
