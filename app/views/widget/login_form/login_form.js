@@ -10,9 +10,6 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
 
      var $smsBtn = $(".sms-btn");
 
-	console.log(loginPort);
-
-
     //图片验证码
     $(".captcha-img").on("click",function(){
         getAuth({
@@ -44,7 +41,7 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
 
             if( res.success ){
                 if(res.nextSrc){
-                    if(data.auth_way == "image") $(".captcha-img").attr("src",res.nextSrc);
+                     $(".captcha-img").attr("src",res.nextSrc);
                 }else{
                     alert("短信已经发送，请注意接收验证码");
                     
