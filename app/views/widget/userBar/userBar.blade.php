@@ -17,9 +17,9 @@
     <nav class="tb-nav">
         <ul class="tb-site-nav" role="navigation">
             <li><a class="tb-site-nav-link" href="{{{$userbar['url']['my_ticket']}}}">我的饿单</a></li>
-            <li><a class="tb-site-nav-link" href="{{{$userbar['url']['my_gift']}}}">礼品中心</a></li>
-            <li><a class="tb-site-nav-link" href="{{{$userbar['url']['feedback']}}}">反馈留言</a></li>
-            <li class="tb-hr"><a class="tb-site-nav-link last" href="##">附近团购</a></li>
+            <li><a class="tb-site-nav-link" href="{{{$userbar['url']['my_gift']}}}" style="visibility: hidden">礼品中心</a></li>
+            <li><a class="tb-site-nav-link" href="{{{$userbar['url']['feedback']}}}" style="visibility: hidden">反馈留言</a></li>
+            <li class="tb-hr" style="visibility: hidden;"><a class="tb-site-nav-link last" href="##" style="visibility: hidden">附近团购</a></li>
         </ul>
         <div class="tb-cart">
             <a href="##" class="tb-cart-link">

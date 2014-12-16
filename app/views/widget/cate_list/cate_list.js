@@ -74,6 +74,13 @@ define(['jquery' , "shop_cart/shop_cart"], function($, cart){
 		windowScroll(id);
 	});
 
+	$(".cate_item").on('click', function(e){
+		var id = $(e.currentTarget).data('classify_id');
+		windowScroll(id);
+		console.log(1);
+		return false;
+	});
+
 	// 购物车
 	$(".cate_view").on('click', '.rst-d-act-add', function(){
 		var good_id = $(this).parents('.menu_list_block').data("good_id");
