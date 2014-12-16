@@ -31,16 +31,16 @@
                 </div>
             </div>
         </div>
-        <div class="tb-msg">
-            <a href="##" class="tb-msg-link">
-               <i class="icon-msg"></i>
-            </a>
-            <div class="tb-msg-dropdown-wrapper">
-               <div class="tb-msg-dropdown">
-                   <div class="f-loading"></div>
-               </div>
-            </div>
-        </div>
+        {{--<div class="tb-msg">--}}
+            {{--<a href="##" class="tb-msg-link">--}}
+               {{--<i class="icon-msg"></i>--}}
+            {{--</a>--}}
+            {{--<div class="tb-msg-dropdown-wrapper">--}}
+               {{--<div class="tb-msg-dropdown">--}}
+                   {{--<div class="f-loading"></div>--}}
+               {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
         <div class="topbar-user-nav">
             <a href="##" class="tb-username"><?php echo mb_substr($userbar['data']['username'], 0, 5); ?><i class="caret"></i></a>
             <ul class="tb-user-dropdown">

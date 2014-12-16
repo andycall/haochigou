@@ -44,7 +44,7 @@ define(['jquery', "tools/Sizer", "underscore"], function($, Sizer, _){
 			var target = $(this),
 				place_id = target.data("place_id"),
 				shop_id = target.data("shop_id"),
-				flavor  = target.data("flavor"),
+				//flavor  = target.data("flavor"),
 				issupportpay = target.data('issupportpay'),
 				isonline = target.data('isonline'),
 				ishot   = target.data('ishot'),
@@ -67,7 +67,7 @@ define(['jquery', "tools/Sizer", "underscore"], function($, Sizer, _){
 
 			storage['place_id'] = place_id;
 			storage['shop_id']  = shop_id;
-			storage['flavor']   = flavor;
+			//storage['flavor']   = flavor;
 			storage['issupportpay'] = issupportpay;
 			storage['isonline'] = isonline;
 			storage['ishot']  = ishot;
@@ -118,22 +118,22 @@ define(['jquery', "tools/Sizer", "underscore"], function($, Sizer, _){
 				var nowChecked = input[0].checked;
 				input[0].checked = ! nowChecked;
 			}
-
-			if(flavor != "口味" && flavor != "全部"){
-
-				obj['flavor'] = flavor;
-			}
+			//
+			//if(flavor != "口味" && flavor != "全部"){
+			//
+			//	obj['flavor'] = flavor;
+			//}
 
 		}
-		else if(type == 'drop'){
-			var target = ev.target;
-
-			flavor = $(target).html();
-
-			if(flavor != "口味" && flavor != "全部"){
-				obj['flavor'] = flavor;
-			}
-		}
+		//else if(type == 'drop'){
+		//	var target = ev.target;
+		//
+		//	flavor = $(target).html();
+		//
+		//	if(flavor != "口味" && flavor != "全部"){
+		//		obj['flavor'] = flavor;
+		//	}
+		//}
 
 
 		// 数据录入
@@ -154,25 +154,25 @@ define(['jquery', "tools/Sizer", "underscore"], function($, Sizer, _){
 				}
 			});
 		}
-		else{
-			spans = $(".activities-btn");
-
-			activities = [];
-
-			spans.each(function(){
-				var input = $(this).find("input"),
-					activity  = $(this).data("activity_id");
-				var checked = input[0].checked;
-
-
-				if(checked){
-					activities.push(activity);
-				}
-			});
-
-			obj['support_activity'] = activities;
-
-		}
+		//else{
+		//	spans = $(".activities-btn");
+		//
+		//	activities = [];
+		//
+		//	spans.each(function(){
+		//		var input = $(this).find("input"),
+		//			activity  = $(this).data("activity_id");
+		//		var checked = input[0].checked;
+		//
+		//
+		//		if(checked){
+		//			activities.push(activity);
+		//		}
+		//	});
+		//
+		//	obj['support_activity'] = activities;
+		//
+		//}
 		console.log(obj);
 		console.log(Sizer.get(obj));
 
