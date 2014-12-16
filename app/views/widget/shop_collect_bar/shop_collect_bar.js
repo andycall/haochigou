@@ -31,6 +31,7 @@ define(["jquery", "shop/port"], function($, port){
 	//收藏ajax
 	function shopFavorAjax( data ){
 		$.post( port["shopFavor"], data, function(res){
+			console.log(res);
 			if( typeof res != "object"){
 				try{
 					res = $.parseJSON(res);
@@ -39,7 +40,7 @@ define(["jquery", "shop/port"], function($, port){
 				}
 			}
                                     
-                                    //失败的话
+            //失败的话
 			if( res.success != "true" ){
 				if(res.errMsg){
 					alert(res.errMsg);

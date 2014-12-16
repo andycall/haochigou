@@ -1,7 +1,7 @@
 define([ "jquery", "tools/Sizer", "underscore" ], function($, Sizer, _) {
     // 事件触发的数据获取中间件
     function dataTrigger(ev, type) {
-        var spans, activities, flavor, obj = {};
+        var spans, flavor, obj = {};
         // 数据获取
         if ("checkbox" == type || "activity" == type) {
             var deleteTarget = ev.delegateTarget, input = $(deleteTarget).find("input");
@@ -9,20 +9,41 @@ define([ "jquery", "tools/Sizer", "underscore" ], function($, Sizer, _) {
                 var nowChecked = input[0].checked;
                 input[0].checked = !nowChecked;
             }
-            "口味" != flavor && "全部" != flavor && (obj.flavor = flavor);
-        } else if ("drop" == type) {
-            var target = ev.target;
-            flavor = $(target).html(), "口味" != flavor && "全部" != flavor && (obj.flavor = flavor);
         }
+        //else if(type == 'drop'){
+        //	var target = ev.target;
+        //
+        //	flavor = $(target).html();
+        //
+        //	if(flavor != "口味" && flavor != "全部"){
+        //		obj['flavor'] = flavor;
+        //	}
+        //}
         // 数据录入
-        "checkbox" == type || "drop" == type ? (spans = $(".choice_click"), spans.each(function() {
+        ("checkbox" == type || "drop" == type) && (spans = $(".choice_click"), spans.each(function() {
             var input = $(this).find("input"), text = $(this).find("label"), checked = input[0].checked, label = (text.html(), 
             $(this).data("label"));
             checked && (obj[label] = Number(checked));
-        })) : (spans = $(".activities-btn"), activities = [], spans.each(function() {
-            var input = $(this).find("input"), activity = $(this).data("activity_id"), checked = input[0].checked;
-            checked && activities.push(activity);
-        }), obj.support_activity = activities), console.log(obj), console.log(Sizer.get(obj));
+        })), //else{
+        //	spans = $(".activities-btn");
+        //
+        //	activities = [];
+        //
+        //	spans.each(function(){
+        //		var input = $(this).find("input"),
+        //			activity  = $(this).data("activity_id");
+        //		var checked = input[0].checked;
+        //
+        //
+        //		if(checked){
+        //			activities.push(activity);
+        //		}
+        //	});
+        //
+        //	obj['support_activity'] = activities;
+        //
+        //}
+        console.log(obj), console.log(Sizer.get(obj));
         // 通过筛选器进行筛选并渲染
         var template = _.template($("#shop_list_template").html())({
             shops: Sizer.get(obj),
@@ -43,8 +64,9 @@ define([ "jquery", "tools/Sizer", "underscore" ], function($, Sizer, _) {
     }), function() {
         var target = shop_container.find(".more_shops-row-book"), result = [];
         target.each(function() {
-            var target = $(this), place_id = target.data("place_id"), shop_id = target.data("shop_id"), flavor = target.data("flavor"), issupportpay = target.data("issupportpay"), isonline = target.data("isonline"), ishot = target.data("ishot"), support_activity = target.data("support_activity").split(","), shop_url = target.parent().prop("href"), is_collected = target.find(".uncollect").hasClass("change"), shop_logo = target.find(".logo img").prop("src"), deliver_time = target.find(".more_shops-row-book-left span").data("deliver_time"), shop_name = target.find(".title p").html(), is_opening = target.find(".more_shops-row-book-right").data("is_opening"), shop_type = target.find(".more_shops-row-book-right").data("shop_type"), shop_level = target.find(".more_shops-row-book-right").data("shop_level"), order_count = target.find(".more_shops-row-book-right").data("order_count"), shop_announce = target.find(".divider").data("shop_announce"), deliver_state_start = target.find(".divider").data("deliver_state_start"), shop_address = target.find(".divider").data("shop_address"), business_hours = target.find(".divider").data("business_hours"), shop_summary = target.find(".divider").data("shop_summary"), storage = {};
-            storage.place_id = place_id, storage.shop_id = shop_id, storage.flavor = flavor, 
+            var target = $(this), place_id = target.data("place_id"), shop_id = target.data("shop_id"), //flavor  = target.data("flavor"),
+            issupportpay = target.data("issupportpay"), isonline = target.data("isonline"), ishot = target.data("ishot"), support_activity = target.data("support_activity").split(","), shop_url = target.parent().prop("href"), is_collected = target.find(".uncollect").hasClass("change"), shop_logo = target.find(".logo img").prop("src"), deliver_time = target.find(".more_shops-row-book-left span").data("deliver_time"), shop_name = target.find(".title p").html(), is_opening = target.find(".more_shops-row-book-right").data("is_opening"), shop_type = target.find(".more_shops-row-book-right").data("shop_type"), shop_level = target.find(".more_shops-row-book-right").data("shop_level"), order_count = target.find(".more_shops-row-book-right").data("order_count"), shop_announce = target.find(".divider").data("shop_announce"), deliver_state_start = target.find(".divider").data("deliver_state_start"), shop_address = target.find(".divider").data("shop_address"), business_hours = target.find(".divider").data("business_hours"), shop_summary = target.find(".divider").data("shop_summary"), storage = {};
+            storage.place_id = place_id, storage.shop_id = shop_id, //storage['flavor']   = flavor;
             storage.issupportpay = issupportpay, storage.isonline = isonline, storage.ishot = ishot, 
             storage.support_activity = support_activity, storage.shop_id = shop_id, storage.shop_url = shop_url, 
             storage.is_collected = is_collected, storage.shop_logo = shop_logo, storage.deliver_time = deliver_time, 

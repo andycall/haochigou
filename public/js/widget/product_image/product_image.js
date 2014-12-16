@@ -1,3 +1,1 @@
-define([ "jquery" ], function() {
-    console.log("product_image");
-});
+define(["jquery"],function(){console.log("product_image")});

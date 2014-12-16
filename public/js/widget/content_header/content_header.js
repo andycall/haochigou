@@ -1,3 +1,1 @@
-define([ "jquery" ], function() {
-    console.log("content header loaded");
-});
+define(["jquery"],function(){console.log("content header loaded")});
