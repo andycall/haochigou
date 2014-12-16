@@ -95,7 +95,7 @@ define([ "jquery", "login/port", "loginPort" ], function($, port, loginPort) {
      * @include "验证码点击切换/发送验证码"
     */
     var $smsBtn = $(".sms-btn");
-    console.log(loginPort), //图片验证码
+    //图片验证码
     $(".captcha-img").on("click", function() {
         getAuth({
             auth_way: "image",

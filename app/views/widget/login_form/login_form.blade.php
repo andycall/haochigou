@@ -87,7 +87,6 @@
             return {
                 jump_port : "{{$jump_port}}"
             }
-
         });
     </script>
 @stop

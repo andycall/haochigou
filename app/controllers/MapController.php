@@ -11,7 +11,7 @@ class MapController extends BaseController{
      **/
     public function shopsGet(){
         $locations = Input::get('restaurant');
-        $locations = json_decode($locations);
+//        $locations = json_decode($locations);
 
         if(empty($locations) || !is_array($locations)){
             echo json_encode(array(

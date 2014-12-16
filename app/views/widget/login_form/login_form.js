@@ -10,9 +10,6 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
 
      var $smsBtn = $(".sms-btn");
 
-	console.log(loginPort);
-
-
     //图片验证码
     $(".captcha-img").on("click",function(){
         getAuth({
@@ -45,7 +42,6 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
                     return ;
                 }
             }
-
             if( res.success ){
                 if(res.nextSrc){
                     $(".captcha-img").attr("src",res.nextSrc);
