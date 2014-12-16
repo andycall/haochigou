@@ -15,7 +15,7 @@ class FrontUser extends Eloquent implements UserInterface, RemindableInterface{
 
     public $timestamps = false;
 
-    public $remember_token = false;
+//    public $remember_token = false;
 
     public function user()
     {
