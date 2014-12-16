@@ -239,8 +239,16 @@ class ShopController extends BaseController {
 		
 		$data['announce_content'] = $shop->announcement;
 		$data['start_price']      = $shop->begin_price;
-		$data['activities']       = array();
+		$data['activities']       = array(
+			array(
+				'activity_name' => '满58起送',
+				'activity_icon' => ''
+			)
+		);
+		return $data;
 
+
+		/* 取消了活动
 		$menus = $shop->groups()->get();
 		foreach($menus as $menu){
 			if($menu->activity_id != 1){
@@ -253,7 +261,7 @@ class ShopController extends BaseController {
 				array_push($data['activities'], $oneact);
 			}
 		}
-		return $data;
+		*/
 	}
 
 	/**
@@ -297,6 +305,9 @@ class ShopController extends BaseController {
 			$one['classify_id']   = $group->id;
 			$one['classify_icon'] = $group->icon;
 
+			$one['activity_ads']['activity_name'] = '';
+			$one['activity_ads']['activity_statement'] = '';
+			/* 不要活动了
 			if($group->activity_id == 1 ){
 				$one['activity_ads']['activity_name'] = '';
 				$one['activity_ads']['activity_statement'] = '';
@@ -305,6 +316,7 @@ class ShopController extends BaseController {
 				$one['activity_ads']['activity_name'] = $act->name;
 				$one['activity_ads']['activity_statement'] = $act->intro;
 			}
+			*/
 
 			$goods           = Menu::where('shop_id', $shop_id)->where('group_id', $group->id)->get();
 			$classify_images = array();
@@ -380,6 +392,15 @@ class ShopController extends BaseController {
 		$good_activity  = array();
 		foreach($groups as $group){
 			$one = array();
+
+			$one['classify_name']      = $group->name;
+			$one['classify_name_abbr'] = (mb_strlen($group->name, 'utf8') > 10) ? mb_substr($group->name, 0, 3, 'utf8').'...' : $group->name;
+			$one['classify_id']        = $group->id;
+			$one['classify_count']     = Menu::where('shop_id', $shop_id)->where('group_id', $group->activity_id)->get()->count('shop_id');
+			$one['classify_icon']      = $group->icon;
+			array_push($goods_category, $one);
+
+			/* 不要活动了
 			if($group->activity_id == 1){		// 不是活动
 				$one['classify_name']      = $group->name;
 				$one['classify_name_abbr'] = (mb_strlen($group->name, 'utf8') > 10) ? mb_substr($group->name, 0, 3, 'utf8').'...' : $group->name;
@@ -395,6 +416,7 @@ class ShopController extends BaseController {
 				$one['activity_statement'] = $act->intro;
 				array_push($good_activity, $one);
 			}
+			*/
 		}
 		$data['goods_category'] = $goods_category;
 		$data['good_activity']  = $good_activity;
@@ -600,7 +622,7 @@ class ShopController extends BaseController {
 		$userbar = array();
 		$userbar['url'] = array(
 				"my_place"      => "这里是地址",
-				"switch_palce"  => "##",
+				"switch_palce"  => url('map'),
 				"logo"          => url('/'),	// 网站主页地址
 				"mobile"        => "123",                 				// 跳转到下载手机APP的地址
 				"my_ticket"     => 'order',                 			// 我的饿单的地址
@@ -612,7 +634,6 @@ class ShopController extends BaseController {
 				"my_collection" => "profile/shop",               		// 我的收藏地址
 				"my_secure"     => "profile/security",              	// 安全设置的地址
 				"loginout"      => url("logout"),              			// 退出登录的地址
-				"switch_place"  => "switch_place"                  		// 切换当前地址的地址
 		);
         if( Auth::check() ){
             $user = Auth::user();

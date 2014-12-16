@@ -527,7 +527,7 @@ class UserCenterController extends BaseController{
         $userbar = array();
         $userbar['url'] = array(
                 "my_place"      => "这里是地址",
-                "switch_palce"  => "##",
+                "switch_palce"  => url('map'),
                 "logo"          => url('/'),    // 网站主页地址
                 "mobile"        => "123",                               // 跳转到下载手机APP的地址
                 "my_ticket"     => url('usercenter/recent_month'),                        // 我的饿单的地址
@@ -539,7 +539,6 @@ class UserCenterController extends BaseController{
                 "my_collection" => "profile/shop",                      // 我的收藏地址
                 "my_secure"     => "profile/security",                  // 安全设置的地址
                 "loginout"      => url("logout"),                       // 退出登录的地址
-                "switch_place"  => "switch_place"                       // 切换当前地址的地址
         );
         if( Auth::check() ){
             $user = Auth::user();
