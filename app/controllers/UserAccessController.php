@@ -26,6 +26,21 @@ class UserAccessController extends BaseController{
         $mobile = Input::get('user_phone');
         $email = Input::get('user_email');
 
+        $auth = Input::get('user_auth');
+        if(!$this->MessageCheck($auth,$mobile)){
+            echo json_encode(array(
+                'success'=>false,
+                'state'=>200,
+                array(
+                    'inputMsg'=>'验证码验证失败!'
+                )
+            ));
+
+            exit();
+        }
+
+
+
         //账号重复性检测
         if(is_object($this->accountCheck($mobile)) || is_object($this->accountCheck($email))){
             echo json_encode(array(
@@ -214,37 +229,39 @@ class UserAccessController extends BaseController{
      */
     public function sendMessage(){
 
-        $mobile='13399857034';
+        $mobile = Input::get('telNumber');
+
         $tpl_id = 1;
         $code = rand(100000,999999);
         $tpl_value = '#code#='.$code.'&#company#=好吃go';
 
-        $status = Queue::push('QueueSendMessage@send', array('mobile' => $mobile,'tpl_id'=>1,'tpl_value'=>$tpl_value));
+        $status = Queue::push('QueueSendMessage@send', array('mobile' => $mobile,'tpl_id'=>$tpl_id,'tpl_value'=>$tpl_value));
 
         $codeKey = md5($this->getIP().$mobile);
         Cache::tags('register','code')->put($codeKey,$code,1);
 
         $key = Cache::tags('register','code')->get($codeKey);
 
-        var_dump($key);
+        echo json_encode(array(
+            'status'=>true,
+            'nextSrc'=>'',
+            'errMsg'=>''
+        ));
 
 
     }
 
 
-    public function MessageCheck(){
-        $mobileKey = Input::get('key');
-
-        $mobile='13399857034';
+    private  function MessageCheck($mobileKey,$mobile){
 
         $codeKey = md5($this->getIP().$mobile);
 
         $key = Cache::tags('register','code')->get($codeKey);
 
         if($key == $mobileKey){
-            echo "ok";
+           return true;
         }else{
-            echo "false";
+            return false;
         }
 
 
