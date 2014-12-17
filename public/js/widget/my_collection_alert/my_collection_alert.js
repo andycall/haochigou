@@ -1,1 +1,107 @@
-define(["jquery","home/port"],function(a,b){function c(){a(".collection-modal input").each(function(){this.checked&&(h=a(this).attr("shop_id"),i["shop_id_"+h]=new Array(2),i["shop_id_"+h].shop_id=h,i["shop_id_"+h].place_id=a(this).attr("place_id"))})}function d(){a(".collection-row-none").on("click",function(){var b=a(this).data("is_login"),c=a(this).data("next_src");b?(a(".collection-modal").css("display","block"),a(".modal-backdrop").css("display","block")):(alert("亲! 还没登录呢! "),location.href=c)}),a(".collection-row-book .collection-row-book-close").on("click",function(){var c=a(this).parents(".collection-row-book"),g=c.data("shop_id"),h=c.data("place_id"),i={};i.shop_id=g,i.place_id=h,a.ajax({url:b.cancelCollection,type:"POST",data:i,success:function(a){"true"==a.success?(e(a.data),f(g),d()):alert("取消收藏失败，请重试")}}),i={}})}function e(b){var c=_.template(a("#collection-row").html())(b);a(".collection .collection-row").html(c)}function f(b){var c=".restaurant-"+b,d=a(c);d.find(".collect_star").css("display","none"),d.find(".uncollect").removeClass("change"),d.find(".collect").addClass("change")}function g(b){var c=".restaurant-"+b,d=a(c);d.find(".collect_star").css("display","block"),d.find(".collect").removeClass("change"),d.find(".uncollect").addClass("change")}console.log("my collection alert loaded");var h,i=[],j=[],k={};window.onload=function(){c()},d(),a(".collection-modal").on("click",function(l){var m=l.target.className||null;switch(m){case"check":var n=a(l.target).attr("shop_id"),o=l.target.checked,p=a(".collection-modal").find("input[shop_id='"+n+"']");p.each(function(){this.checked=o});break;case"set close":a(".collection-modal").css("display","none"),a(".modal-backdrop").css("display","none");break;case"btn btn-yellow":a(".collection-modal").css("display","none"),a(".modal-backdrop").css("display","none"),a(".collection-modal input").each(function(){this.checked&&(h=a(this).attr("shop_id"),j["shop_id_"+h]=new Array(2),j["shop_id_"+h].shop_id=h,j["shop_id_"+h].place_id=a(this).attr("place_id"))}),Object.keys(j).forEach(function(a){i[a]&&(delete i[a],delete j[a])}),k={},k.add_collection=[],k.cancel_collection=[],Object.keys(j).forEach(function(a,b){k.add_collection[b]={},k.add_collection[b]={shop_id:j[a].shop_id,place_id:j[a].place_id}}),Object.keys(i).forEach(function(a,b){k.cancel_collection[b]={},k.cancel_collection[b]={shop_id:i[a].shop_id,place_id:i[a].place_id}}),(k.add_collection.length||k.cancel_collection.length)&&a.ajax({url:b.collectList,type:"POST",data:k,success:function(a){if("true"==a.success){if(e(a.data),k.add_collection.length)for(var b=k.add_collection.length-1;b>=0;b--)g(k.add_collection[b].shop_id);if(k.cancel_collection.length)for(var b=k.cancel_collection.length-1;b>=0;b--)f(k.cancel_collection[b].shop_id);d()}else alert("收藏失败，请重新收藏")}}),i=[],c(),j=[];break;case"p_hot":a(".collection-modal .new-res").css("display","none"),a(".collection-modal .p_new").removeClass("action"),a(".collection-modal .hot-res").css("display","block"),a(".collection-modal .p_hot").addClass("action");break;case"p_new":a(".collection-modal .hot-res").css("display","none"),a(".collection-modal .p_hot").removeClass("action"),a(".collection-modal .new-res").css("display","block"),a(".collection-modal .p_new").addClass("action")}}),a(".more_shops-row-book .uncollect").on("click",function(){var c=a(this).parents(".more_shops-row-book"),g=c.data("shop_id"),h=c.data("place_id"),i={};i.shop_id=g,i.place_id=h,a.ajax({url:b.cancelCollection,type:"POST",data:i,success:function(a){"true"==a.success?(e(a.data),f(g),d()):alert("取消收藏失败，请重试")}}),i={}}),a(".more_shops-row-book .collect").on("click",function(){var b=a(this).parents(".more_shops-row-book"),c=b.data("shop_id"),f=b.data("place_id"),h={};h.shop_id=c,h.place_id=f,a.ajax({url:"collectshop",type:"POST",data:h,success:function(a){"true"==a.success?(e(a.data),g(c),d()):alert("收藏失败，请重新收藏")}}),h={}})});
+define([ "jquery", "home/port" ], function($, port) {
+    function cancel_collection_each() {
+        $(".collection-modal input").each(function() {
+            this.checked && (n = $(this).attr("shop_id"), cancel_collection["shop_id_" + n] = new Array(2), 
+            cancel_collection["shop_id_" + n].shop_id = n, cancel_collection["shop_id_" + n].place_id = $(this).attr("place_id"));
+        });
+    }
+    function addClick() {
+        $(".collection-row-none").on("click", function() {
+            var is_login = $(this).data("is_login"), next_src = $(this).data("next_src");
+            is_login ? ($(".collection-modal").css("display", "block"), $(".modal-backdrop").css("display", "block")) : location.href = next_src;
+        }), $(".collection-row-book .collection-row-book-close").on("click", function() {
+            var father = $(this).parents(".collection-row-book"), shop_id = father.data("shop_id"), place_id = father.data("place_id"), post = {};
+            post.shop_id = shop_id, post.place_id = place_id, $.ajax({
+                url: port.cancelCollection,
+                type: "POST",
+                data: post,
+                success: function(res) {
+                    "true" == res.success ? (showComments(res.data), uncollection(shop_id), addClick()) : alert("取消收藏失败，请重试");
+                }
+            }), post = {};
+        });
+    }
+    function showComments(data) {
+        var temp = _.template($("#collection-row").html())(data);
+        $(".collection .collection-row").html(temp);
+    }
+    function uncollection(shop_id) {
+        var className = ".restaurant-" + shop_id, obj = $(className);
+        obj.find(".collect_star").css("display", "none"), obj.find(".uncollect").removeClass("change"), 
+        obj.find(".collect").addClass("change");
+    }
+    function collection(shop_id) {
+        var className = ".restaurant-" + shop_id, obj = $(className);
+        obj.find(".collect_star").css("display", "block"), obj.find(".collect").removeClass("change"), 
+        obj.find(".uncollect").addClass("change");
+    }
+    console.log("my collection alert loaded");
+    var n, cancel_collection = [], add_collection = [], post = {};
+    window.onload = function() {
+        cancel_collection_each();
+    }, addClick(), $(".collection-modal").on("click", function(e) {
+        var e_class = e.target.className || null;
+        switch (e_class) {
+          case "check":
+            var shop_id = $(e.target).attr("shop_id"), click_checked = e.target.checked, sameElement = $(".collection-modal").find("input[shop_id='" + shop_id + "']");
+            sameElement.each(function() {
+                this.checked = click_checked;
+            });
+            break;
+
+          case "set close":
+            $(".collection-modal").css("display", "none"), $(".modal-backdrop").css("display", "none");
+            break;
+
+          case "btn btn-yellow":
+            $(".collection-modal").css("display", "none"), $(".modal-backdrop").css("display", "none"), 
+            $(".collection-modal input").each(function() {
+                this.checked && (n = $(this).attr("shop_id"), add_collection["shop_id_" + n] = new Array(2), 
+                add_collection["shop_id_" + n].shop_id = n, add_collection["shop_id_" + n].place_id = $(this).attr("place_id"));
+            }), Object.keys(add_collection).forEach(function(value) {
+                cancel_collection[value] && (delete cancel_collection[value], delete add_collection[value]);
+            }), post = {}, post.add_collection = [], post.cancel_collection = [], Object.keys(add_collection).forEach(function(value, index) {
+                post.add_collection[index] = {}, post.add_collection[index] = {
+                    shop_id: add_collection[value].shop_id,
+                    place_id: add_collection[value].place_id
+                };
+            }), Object.keys(cancel_collection).forEach(function(value, index) {
+                post.cancel_collection[index] = {}, post.cancel_collection[index] = {
+                    shop_id: cancel_collection[value].shop_id,
+                    place_id: cancel_collection[value].place_id
+                };
+            }), (post.add_collection.length || post.cancel_collection.length) && $.ajax({
+                url: port.collectList,
+                type: "POST",
+                data: post,
+                success: function(res) {
+                    if ("true" == res.success) {
+                        if (showComments(res.data), post.add_collection.length) for (var i = post.add_collection.length - 1; i >= 0; i--) collection(post.add_collection[i].shop_id);
+                        if (post.cancel_collection.length) for (var i = post.cancel_collection.length - 1; i >= 0; i--) uncollection(post.cancel_collection[i].shop_id);
+                        addClick();
+                    } else alert("收藏失败，请重新收藏");
+                }
+            }), cancel_collection = [], cancel_collection_each(), add_collection = [];
+        }
+    }), $(".more_shops-row-book .uncollect").on("click", function() {
+        var father = $(this).parents(".more_shops-row-book"), shop_id = father.data("shop_id"), place_id = father.data("place_id"), post = {};
+        post.shop_id = shop_id, post.place_id = place_id, $.ajax({
+            url: port.cancelCollection,
+            type: "POST",
+            data: post,
+            success: function(res) {
+                "true" == res.success ? (showComments(res.data), uncollection(shop_id), addClick()) : alert("取消收藏失败，请重试");
+            }
+        }), post = {};
+    }), $(".more_shops-row-book .collect").on("click", function() {
+        var father = $(this).parents(".more_shops-row-book"), shop_id = father.data("shop_id"), place_id = father.data("place_id"), post = {};
+        post.shop_id = shop_id, post.place_id = place_id, $.ajax({
+            url: "takeaway/public/index.php/add_collect",
+            type: "POST",
+            data: post,
+            success: function(res) {
+                "true" == res.success ? (showComments(res.data), collection(shop_id), addClick()) : alert("收藏失败，请重新收藏");
+            }
+        }), post = {};
+    });
+});

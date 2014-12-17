@@ -153,7 +153,8 @@
              var id = $item.data('good_id'),
                  shop_id = $item.data('shop_id');
              cart.find(id, function(good){
-                $item.find('.set_num_in').val(good.count);
+                 if(good)
+                     $item.find('.set_num_in').val(good.count);
              });
          });
          if(cartInfo.totalPrice == 0){
@@ -287,7 +288,8 @@
          add: function(id, shop_id) {
              cart.find(id, function(item){
                  if(item){
-                     item.count ++;
+                     //item.count ++;
+                     exports.setCount(id, item.count+1, shop_id);
                  }else{
                      $.ajax({
                          url: port['cartAdd'],

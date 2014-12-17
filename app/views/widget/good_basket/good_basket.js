@@ -98,8 +98,11 @@ define(['jquery', 'underscore', 'shop/port'], function($, _, port){
             var self = $(item);
             var id = self.data('good_id');
             cart.find(id, function(item){
-                if(item && item.count)
+                if(item && item.count){
                     self.find('.cdish-qty').val(item.count);
+                    self.find('.cdish-total').html(item.count * item.price);
+                }
+
             });
         });
     }
