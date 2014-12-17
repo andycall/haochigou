@@ -44,7 +44,7 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
             }
             if( res.success ){
                 if(res.nextSrc){
-                    $(".captcha-img").attr("src",res.nextSrc);
+                    $(".captcha-img").attr("src",res.nextSrc+'?smelraint=Math.random()*10000');
                 }else{
                     alert("短信已经发送，请注意接收验证码");
                     
@@ -199,6 +199,7 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
                     }
                 }
                 if(res.success){
+                    alert("登陆成功!");
                     location.href = loginPort['jump_port']
                 }else{
                     if( res.no || (res.no >= 1 && res.no <= 4) ){ //填写错误
@@ -232,6 +233,8 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
 
                     }else if(res.errMsg && res.errMsg.otherMsg){ //其它错误
                         alert(res.errMsg.otherMsg);
+                    }else{
+                        alert("登录失败！！！请重试");
                     }
                 }
 
@@ -284,7 +287,6 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
         }
         
         ajaxForm(data);
-        
         //保险起见
         return false;
     });
