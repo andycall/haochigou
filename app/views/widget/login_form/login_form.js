@@ -45,7 +45,7 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
             if( res.success ){
                 if(res.nextSrc){
                     $(".captcha-img").attr("src", res.nextSrc+'?t='+Math.random()*1000);
-                }else{
+                }else{d
                     alert("短信已经发送，请注意接收验证码");
                     
                     //计时禁止连续发送30秒

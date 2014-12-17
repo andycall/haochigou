@@ -134,6 +134,17 @@ define(["jquery", "register/port", 'registerPort'], function($, port, registerPo
 
     }
 
+    //显示表单的错误
+    function showInputError($id,msg){
+        var $tip = $id.find(".u-error-tip");
+
+        if(msg){
+            $tip.text(msg);
+        }
+
+        $tip.show();
+    }
+
     //ajax
     function ajaxForm(data){
         $.ajax({
