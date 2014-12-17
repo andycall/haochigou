@@ -22,6 +22,11 @@ use Illuminate\Database\Eloquent\Collection;
 class MainController extends BaseController {
 
 	public function index(){
+		/*
+		if( !Auth::check() ){
+			return Redirect::to('/map');
+		}
+		*/
 		$data = array();
 
 		$data['userbar'] 		= $this->getUserBar();
@@ -248,7 +253,7 @@ class MainController extends BaseController {
 	 */
 	public function getMyStoreAlert(){
 		if( !Auth::check() ){
-			echo '必须登录';
+			return ;
 		} else{
 			$user = Auth::user();
 		}
