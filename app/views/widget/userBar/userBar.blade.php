@@ -63,9 +63,10 @@
             <ul class="search-list">
                 <% data.forEach(function(_val){ %>
                 <li class="search-item">
-                    <img class="sr-logo" src="<%= _val.img_url %>" alt="<%= _val.goods_name %>">
-                    <a class="sr-name" href="<%= _val.goods_url %>" target="_blank"><%= _val.goods_name %></a>
-                    <span class="sr-price"><span class="symbol-rmb">¥</span> <%= _val.goods_value %></span>
+                    <a href="<%= _val.shop_url %>">
+                        <img class="sr-logo" src="<%= _val.img_url %>" alt="<%= _val.shop_name %>">
+                        <span class="sr-shopname"><%= _val.shop_name %></span>
+                    </a>
                 </li>
                 <% }); %>
             </ul>
