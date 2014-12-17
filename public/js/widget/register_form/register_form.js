@@ -52,7 +52,7 @@ define([ "jquery", "register/port", "registerPort" ], function($, port, register
                 } catch (err) {
                     return void alert("服务器异常，稍后再试");
                 }
-                if ("true" == String(res.success)) location.href = registerPort.jump_port; else if (res.no || res.no >= 1 && res.no <= 4) //填写错误
+                if ("true" == String(res.success)) alert("注册成功"), location.href = registerPort.jump_port; else if (res.no || res.no >= 1 && res.no <= 4) //填写错误
                 switch (res.no) {
                   //邮箱错误
                     case 1:
@@ -76,8 +76,8 @@ define([ "jquery", "register/port", "registerPort" ], function($, port, register
                     !function() {
                         "normal" == loginWay ? showInputError($divAuth1, res.errMsg.inputMsg) : "mobile" == loginWay && showInputError($divAuth2, res.errMsg.inputMsg);
                     }();
-                } else res.errMsg && res.errMsg.otherMsg && //其它错误
-                alert(res.errMsg.otherMsg);
+                } else //其它错误
+                alert(res.errMsg && res.errMsg.otherMsg ? res.errMsg.otherMsg : "注册失败!!!");
             }
         });
     }

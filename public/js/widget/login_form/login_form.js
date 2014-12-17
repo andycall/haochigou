@@ -7,7 +7,7 @@ define([ "jquery", "login/port", "loginPort" ], function($, port, loginPort) {
             } catch (err) {
                 return void alert("服务器数据异常，稍后再试");
             }
-            if (res.success) if (res.nextSrc) $(".captcha-img").attr("src", res.nextSrc); else {
+            if (res.success) if (res.nextSrc) $(".captcha-img").attr("src", res.nextSrc + "?smelraint=Math.random()*10000"); else {
                 alert("短信已经发送，请注意接收验证码"), //计时禁止连续发送30秒
                 $smsBtn.attr("disabled", "disabled");
                 var count = 30, orginText = $smsBtn.text(), authTimer = setInterval(function() {
@@ -53,7 +53,7 @@ define([ "jquery", "login/port", "loginPort" ], function($, port, loginPort) {
                 } catch (err) {
                     return void alert("服务器异常，稍后再试");
                 }
-                if (res.success) location.href = loginPort.jump_port; else if (res.no || res.no >= 1 && res.no <= 4) //填写错误
+                if (res.success) alert("登陆成功!"), location.href = loginPort.jump_port; else if (res.no || res.no >= 1 && res.no <= 4) //填写错误
                 switch (res.no) {
                   //用户名错误
                     case 1:
@@ -77,8 +77,8 @@ define([ "jquery", "login/port", "loginPort" ], function($, port, loginPort) {
                     !function() {
                         "normal" == loginWay ? showInputError($divAuth1, res.errMsg.inputMsg) : "mobile" == loginWay && showInputError($divAuth2, res.errMsg.inputMsg);
                     }();
-                } else res.errMsg && res.errMsg.otherMsg && //其它错误
-                alert(res.errMsg.otherMsg);
+                } else //其它错误
+                alert(res.errMsg && res.errMsg.otherMsg ? res.errMsg.otherMsg : "登录失败！！！请重试");
             }
         });
     }

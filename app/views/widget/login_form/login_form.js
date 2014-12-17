@@ -287,7 +287,6 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
         }
         
         ajaxForm(data);
-        
         //保险起见
         return false;
     });

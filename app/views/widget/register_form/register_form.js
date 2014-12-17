@@ -151,7 +151,6 @@ define(["jquery", "register/port", 'registerPort'], function($, port, registerPo
                         return;
                     }
                 }
-
                 if( String(res.success) == 'true'){
                     alert("注册成功");
 	                location.href = registerPort['jump_port']
