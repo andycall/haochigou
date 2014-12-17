@@ -284,7 +284,7 @@
   height: 50px;
   background: url("../../../images/gif-loader.gif") no-repeat rgba(0, 0, 0, 0);
 }
-.tb-nav .tb-widget-empty {
+.tb-widget-empty {
   font-size: 14px;
   color: #222;
   padding: 10px;
