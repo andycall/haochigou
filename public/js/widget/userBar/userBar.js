@@ -17,9 +17,10 @@ define([ "jquery", "underscore" ], function($, _) {
                 },
                 success: function(res) {
                     if ("object" != typeof res && (res = $.parseJSON(res)), 1 == res.success) {
+                        if (res.data.length) //有搜出东西来
                         var data = res.data, _tpl = _.template($("#tpl-tb-search").html())({
                             data: data
-                        });
+                        }); else var _tpl = _.template($("#tpl-tb-search-empty").html())();
                         $sResult.html(_tpl).show(), $iLoading.addClass("hide"), $iClear.removeClass("hide");
                     } else alert("搜索异常!");
                 }

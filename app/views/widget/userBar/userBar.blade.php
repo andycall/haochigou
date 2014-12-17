@@ -74,6 +74,9 @@
     </div>
 </script>
 
+<script type="text/template" id="tpl-tb-search-empty">
+    <div class="tb-widget-empty">没有找到相关餐厅，请换个关键字。</div>
+</script>
 
 <script type="text/template" id="tpl-tb-cart-empty">
     <div class="tb-widget-empty">篮子空空，肚子空空，快去订餐吧~</div>

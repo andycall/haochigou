@@ -22,11 +22,16 @@ define(['jquery', 'underscore'], function($, _){
                     if(typeof res != 'object')
                         res = $.parseJSON(res);
                     if (res.success == true) {
-                        var data = res.data,
-                            _tpl = _.template($('#tpl-tb-search').html())({data: data});
+                        if(res.data.length){//有搜出东西来
+                            var data = res.data,
+                                _tpl = _.template($('#tpl-tb-search').html())({data: data});
+                        }else{
+                            var _tpl = _.template($('#tpl-tb-search-empty').html())();
+                        }
                         $sResult.html(_tpl).show();
                         $iLoading.addClass("hide");
                         $iClear.removeClass('hide');
+
                     } else {
                         alert('搜索异常!');
                     }
