@@ -85,33 +85,30 @@
 
 <script type="text/template" id="tpl-tb-cart">
 <div class="twidget-dropdown">
-          <div id="tcart_wrapper">
-          <h3 class="tcart-title clearfix">
-             <a class="tcart-restaurant" href="<%= data.url.shop_url %>"><%= data.shop_name %></a>
-             <span class="tcart-cost"><span class="symbol-rmb">¥ </span><%= data.all_value %></span>
-             <span id="tcart_total_hidden" class="hide">1</span>
-          </h3>
+    <div id="tcart_wrapper">
+        <h3 class="tcart-title clearfix">
+           <a class="tcart-restaurant" href="<%= data.url.shop_url %>"><%= data.shop_name %></a>
+           <span class="tcart-cost"><span class="symbol-rmb">¥ </span><%= data.all_value %></span>
+           <span id="tcart_total_hidden" class="hide">1</span>
+        </h3>
 
-    <div class="tcart-content">
-
-    <ul class="tcart-list">
-    <% data.goods.forEach(function(item){ %>
-        <li class="tcart-item">
-             <span class="tcart-dish"><%= item.good_name %></span>
-             <span class="tcart-amount">× <%= item.good_count %></span>
-             <span class="tcart-price"><span class="symbol-rmb">¥ </span><%= item.good_value %></span>
-         </li>
-
-    <% }); %>
-
-     </ul>
-  </div>
-
-<div class="twidget-footer">
-    <a id="tcart_checkout" class="twidget-btn" href="/cart2/checkout">去结算</a>
-  </div>
-</div>
+        <div class="tcart-content">
+            <ul class="tcart-list">
+                <% data.goods.forEach(function(item){ %>
+                    <li class="tcart-item">
+                        <span class="tcart-dish"><%= item.good_name %></span>
+                        <span class="tcart-amount">× <%= item.good_count %></span>
+                        <span class="tcart-price"><span class="symbol-rmb">¥ </span><%= item.good_value %></span>
+                    </li>
+                <% }); %>
+            </ul>
         </div>
+
+        <div class="twidget-footer">
+            <a id="tcart_checkout" class="twidget-btn" href="/checkout">去结算</a>
+        </div>
+    </div>
+</div>
 </script>
 @section("css")
     @parent

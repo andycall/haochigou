@@ -320,7 +320,7 @@
     //****************ADD**********
     //购物车初始化
     type : "post"
-    url  : ""
+    url  : "/cartInit"
     input : {}
     output :
         [

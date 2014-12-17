@@ -429,6 +429,7 @@ class MainController extends BaseController {
 				"shop_chart"    => "cart",                				// 购物车地址
 				"user_mail"     => "mail",                				// 用户提醒的地址
 				"personal"      => url('usercenter'),                	// 个人中心地址
+				'checkout'		=> url('checkout'),						// 支付订单页面
 				"my_collection" => url('usercenter/collect_shop'),               		// 我的收藏地址
 				"my_secure"     => url('useraccount/personal_secure'),              	// 安全设置的地址
 				"loginout"      => url("logout"),              			// 退出登录的地址

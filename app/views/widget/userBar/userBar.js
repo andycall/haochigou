@@ -6,20 +6,26 @@ define(['jquery', 'underscore'], function($, _){
             background: "#FFF"
         });
     }).on("keydown", function() {
-        $.ajax("/takeaway/public/index.php/userBarSearch", {
+        $.ajax("/userBarSearch", {
+            type: "POST",
+            data: {
+              string: $sInput.val()
+            },
             beforeSend: function () {
                 $iClear.addClass("hide");
                 $iLoading.removeClass("hide");
             },
             success: function (res) {
-                if (res.success == "true") {
+                if(typeof res != 'object')
+                    res = $.parseJSON(res);
+                if (res.success == true) {
                     var data = res.data,
                         _tpl = _.template($('#tpl-tb-search').html())({data: data});
                     $sResult.html(_tpl).show();
                     $iLoading.addClass("hide");
                     $iClear.removeClass('hide');
                 } else {
-                    alert(123);
+                    alert('搜索异常!');
                 }
             }
 
@@ -40,7 +46,7 @@ define(['jquery', 'underscore'], function($, _){
         if($('.tb-cart-dropdown-wrapper').css('display') == 'block'){
             return $('.tb-cart-dropdown-wrapper').hide();
         }
-        $.ajax('/takeaway/public/index.php/userBarCart', {
+        $.ajax('/userBarCart', {
             beforeSend: function () {
                 $('.tb-cart-dropdown-wrapper').show();
                 $('.tb-msg-dropdown-wrapper').hide();
@@ -71,7 +77,7 @@ define(['jquery', 'underscore'], function($, _){
         if($('.tb-msg-dropdown-wrapper').css('display') == 'block'){
             return $('.tb-msg-dropdown-wrapper').hide();
         }
-        $.ajax('/takeaway/public/index.php/userBarMsg', {
+        $.ajax('/userBarMsg', {
             beforeSend: function () {
                 $('.tb-msg-dropdown-wrapper').show();
                 $('.tb-cart-dropdown-wrapper').hide();

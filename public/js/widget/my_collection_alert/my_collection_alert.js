@@ -82,16 +82,6 @@ define([ "jquery", "home/port" ], function($, port) {
                     } else alert("收藏失败，请重新收藏");
                 }
             }), cancel_collection = [], cancel_collection_each(), add_collection = [];
-            break;
-
-          case "p_hot":
-            $(".collection-modal .new-res").css("display", "none"), $(".collection-modal .p_new").removeClass("action"), 
-            $(".collection-modal .hot-res").css("display", "block"), $(".collection-modal .p_hot").addClass("action");
-            break;
-
-          case "p_new":
-            $(".collection-modal .hot-res").css("display", "none"), $(".collection-modal .p_hot").removeClass("action"), 
-            $(".collection-modal .new-res").css("display", "block"), $(".collection-modal .p_new").addClass("action");
         }
     }), $(".more_shops-row-book .uncollect").on("click", function() {
         var father = $(this).parents(".more_shops-row-book"), shop_id = father.data("shop_id"), place_id = father.data("place_id"), post = {};
