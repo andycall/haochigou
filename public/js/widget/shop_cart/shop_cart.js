@@ -167,8 +167,8 @@ define([ "jquery", "underscore", "shop/port" ], function($, _, port) {
     var exports = {
         add: function(id, shop_id) {
             cart.find(id, function(item) {
-                item ? //item.count ++; 
-                this.setCount(id, item.count + 1, shop_id) : $.ajax({
+                item ? //item.count ++;
+                exports.setCount(id, item.count + 1, shop_id) : $.ajax({
                     url: port.cartAdd,
                     type: "post",
                     data: {
