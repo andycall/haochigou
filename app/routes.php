@@ -95,6 +95,7 @@ Route::filter('loginCheck', function()
 
 # 主页
 Route::get('/', 'MainController@index');
+Route::post('/', function(){}); // 首页的一个post请求
 Route::post('cancelshop', array('before' => 'loginCheck', 'uses' => 'MainController@cancelShop'));     // 取消收藏店铺
 Route::post('collectshop', array('before' => 'loginCheck', 'uses' => 'MainController@collectShop'));   // 收藏某个店铺
 
