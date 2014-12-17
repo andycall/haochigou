@@ -14,6 +14,8 @@ Route::post("mapSearch2", function(){
 	return Response::json($data);
 });
 
+
+
 # 登陆与注册
 Route::post('registerAjax', 'UserAccessController@register');
 
@@ -97,6 +99,9 @@ Route::filter('loginCheck', function()
 Route::get('/', 'MainController@index');
 Route::post('cancelshop', array('before' => 'loginCheck', 'uses' => 'MainController@cancelShop'));     // 取消收藏店铺
 Route::post('collectshop', array('before' => 'loginCheck', 'uses' => 'MainController@collectShop'));   // 收藏某个店铺
+
+#搜索
+Route::post('userBarSearch', 'SearchController@mainSearch');
 
 
 # 商家
