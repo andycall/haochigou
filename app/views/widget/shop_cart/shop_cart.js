@@ -153,7 +153,8 @@
              var id = $item.data('good_id'),
                  shop_id = $item.data('shop_id');
              cart.find(id, function(good){
-                $item.find('.set_num_in').val(good.count);
+                 if(good)
+                     $item.find('.set_num_in').val(good.count);
              });
          });
          if(cartInfo.totalPrice == 0){
