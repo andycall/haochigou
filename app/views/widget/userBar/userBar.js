@@ -16,7 +16,7 @@ define(['jquery', 'underscore'], function($, _){
                 $iLoading.removeClass("hide");
             },
             success: function (res) {
-                if (res.success == "true") {
+                if (res.success == true) {
                     var data = res.data,
                         _tpl = _.template($('#tpl-tb-search').html())({data: data});
                     $sResult.html(_tpl).show();
