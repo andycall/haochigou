@@ -28,9 +28,6 @@ class SearchController extends BaseController{
            $key++;
        }
 
-
-       $shopData = json_encode($shopData);
-
        echo json_encode(array(
            'success'=>true,
            'state'=>200,
