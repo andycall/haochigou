@@ -33,7 +33,7 @@ Route::get("/find_password", function(){
 	$data = [
 		"find_email" => "",
 		"find_phone" => "",
-		"auth_image" => "http://t11.baidu.com/it/u=254287606,1076184673&fm=58"        //验证码
+		"auth_image" => url('captcha')    //验证码
 	];
 
 	return View::make("template.find_password.find_password")->with($data);
@@ -47,7 +47,7 @@ Route::post('login','UserAccessController@login');
 
 Route::get("/login", function(){
     $data = [
-        "find_password" => "#",
+        "find_password" => url("find_password"),
         "auth_image" => url('captcha')
     ];
 

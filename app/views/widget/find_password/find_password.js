@@ -117,5 +117,11 @@ define(['jquery', 'timer', 'find_password_template/port',  "JSON", 'jquery-ui'],
 
 		if(! flag) return false;
 
+
+		
+
+
+
+		return false;
 	});
 });

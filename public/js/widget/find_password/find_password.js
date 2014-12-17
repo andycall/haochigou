@@ -64,6 +64,6 @@ define([ "jquery", "timer", "find_password_template/port", "JSON", "jquery-ui" ]
                 flag = !1;
             }
         }), data.new_psw != data.repeat_psw && (flag = !1, $("input[name='repeat_psw']").parent().find("div.u-error-tip").show()), 
-        flag ? void 0 : !1;
+        flag ? !1 : !1;
     });
 });
