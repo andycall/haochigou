@@ -243,7 +243,7 @@ class UserAccessController extends BaseController{
         $key = Cache::tags('register','code')->get($codeKey);
 
         echo json_encode(array(
-            'status'=>true,
+            'success'=>true,
             'nextSrc'=>'',
             'errMsg'=>''
         ));
