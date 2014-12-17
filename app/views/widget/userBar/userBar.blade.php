@@ -63,9 +63,10 @@
             <ul class="search-list">
                 <% data.forEach(function(_val){ %>
                 <li class="search-item">
-                    <img class="sr-logo" src="<%= _val.img_url %>" alt="<%= _val.goods_name %>">
-                    <a class="sr-name" href="<%= _val.goods_url %>" target="_blank"><%= _val.goods_name %></a>
-                    <span class="sr-price"><span class="symbol-rmb">¥</span> <%= _val.goods_value %></span>
+                    <a href="<%= _val.shop_url %>">
+                        <img class="sr-logo" src="<%= _val.img_url %>" alt="<%= _val.shop_name %>">
+                        <span class="sr-price"><%= _val.shop_name %></span>
+                    </a>
                 </li>
                 <% }); %>
             </ul>
@@ -73,6 +74,9 @@
     </div>
 </script>
 
+<script type="text/template" id="tpl-tb-search-empty">
+    <div class="tb-widget-empty">没有找到相关餐厅，请换个关键字。</div>
+</script>
 
 <script type="text/template" id="tpl-tb-cart-empty">
     <div class="tb-widget-empty">篮子空空，肚子空空，快去订餐吧~</div>
