@@ -7,7 +7,7 @@ define([ "jquery", "login/port", "loginPort" ], function($, port, loginPort) {
             } catch (err) {
                 return void alert("服务器数据异常，稍后再试");
             }
-            if (res.success) if (res.nextSrc) $(".captcha-img").attr("src", res.nextSrc + "?smelraint=Math.random()*10000"); else {
+            if (res.success) if (res.nextSrc) $(".captcha-img").attr("src", res.nextSrc + "?t=" + 1e3 * Math.random()); else {
                 alert("短信已经发送，请注意接收验证码"), //计时禁止连续发送30秒
                 $smsBtn.attr("disabled", "disabled");
                 var count = 30, orginText = $smsBtn.text(), authTimer = setInterval(function() {
