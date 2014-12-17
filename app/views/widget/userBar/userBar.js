@@ -1,35 +1,44 @@
 define(['jquery', 'underscore'], function($, _){
 	console.log("userBar loaded");
     var $sForm = $(".tb-search-form"), $sInput = $(".tb-search-input"), $iLoading = $(".icon-loading"), $iClear = $('.icon-clear'), $sResult = $('.search-result');
+    var keyuptimer;
     $sInput.on("focus", function() {
         $sForm.css({
             background: "#FFF"
         });
-    }).on("keydown", function() {
-        $.ajax("/userBarSearch", {
-            type: "POST",
-            data: {
-              string: $sInput.val()
-            },
-            beforeSend: function () {
-                $iClear.addClass("hide");
-                $iLoading.removeClass("hide");
-            },
-            success: function (res) {
-                if(typeof res != 'object')
-                    res = $.parseJSON(res);
-                if (res.success == true) {
-                    var data = res.data,
-                        _tpl = _.template($('#tpl-tb-search').html())({data: data});
-                    $sResult.html(_tpl).show();
-                    $iLoading.addClass("hide");
-                    $iClear.removeClass('hide');
-                } else {
-                    alert('搜索异常!');
-                }
-            }
+    }).on("keyup", function() {
+        clearTimeout(keyuptimer);
+        keyuptimer = setTimeout(function(){
+            $.ajax("/userBarSearch", {
+                type: "POST",
+                data: {
+                    string: $sInput.val()
+                },
+                beforeSend: function () {
+                    $iClear.addClass("hide");
+                    $iLoading.removeClass("hide");
+                },
+                success: function (res) {
+                    if(typeof res != 'object')
+                        res = $.parseJSON(res);
+                    if (res.success == true) {
+                        if(res.data.length){//有搜出东西来
+                            var data = res.data,
+                                _tpl = _.template($('#tpl-tb-search').html())({data: data});
+                        }else{
+                            var _tpl = _.template($('#tpl-tb-search-empty').html())();
+                        }
+                        $sResult.html(_tpl).show();
+                        $iLoading.addClass("hide");
+                        $iClear.removeClass('hide');
 
-        });
+                    } else {
+                        alert('搜索异常!');
+                    }
+                }
+
+            });
+        }, 200);
 
         $iClear.on("click", function () {
             $sForm.css({

@@ -39,6 +39,11 @@ define([ "jquery", "register/port", "registerPort" ], function($, port, register
         regAuth.test(data.user_auth) ? ($errAuth.hide(), !0) : ($errAuth.show(), !1))) : ($errPwd.show(), 
         !1)) : ($errEmail.show(), !1)) : ($errMobile.show(), !1);
     }
+    //显示表单的错误
+    function showInputError($id, msg) {
+        var $tip = $id.find(".u-error-tip");
+        msg && $tip.text(msg), $tip.show();
+    }
     //ajax
     function ajaxForm(data) {
         $.ajax({

@@ -70,9 +70,31 @@ class MainController extends BaseController {
 	 * 批量收藏店铺
 	 */
 	public function collectList(){
-		vardump(Input::get('add_collection'));
+		$list = Input::get('add_collection');
+		$user = Auth::user();
+		foreach($list as $one){
+			$new_collect = array(
+				'uid' => $user->front_uid,
+				'shop_id' => $one['shop_id'],
+				'uptime' => time(),
+			);
+			$collect = new CollectShop($new_collect);
+			$collect->save();
+		}
+		$output = array(
+				'success' => 'true',
+				'state' => 200,
+				'nextSrc' => '',
+				'errMsg' => '',
+				'no' => 0
+		);
+		$stores = $this->getMyStore();
+		$output['data']['collection_shop'] = $stores['data'];
+		return $output;
 	}
-
+		//var_dump($hehe);
+		//return array('success' => true);
+		
 	/**
 	 * 取消收藏某个商家
 	 *
@@ -222,10 +244,17 @@ class MainController extends BaseController {
 
 	/**
 	 * 点击我的收藏那个加号弹出的对话框
+	 * 必须登录才能操作
 	 */
 	public function getMyStoreAlert(){
+		if( !Auth::check() ){
+			echo '必须登录';
+		} else{
+			$user = Auth::user();
+		}
+
 		$data = array();
-		$data['new_shop'] = array();
+		//$data['new_shop'] = array();
 		$data['hot_shop'] = array();
 
 #TODO：由前端获取用户坐标
@@ -239,7 +268,7 @@ class MainController extends BaseController {
 			$shop     = $oneshop['shopData'];
 			$shops->add($shop);
 		}
-
+		/* 取消最新餐厅这儿
 		$new_shops = $shops->sortByDesc('sold_num');
 		foreach($new_shops as $shop){
 			$one = array();
@@ -264,30 +293,25 @@ class MainController extends BaseController {
 			}
 			array_push($data['new_shop'], $one);
 		}
-
+		*/
 		$hot_shops = $shops->sortByDesc('addtime');
 		foreach($hot_shops as $shop){
-			$one = array();
-			$one['shop_id']            = $shop->id;
-			$one['place_id']           = '123';
-			$one['shop_url']           = url('shop/'.$shop->id);
-			$one['shop_logo']          = $shop->pic;
-			$one['deliver_time']       = (float)$shop->interval;
-			$one['deliver_start']      = $shop->operation_time;
-			$one['shop_name']          = $shop->name;
-			$one['shop_type']          = $shop->type;
-			$Level                     = $this->getLevel($shop);
-			$one['shop_level']         = $Level['thing_total'];
-			$one['order_count']        = (float)$shop->sold_num;
-			$one['is_opening']         = $shop->is_online;
-			$one['is_ready_for_order'] = $shop->reserve;
-			if( !Auth::check() ){
-				$one['is_collected'] = false;
-			} else{
-				$user = Auth::user();
-				$one['is_collected'] = in_array($shop->id, $user->collectShop->lists('shop_id'))?true:false;	// 是否被收藏了
-			}
-			array_push($data['hot_shop'], $one);
+				$one = array();
+				$one['shop_id']            = $shop->id;
+				$one['place_id']           = '123';
+				$one['shop_url']           = url('shop/'.$shop->id);
+				$one['shop_logo']          = $shop->pic;
+				$one['deliver_time']       = (float)$shop->interval;
+				$one['deliver_start']      = $shop->operation_time;
+				$one['shop_name']          = $shop->name;
+				$one['shop_type']          = $shop->type;
+				$Level                     = $this->getLevel($shop);
+				$one['shop_level']         = $Level['thing_total'];
+				$one['order_count']        = (float)$shop->sold_num;
+				$one['is_opening']         = $shop->is_online;
+				$one['is_ready_for_order'] = $shop->reserve;
+				$one['is_collected'] = in_array($shop->id, $user->collectShop->lists('shop_id'))?true:false;
+				array_push($data['hot_shop'], $one);	
 		}
 		return $data;
 	}
