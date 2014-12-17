@@ -1,3 +1,1 @@
-define([ "jquery" ], function() {
-    console.log("pay method loaded");
-});
+define(["jquery"],function(){console.log("pay method loaded")});

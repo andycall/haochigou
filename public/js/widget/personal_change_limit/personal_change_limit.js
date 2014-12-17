@@ -1,3 +1,1 @@
-define([ "jquery" ], function() {
-    console.log("persoanl change limit loaded");
-});
+define(["jquery"],function(){console.log("persoanl change limit loaded")});

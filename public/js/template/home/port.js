@@ -1,10 +1,1 @@
-// 主页 ajax 接口
-define(function() {
-    return {
-        cancelCollection: "cancelshop",
-        //取消收藏
-        addCollection: "collectshop",
-        //添加收藏
-        collectList: "collect_list"
-    };
-});
+define(function(){return{cancelCollection:"cancelshop",addCollection:"collectshop",collectList:"collect_list"}});

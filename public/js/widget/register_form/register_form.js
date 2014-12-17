@@ -7,14 +7,14 @@ define([ "jquery", "register/port", "registerPort" ], function($, port, register
             } catch (err) {
                 return void alert("服务器数据异常，稍后再试");
             }
-            if ("true" == String(res.success)) {
+            if (res.success) {
                 alert("短信已经发送，请注意接收验证码"), //计时禁止连续发送30秒
                 $smsBtn.attr("disabled", "disabled");
                 var count = 30, orginText = $smsBtn.text(), authTimer = setInterval(function() {
                     $smsBtn.text(count-- + "秒后可再发送"), 1 > count && ($smsBtn.text(orginText).removeAttr("disabled"), 
                     clearInterval(authTimer));
                 }, 1e3);
-            } else !res.success && res.errMsg && alert(res.errMsg);
+            } else alert(!res.success && res.errMsg ? res.errMsg : "发送错误");
         });
     }
     //验证所填数据4
@@ -52,7 +52,7 @@ define([ "jquery", "register/port", "registerPort" ], function($, port, register
                 } catch (err) {
                     return void alert("服务器异常，稍后再试");
                 }
-                if ("true" == String(res.success)) location.href = registerPort.jump_port; else if (res.no || res.no >= 1 && res.no <= 4) //填写错误
+                if ("true" == String(res.success)) alert("注册成功"), location.href = registerPort.jump_port; else if (res.no || res.no >= 1 && res.no <= 4) //填写错误
                 switch (res.no) {
                   //邮箱错误
                     case 1:
@@ -76,8 +76,8 @@ define([ "jquery", "register/port", "registerPort" ], function($, port, register
                     !function() {
                         "normal" == loginWay ? showInputError($divAuth1, res.errMsg.inputMsg) : "mobile" == loginWay && showInputError($divAuth2, res.errMsg.inputMsg);
                     }();
-                } else res.errMsg && res.errMsg.otherMsg && //其它错误
-                alert(res.errMsg.otherMsg);
+                } else //其它错误
+                alert(res.errMsg && res.errMsg.otherMsg ? res.errMsg.otherMsg : "注册失败!!!");
             }
         });
     }
@@ -91,14 +91,14 @@ define([ "jquery", "register/port", "registerPort" ], function($, port, register
     var $smsBtn = $(".sms-btn");
     //短信验证码
     $smsBtn.on("click", function() {
-        getAuth({
+        return /^[\d]{11}$/.test($("#register-user-mobile-input").val()) ? void getAuth({
             auth_port: port.sms_auth,
             //短信验证port
             auth_way: "sms",
             timestemp: new Date().getTime(),
             //时间戳
             telNumber: $("#register-user-mobile-input").val()
-        });
+        }) : void $("#register-user-mobile").find(".u-error-tip").show();
     }), //输入框绑定事件,每次获得焦点时隐藏提示
     $("#register-form input").on("focus", function() {
         $(".u-error-tip").hide();

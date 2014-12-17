@@ -2,7 +2,7 @@ define([ "jquery", "shop/port" ], function($, port) {
     //收藏ajax
     function shopFavorAjax(data) {
         $.post(port.shopFavor, data, function(res) {
-            if ("object" != typeof res) try {
+            if (console.log(res), "object" != typeof res) try {
                 res = $.parseJSON(res);
             } catch (err) {
                 alert("服务器数据错误！！！");

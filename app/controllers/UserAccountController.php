@@ -210,6 +210,34 @@ class UserAccountController extends BaseController{
 
         $data['userbar'] = $this->userBar();
 
+        $oldPassword = Input::get('original_password');
+        $newPassword = Input::get('new_password');
+        if(!empty($oldPassword) && !empty($newPassword)){
+            $userModel = FrontUser::find($this->uid);
+
+            if(!Hash::check($oldPassword,$userModel->user->password)){
+                echo json_encode(array(
+                    'success'=>false,
+                    'state'=>200,
+                    'errMsg'=>'密码验证失败',
+
+                ));
+
+                exit;
+            }else{
+                $userModel->user->password = Hash::make($newPassword);
+                $userModel->user->save();
+
+                echo json_encode(array(
+                    'success'=>true,
+                    'state'=>200,
+                    'errMsg'=>'',
+
+                ));
+
+            }
+        }
+
         return View::make("template.personal.personal_change_password")->with($data);
     }
 
@@ -277,7 +305,7 @@ class UserAccountController extends BaseController{
         $userbar = array();
         $userbar['url'] = array(
             "my_place"      => "这里是地址",
-            "switch_palce"  => "##",
+            "switch_palce"  => url('map'),
             "logo"          => url('/'),    // 网站主页地址
             "mobile"        => "123",                               // 跳转到下载手机APP的地址
             "my_ticket"     => url('usercenter/recent_month'),                             // 我的饿单的地址
@@ -286,10 +314,9 @@ class UserAccountController extends BaseController{
             "shop_chart"    => "cart",                              // 购物车地址
             "user_mail"     => "mail",                              // 用户提醒的地址
             "personal"      => url('usercenter'),                           // 个人中心地址
-            "my_collection" => "profile/shop",                      // 我的收藏地址
-            "my_secure"     => "profile/security",                  // 安全设置的地址
+            "my_collection" => url('usercenter/collect_shop'),                      // 我的收藏地址
+            "my_secure"     => url('useraccount/personal_secure'),                  // 安全设置的地址
             "loginout"      => url("logout"),                       // 退出登录的地址
-            "switch_place"  => "switch_place"                       // 切换当前地址的地址
         );
         if( Auth::check() ){
             $user = Auth::user();

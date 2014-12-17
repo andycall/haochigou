@@ -1,6 +1,6 @@
 
 <div class="menu_toolbar">
-    <div class="toolbar_text" data-classify_id="">
+    <div class="toolbar_text" data-classify_id="{{$category['data']['classify_sec'][0]['classify_id']}}">
         <span>{{$category['data']['classify_sec'][0]['classify_name']}}</span>
         <img class="icon-rst-badge" src="" alt="" title=""/>
     </div>
@@ -11,7 +11,7 @@
                 <ul class="cate_drop_down ui-helper-clearfix">
                     @foreach($good_category['data']['goods_category'] as $key=>$value)
                     <li class="cate_item" data-classify_id="{{$value['classify_id']}}">
-                    <a href="#" title="{{$value['classify_name']}}">{{$value['classify_name']}}
+                    <a href="javascript:void(0)" title="{{$value['classify_name']}}">{{$value['classify_name']}}
                         {{--<img class="icon-rst-badge" src="http://fuss10.elemecdn.com/c/12/d2b0ed6e994997099e86581009d3bjpeg.jpeg" title="1元秒杀爽到爆！" alt="1元秒杀爽到爆！">--}}
                     </a></li>
                     @endforeach
@@ -43,7 +43,7 @@
             <li class="menu_list_block js-get-good-id" data-good_id="{{$good_value['goods_id']}}">
                 <div class="menu_sec_info">
                     <p class="menu_sec_title">
-                        <a href="#" class="dish_flavor favor_btn">♥</a>
+                        <a href="javascript:void(0)" class="dish_flavor favor_btn">♥</a>
                         <a href="#" class="dish_title"></a>
                     </p>
                     <p class="menu_sec_desc" title="{{$good_value['goods_name']}}">{{$good_value['goods_name']}}</p>

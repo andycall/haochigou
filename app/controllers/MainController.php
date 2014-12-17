@@ -72,6 +72,7 @@ class MainController extends BaseController {
 	 * 请求类型：POST
 	 */
 	public function cancelShop(){
+
 		$user = Auth::user();
 		$rules = array(
 			'uid'     => 'required | integer',
@@ -81,6 +82,7 @@ class MainController extends BaseController {
 			'uid'     => $user->front_uid,
 			'shop_id' => Input::get('shop_id'),
 		);
+
 		$v = Validator::make($new_collect, $rules);
 		if( $v->fails() ){
 			$message         = $v->messages();	
@@ -88,6 +90,8 @@ class MainController extends BaseController {
 			$error['status'] = '400';
 			return $error;
 		}
+		//echo '呵呵';
+		
 		if( CollectShop::where('shop_id', Input::get('shop_id'))->where('uid', $user->front_uid)->delete() ){
 			$output = array(
 				'success' => 'true',
@@ -100,6 +104,7 @@ class MainController extends BaseController {
 			$output['data']['collection_shop'] = $stores['data'];
 			return $output;
 		}
+		
 	}
 
 	/**
@@ -120,12 +125,7 @@ class MainController extends BaseController {
 		);
 		$v = Validator::make($new_collect, $rules);
 		if( $v->fails() ){
-			return Redirect::to('http://baidu.com');
-
-			return Redirect::to('error')
-				->with('user', Auth::user())
-				->withErrors($v)
-				->withInput();
+			echo '错误了';
 		}
 
 		$collect = new CollectShop($new_collect);
@@ -178,7 +178,7 @@ class MainController extends BaseController {
 	public function getMyStore(){
 		if( !Auth::check() ){
 			return array(
-				'url'  => 'personal/collection/shop',
+				'url'  => url('personal/collection/shop'),
 				'data' => array()
 			);
 		}
@@ -187,7 +187,7 @@ class MainController extends BaseController {
 		$stores = CollectShop::where('uid', $user->front_uid)->orderBy('uptime', 'desc')->take(5)->lists('shop_id');
 
 		$my_store         = array();
-		$my_store['url']  = 'personal/collection/shop';
+		$my_store['url']  = url('personal/collection/shop');
 		$my_store['data'] = array();
 
 		foreach($stores as $store){
@@ -196,7 +196,7 @@ class MainController extends BaseController {
 			$shop                           = Shop::find($store);
 			$onestore['shop_id']            = $shop->id;
 			$onestore['place_id']           = 'null';					// 地址ID，暂时不用
-			$onestore['shop_url']           = 'shop/'.$shop->id;		 	// 点击跳转到相应商家
+			$onestore['shop_url']           = url('shop/'.$shop->id);		 	// 点击跳转到相应商家
 			$onestore['shop_logo']          = $shop->pic;		  	// 商家的logo图片地址
 			$onestore['deliver_time']       = (float)$shop->interval;	// 送货时间间隔
 			$onestore['deliver_start']      = $shop->operation_time;	// ----------------------------没有开始时间，只有一个时间字符串
@@ -238,7 +238,7 @@ class MainController extends BaseController {
 			$one = array();
 			$one['shop_id']            = $shop->id;
 			$one['place_id']           = '123';
-			$one['shop_url']           = 'shop/'.$shop->id;
+			$one['shop_url']           = url('shop/'.$shop->id);
 			$one['shop_logo']          = $shop->pic;
 			$one['deliver_time']       = (float)$shop->interval;
 			$one['deliver_start']      = $shop->operation_time;
@@ -263,7 +263,7 @@ class MainController extends BaseController {
 			$one = array();
 			$one['shop_id']            = $shop->id;
 			$one['place_id']           = '123';
-			$one['shop_url']           = 'shop/'.$shop->id;
+			$one['shop_url']           = url('shop/'.$shop->id);
 			$one['shop_logo']          = $shop->pic;
 			$one['deliver_time']       = (float)$shop->interval;
 			$one['deliver_start']      = $shop->operation_time;
@@ -355,8 +355,8 @@ class MainController extends BaseController {
 			$onestore['isOnline']                = $shop->is_online?'true':'false';						// 是否营业		
 			$onestore['isSupportPay']            = in_array('1', explode(',', $shop->pay_method));	// 是否支持在线支付
 			$onestore['shop_id']                 = $shop->id;											// 商家id
-			$onestore['place_id']                = '不需要';									// -------------------位置经纬度和位置id后期再改数据库
-			$onestore['shop_url']                = 'shop/'.$shop->id;									// 点击跳转到相应商家
+			$onestore['place_id']                = 111111;									// -------------------位置经纬度和位置id后期再改数据库
+			$onestore['shop_url']                = url('shop/'.$shop->id);									// 点击跳转到相应商家
 			$onestore['shop_logo']               = $shop->pic;		  								// 商家的logo图片地址
 			$onestore['deliver_time']            = (float)$shop->interval;								// 送货时间间隔
 			$onestore['deliver_start']           = $shop->begin_time;								// 送货开始时间
@@ -420,19 +420,18 @@ class MainController extends BaseController {
 		$userbar = array();
 		$userbar['url'] = array(
 				"my_place"      => "这里是地址",
-				"switch_palce"  => "##",
+				"switch_palce"  => url('map'),
 				"logo"          => url('/'),	// 网站主页地址
 				"mobile"        => "123",                 				// 跳转到下载手机APP的地址
-				"my_ticket"     => 'order',                 			// 我的饿单的地址
+				"my_ticket"     => url('usercenter/recent_month'),      // 我的饿单的地址
 				"my_gift"       => 'gift',                				// 礼品中心地址
 				"feedback"      => 'feedback',                			// 反馈留言地址
 				"shop_chart"    => "cart",                				// 购物车地址
 				"user_mail"     => "mail",                				// 用户提醒的地址
-				"personal"      => url('usercenter'),                			// 个人中心地址
-				"my_collection" => "profile/shop",               		// 我的收藏地址
-				"my_secure"     => "profile/security",              	// 安全设置的地址
+				"personal"      => url('usercenter'),                	// 个人中心地址
+				"my_collection" => url('usercenter/collect_shop'),               		// 我的收藏地址
+				"my_secure"     => url('useraccount/personal_secure'),              	// 安全设置的地址
 				"loginout"      => url("logout"),              			// 退出登录的地址
-				"switch_place"  => "switch_place"                  		// 切换当前地址的地址
 		);
         if( Auth::check() ){
             $user = Auth::user();

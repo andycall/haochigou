@@ -42,20 +42,20 @@
         </div>
         
         {{-- 协议链接 --}}
-		<a class="u-protocol-link f-tac f-db" target="_blank">使用条款协议</a>
+		{{--<a class="u-protocol-link f-tac f-db" target="_blank">使用条款协议</a>--}}
         
         {{-- 提交按钮 --}}
-        <input type="submit" class="u-register-submit" value="同意协议并注册">
+        <input type="submit" class="u-register-submit" value="注册">
 	{{ Form::close(); }}
 </div>
 
 {{-- 登陆底部 --}}
 <div class="register-ft">
 	{{-- sns link --}}
-	<div class="way-register-sns">
-		<a href="##" class="weibo sns" target="_blank" title="通过微博登陆"></a>
-		<a href="##" class="renren sns" target="_blank" title="通过人人登陆"></a>
-	</div>
+	{{--<div class="way-register-sns">--}}
+		{{--<a href="##" class="weibo sns" target="_blank" title="通过微博登陆"></a>--}}
+		{{--<a href="##" class="renren sns" target="_blank" title="通过人人登陆"></a>--}}
+	{{--</div>--}}
 	{{-- 返回登陆链接 --}}
 	<a href="/login" class="login-link f-fr">登陆</a>
 </div>

@@ -5,7 +5,9 @@ define(['jquery' , "shop_cart/shop_cart"], function($, cart){
 		var arr = [];
 
 		list.each(function(index, value){
-			arr.push($(this).offset());
+			var data = $(this).offset();
+			data['classify_id'] = $(this).data("classify_id");
+			arr.push(data);
 		});
 		return arr;
 	}
@@ -35,9 +37,11 @@ define(['jquery' , "shop_cart/shop_cart"], function($, cart){
 		drop_down_menu  = $(".drop_down_menu"),
 		classify_sec    = $(".classify_sec"),
 		sec_title       = $(".sec_title"),
-		toolbar_text    = $(".toolbar_text").find("span"),
+		toolbar         = $(".toolbar_text"),
+		toolbar_text    = toolbar.find("span"),
 		shop_id         = $(".res_info_header").data("shop_id"),
 		scrollIndex     = 0,
+		positionArr = getListTop(classify_sec),
  		ready_tmp,               // 状态保存
 		ready_status    = false; // 是否需要运行切换
 
@@ -55,10 +59,31 @@ define(['jquery' , "shop_cart/shop_cart"], function($, cart){
 	});
 
 
+	function windowScroll(id){
+		positionArr.forEach(function(value, index){
+			if(value['classify_id'] == id){
+				$("body").animate({
+					scrollTop : value['top']
+				});
+			}
+		});
+	}
+
+	$(".category_list").on('click', function(e){
+		var id = $(e.currentTarget).find('a').data('cateid');
+		windowScroll(id);
+	});
+
+	$(".cate_item").on('click', function(e){
+		var id = $(e.currentTarget).data('classify_id');
+		windowScroll(id);
+		console.log(1);
+		return false;
+	});
+
 	// 购物车
 	$(".cate_view").on('click', '.rst-d-act-add', function(){
 		var good_id = $(this).parents('.menu_list_block').data("good_id");
-		console.log(good_id);
 		cart.add(good_id, shop_id);
 		return false;
 
@@ -66,11 +91,12 @@ define(['jquery' , "shop_cart/shop_cart"], function($, cart){
 
 	$(window).on('scroll', function(e){
 		var scrollTop = $(window).scrollTop(),
-			positionArr = getListTop(classify_sec),
 			direction = CaculateDirection(scrollTop),
 			isReady = scrollTop >= menu_offset.top, // 是否可以切换fixed
 			nextPosition, prevPosition,
-			target;
+			target,
+			target_id;
+
 
 		if(isReady != ready_tmp){
 			ready_status = true;
@@ -100,8 +126,10 @@ define(['jquery' , "shop_cart/shop_cart"], function($, cart){
 			nextPosition = positionArr[scrollIndex+1];
 			if(scrollTop + 10 > nextPosition.top){
 				target = sec_title.eq(scrollIndex + 1).find("span").html();
+				target_id = classify_sec.eq(scrollIndex + 1).data("classify_id");
 				scrollIndex++;
 				toolbar_text.html(target);
+				toolbar.attr("data-classify_id", target_id);
 			}
 		}
 		else if(isReady && direction === -1){
@@ -109,8 +137,10 @@ define(['jquery' , "shop_cart/shop_cart"], function($, cart){
 			prevPosition = positionArr[scrollIndex];
 			if(scrollTop + 10 < prevPosition.top){
 				target = sec_title.eq(scrollIndex - 1).find('span').html();
+				target_id = classify_sec.eq(scrollIndex - 1).data("classify_id");
 				scrollIndex--;
 				toolbar_text.html(target);
+				toolbar.attr("data-classify_id", target_id);
 			}
 		}
 	});
