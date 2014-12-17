@@ -65,7 +65,7 @@
                 <li class="search-item">
                     <a href="<%= _val.shop_url %>">
                         <img class="sr-logo" src="<%= _val.img_url %>" alt="<%= _val.shop_name %>">
-                        <span class="sr-shopname"><%= _val.shop_name %></span>
+                        <span class="sr-price"><%= _val.shop_name %></span>
                     </a>
                 </li>
                 <% }); %>
