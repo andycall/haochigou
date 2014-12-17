@@ -210,7 +210,7 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
                             break;
                             
                             //密码错误
-                            case 2: showInputError($divUserPWd,res.errMsg.inputMsg);
+                            case 2: showInputError($divUserPwd,res.errMsg.inputMsg);
                             break;
 
                             //电话号码码错误
