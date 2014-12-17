@@ -288,7 +288,8 @@
          add: function(id, shop_id) {
              cart.find(id, function(item){
                  if(item){
-                     item.count ++;
+                     //item.count ++; 
+                     this.setCount(id, item.count+1, shop_id);
                  }else{
                      $.ajax({
                          url: port['cartAdd'],
