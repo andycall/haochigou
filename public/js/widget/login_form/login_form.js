@@ -14,7 +14,7 @@ define([ "jquery", "login/port", "loginPort" ], function($, port, loginPort) {
                     $smsBtn.text(count-- + "秒后可再发送"), 1 > count && ($smsBtn.text(orginText).removeAttr("disabled"), 
                     clearInterval(authTimer));
                 }, 1e3);
-            } else !res.success && res.errMsg && alert(res.errMsg);
+            } else alert(!res.success && res.errMsg ? res.errMsg : "发送错误");
         });
     }
     //表单验证     
@@ -103,7 +103,7 @@ define([ "jquery", "login/port", "loginPort" ], function($, port, loginPort) {
         });
     }), //短信验证码
     $smsBtn.on("click", function() {
-        getAuth({
+        return /^[\d]{11}$/.test($("#user-mobile").val()) ? void getAuth({
             auth_port: port.sms_auth,
             //短信验证port
             auth_way: "sms",
@@ -111,7 +111,7 @@ define([ "jquery", "login/port", "loginPort" ], function($, port, loginPort) {
             timestemp: new Date().getTime(),
             //时间戳
             telNumber: $("#user-mobile").val()
-        });
+        }) : void $("#login-user-mobile").find(".u-error-tip").show();
     }), //输入框绑定事件,每次获得焦点时隐藏提示
     $("#login-form input").on("focus", function() {
         $(".u-error-tip").hide();

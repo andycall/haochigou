@@ -11,6 +11,10 @@ define(["jquery", "register/port", 'registerPort'], function($, port, registerPo
 
     //短信验证码
     $smsBtn.on("click",function(){
+        if( !/^[\d]{11}$/.test($("#register-user-mobile-input").val() ) ){
+            $("#register-user-mobile").find(".u-error-tip").show();
+            return ;
+        }
         getAuth({
             'auth_port' : port.sms_auth,     //短信验证port
             'auth_way'  : 'sms',
@@ -31,7 +35,7 @@ define(["jquery", "register/port", 'registerPort'], function($, port, registerPo
                 }
             }
 
-            if( String(res.success) == "true"){
+            if(res.success){
                 alert("短信已经发送，请注意接收验证码");
                     
                 //计时禁止连续发送30秒
@@ -50,6 +54,8 @@ define(["jquery", "register/port", 'registerPort'], function($, port, registerPo
                 },1000);
             }else if( !res.success && res.errMsg){
                 alert(res.errMsg);
+            }else{
+                alert("发送错误");
             }
         });
     }
