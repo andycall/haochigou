@@ -44,7 +44,7 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
             }
             if( res.success ){
                 if(res.nextSrc){
-                    $(".captcha-img").attr("src",res.nextSrc+'t=Math.random()*10000');
+                    $(".captcha-img").attr("src",res.nextSrc+'?smelraint=Math.random()*10000');
                 }else{
                     alert("短信已经发送，请注意接收验证码");
                     
