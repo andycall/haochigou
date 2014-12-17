@@ -39,11 +39,6 @@ define([ "jquery", "register/port", "registerPort" ], function($, port, register
         regAuth.test(data.user_auth) ? ($errAuth.hide(), !0) : ($errAuth.show(), !1))) : ($errPwd.show(), 
         !1)) : ($errEmail.show(), !1)) : ($errMobile.show(), !1);
     }
-    //显示表单的错误
-    function showInputError($id, msg) {
-        var $tip = $id.find(".u-error-tip");
-        msg && $tip.text(msg), $tip.show();
-    }
     //ajax
     function ajaxForm(data) {
         $.ajax({
@@ -57,32 +52,7 @@ define([ "jquery", "register/port", "registerPort" ], function($, port, register
                 } catch (err) {
                     return void alert("服务器异常，稍后再试");
                 }
-                if ("true" == String(res.success)) alert("注册成功"), location.href = registerPort.jump_port; else if (res.no || res.no >= 1 && res.no <= 4) //填写错误
-                switch (res.no) {
-                  //邮箱错误
-                    case 1:
-                    showInputError($divUserEmail, res.errMsg.inputMsg);
-                    break;
-
-                  //密码错误
-                    case 2:
-                    showInputError($divUserPWd, res.errMsg.inputMsg);
-                    break;
-
-                  //电话号码码错误
-                    case 3:
-                    !function() {
-                        "mobile" == loginWay && showInputError($divUserTel, res.errMsg.inputMsg);
-                    }();
-                    break;
-
-                  //验证码错误
-                    case 4:
-                    !function() {
-                        "normal" == loginWay ? showInputError($divAuth1, res.errMsg.inputMsg) : "mobile" == loginWay && showInputError($divAuth2, res.errMsg.inputMsg);
-                    }();
-                } else //其它错误
-                alert(res.errMsg && res.errMsg.otherMsg ? res.errMsg.otherMsg : "注册失败!!!");
+                res.success ? (alert("注册成功"), location.href = registerPort.jump_port) : alert(res.inutMsg ? res.inputMsg : res.otherMsg ? res.otherMsg : "注册失败!!!");
             }
         });
     }
