@@ -59,7 +59,7 @@
 <script type="text/template" id="tpl-tb-search">
     <div class="tb-search-autocomplete">
         <div class="clearfix">
-            <span class="search-cate"><%= val.goods_category %></span>
+            <span class="search-cate">商家</span>
             <ul class="search-list">
                 <% data.forEach(function(_val){ %>
                 <li class="search-item">
