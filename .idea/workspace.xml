@@ -2,7 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b879347d-d48a-4708-b0bc-0618efd40881" name="Default" comment="">
+<<<<<<< HEAD
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+=======
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/controllers/CheckoutController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/MainController.php" afterPath="$PROJECT_DIR$/app/controllers/MainController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/database.php" afterPath="$PROJECT_DIR$/app/config/database.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/API/login_and_register" afterPath="$PROJECT_DIR$/API/login_and_register" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/login_form/login_form.blade.php" afterPath="$PROJECT_DIR$/app/views/widget/login_form/login_form.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/login_form/login_form.js" afterPath="$PROJECT_DIR$/app/views/widget/login_form/login_form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/widget/login_form/login_form.js" afterPath="$PROJECT_DIR$/public/js/widget/login_form/login_form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/my_collection_alert/my_collection_alert.blade.php" afterPath="$PROJECT_DIR$/app/views/widget/my_collection_alert/my_collection_alert.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/my_collection_alert/my_collection_alert.js" afterPath="$PROJECT_DIR$/app/views/widget/my_collection_alert/my_collection_alert.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/widget/my_collection_alert/my_collection_alert.js" afterPath="$PROJECT_DIR$/public/js/widget/my_collection_alert/my_collection_alert.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/register_form/register_form.js" afterPath="$PROJECT_DIR$/app/views/widget/register_form/register_form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/widget/register_form/register_form.js" afterPath="$PROJECT_DIR$/public/js/widget/register_form/register_form.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes.php" afterPath="$PROJECT_DIR$/app/routes.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/shop_cart/shop_cart.blade.php" afterPath="$PROJECT_DIR$/app/views/widget/shop_cart/shop_cart.blade.php" />
+>>>>>>> e6da79fb3a85ec888a5e068ae34cae6104ea835b
     </list>
     <ignored path="haochigo.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,7 +48,7 @@
       <file leaf-file-name="personal_center.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/widget/personal_center/personal_center.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="747" max-vertical-offset="1650">
+            <state vertical-scroll-proportion="0.0" vertical-offset="690" max-vertical-offset="1125">
               <caret line="46" column="26" selection-start-line="46" selection-start-column="26" selection-end-line="46" selection-end-column="26" />
               <folding />
             </state>
@@ -40,7 +58,7 @@
       <file leaf-file-name="my_collection.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/widget/my_collection/my_collection.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="550">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -50,8 +68,18 @@
       <file leaf-file-name="my_collection.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/widget/my_collection/my_collection.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2156">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1470">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="database.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/config/database.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="1.0536045" vertical-offset="795" max-vertical-offset="2355">
+              <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -60,13 +88,14 @@
       <file leaf-file-name="my_collection_alert.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/widget/my_collection_alert/my_collection_alert.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="5996" max-vertical-offset="6886">
+            <state vertical-scroll-proportion="0.0" vertical-offset="4170" max-vertical-offset="4725">
               <caret line="278" column="0" selection-start-line="278" selection-start-column="0" selection-end-line="278" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="my_collection_alert.less" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/widget/my_collection_alert/my_collection_alert.less">
           <provider selected="true" editor-type-id="text-editor">
@@ -82,6 +111,13 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-12.774194" vertical-offset="0" max-vertical-offset="858">
               <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+=======
+      <file leaf-file-name="my_collection_alert.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/widget/my_collection_alert/my_collection_alert.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-16.25" vertical-offset="0" max-vertical-offset="585">
+              <caret line="26" column="10" selection-start-line="26" selection-start-column="10" selection-end-line="26" selection-end-column="10" />
+>>>>>>> e6da79fb3a85ec888a5e068ae34cae6104ea835b
               <folding />
             </state>
           </provider>
@@ -90,7 +126,7 @@
       <file leaf-file-name="shop_uncollected.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/widget/shop_uncollected/shop_uncollected.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="858">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -100,7 +136,7 @@
       <file leaf-file-name="shop_uncollected.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/widget/shop_uncollected/shop_uncollected.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="176">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -110,7 +146,11 @@
       <file leaf-file-name="shop_uncollected.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/widget/shop_uncollected/shop_uncollected.blade.php">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="462">
+=======
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
+>>>>>>> e6da79fb3a85ec888a5e068ae34cae6104ea835b
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -128,15 +168,14 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
+    <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/../haochigo_business/app/views/template/shop_info/shop_info.js" />
-        <option value="$PROJECT_DIR$/../haochigo_business/app/views/widget/shop_info/shop_info.blade.php" />
-        <option value="$PROJECT_DIR$/../haochigo_business/app/views/template/shop_info/shop_info.blade.php" />
-        <option value="$PROJECT_DIR$/app/views/widget/personal_center/personal_center.js" />
-        <option value="$PROJECT_DIR$/app/views/widget/my_collection_alert/my_collection_alert.js" />
         <option value="$PROJECT_DIR$/app/views/widget/my_collection_alert/my_collection_alert.blade.php" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/app/views/widget/my_collection_alert/my_collection_alert.less" />
+=======
+        <option value="$PROJECT_DIR$/app/config/database.php" />
+>>>>>>> e6da79fb3a85ec888a5e068ae34cae6104ea835b
       </list>
     </option>
   </component>
@@ -180,13 +219,11 @@
     </gruntfiles>
     <initial>false</initial>
   </component>
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-  </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="width" value="1920" />
-    <option name="height" value="1040" />
+    <option name="y" value="22" />
+    <option name="width" value="1440" />
+    <option name="height" value="795" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -365,6 +402,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="haochigo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="haochigo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -402,7 +457,7 @@
       <node-options />
       <gulpfile />
       <tasks />
-      <pass-parent-envs>true</pass-parent-envs>
+      <pass-parent-env-vars>false</pass-parent-env-vars>
       <envs />
       <method />
     </configuration>
@@ -445,17 +500,29 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
     <frame x="0" y="0" width="1920" height="1040" extended-state="0" />
+=======
+    <frame x="0" y="22" width="1440" height="795" extended-state="6" />
+>>>>>>> e6da79fb3a85ec888a5e068ae34cae6104ea835b
     <editor active="true" />
     <layout>
       <window_info id="Grunt" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25384617" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32857144" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36263737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15151516" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+>>>>>>> e6da79fb3a85ec888a5e068ae34cae6104ea835b
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18333334" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+=======
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+>>>>>>> e6da79fb3a85ec888a5e068ae34cae6104ea835b
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -463,6 +530,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3813187" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3813187" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -513,6 +581,24 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
+=======
+    <entry file="file://$PROJECT_DIR$/app/views/widget/shop_uncollected/shop_uncollected.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/database.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="795" max-vertical-offset="2100">
+          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="73" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+>>>>>>> e6da79fb3a85ec888a5e068ae34cae6104ea835b
     <entry file="file://$PROJECT_DIR$/app/controllers/UserAccountController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="195">
@@ -552,20 +638,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="3060">
           <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/database.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1276" max-vertical-offset="3080">
-          <caret line="87" column="32" selection-start-line="87" selection-start-column="32" selection-end-line="87" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/scopes/scope_settings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="220">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -842,22 +914,9 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/views/widget/my_collection/my_collection.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2156">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/widget/my_collection_alert/my_collection_alert.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5996" max-vertical-offset="6886">
-          <caret line="278" column="0" selection-start-line="278" selection-start-column="0" selection-end-line="278" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+=======
     <entry file="file://$PROJECT_DIR$/app/views/widget/my_collection/my_collection.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="550">
@@ -866,10 +925,48 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/widget/my_collection_alert/my_collection_alert.js">
+>>>>>>> e6da79fb3a85ec888a5e068ae34cae6104ea835b
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5996" max-vertical-offset="6886">
+          <caret line="278" column="0" selection-start-line="278" selection-start-column="0" selection-end-line="278" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/widget/my_collection_alert/my_collection_alert.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.25" vertical-offset="0" max-vertical-offset="585">
+          <caret line="26" column="10" selection-start-line="26" selection-start-column="10" selection-end-line="26" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/app/views/widget/my_collection/my_collection.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="550">
+=======
+    <entry file="file://$PROJECT_DIR$/app/views/widget/my_collection/my_collection.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2156">
+>>>>>>> e6da79fb3a85ec888a5e068ae34cae6104ea835b
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/app/views/widget/my_collection_alert/my_collection_alert.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.774194" vertical-offset="0" max-vertical-offset="858">
           <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+=======
+    <entry file="file://$PROJECT_DIR$/app/config/database.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0536045" vertical-offset="795" max-vertical-offset="2355">
+          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+>>>>>>> e6da79fb3a85ec888a5e068ae34cae6104ea835b
           <folding />
         </state>
       </provider>
@@ -884,3 +981,4 @@
     </entry>
   </component>
 </project>
+
