@@ -15,7 +15,7 @@ define([ "jquery", "underscore" ], function($, _) {
                 $iClear.addClass("hide"), $iLoading.removeClass("hide");
             },
             success: function(res) {
-                if (1 == res.success) {
+                if ("object" != typeof res && (res = $.parseJSON(res)), 1 == res.success) {
                     var data = res.data, _tpl = _.template($("#tpl-tb-search").html())({
                         data: data
                     });
