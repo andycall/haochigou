@@ -227,8 +227,6 @@ define(['jquery','home/port'], function($, port){
 
             }else{
 
-                alert("亲! 还没登录呢! ");
-
                 location.href = next_src;
 
             }
