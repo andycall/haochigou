@@ -1,7 +1,7 @@
 <i class="aside-icon-cart"></i>
 <div class="aside-cart-dock">
     <span class="rcart-info basket_food_info"><span id="cartTotalItems">0</span>份 <span id="cartTotalPrice" class="symbol-rmb">0</span></span>
-    <a class="aside-cart-btn disabled" href="##">篮子是空的</a>
+    <a class="aside-cart-btn disabled" href="{{$userbar['url']['personal']}}">篮子是空的</a>
 </div>
 <div id="cartScroll" class="aside-cart-dropup">
     <p class="rcart-empty">篮子是空的</p>
