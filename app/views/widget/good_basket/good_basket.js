@@ -100,7 +100,7 @@ define(['jquery', 'underscore', 'shop/port'], function($, _, port){
             cart.find(id, function(item){
                 if(item && item.count){
                     self.find('.cdish-qty').val(item.count);
-                    self.find('.cdish-total').val(item.count * item.price);
+                    self.find('.cdish-total').html(item.count * item.price);
                 }
 
             });
