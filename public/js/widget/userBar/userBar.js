@@ -7,6 +7,7 @@ define([ "jquery", "underscore" ], function($, _) {
         });
     }).on("keydown", function() {
         $.ajax("/userBarSearch", {
+            type: "POST",
             data: {
                 string: $sInput.val()
             },
