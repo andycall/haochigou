@@ -153,6 +153,7 @@ define(["jquery", "register/port", 'registerPort'], function($, port, registerPo
                 }
 
                 if( String(res.success) == 'true'){
+                    alert("注册成功");
 	                location.href = registerPort['jump_port']
                 }else{
                     if( res.no || (res.no >= 1 && res.no <= 4) ){ //填写错误
@@ -186,6 +187,8 @@ define(["jquery", "register/port", 'registerPort'], function($, port, registerPo
 
                     }else if(res.errMsg && res.errMsg.otherMsg){ //其它错误
                         alert(res.errMsg.otherMsg);
+                    }else{
+                        alert("注册失败!!!");
                     }
                 }
 
