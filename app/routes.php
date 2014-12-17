@@ -130,7 +130,6 @@ Route::get('test/{shop_id}', 'ShopController@getCategory');
 
 
 
-
 #测试
 Route::get("/personal_modify_payment",function(){
    $data = [
