@@ -189,6 +189,7 @@ class ShopController extends BaseController {
 		$key = 'laravel:user:'.$cartkey.':cart';
 
 		//var_dump(Redis::lrange($key, 0, -1));
+		//var_dump(Redis::lrange($key, 0, -1));
 		$shop_id = Redis::lrange($key, 0, 0);
 		$ids     = array_count_values(Redis::lrange($key, 1, -1));		
 
@@ -201,7 +202,7 @@ class ShopController extends BaseController {
 
 			array_push($output['data'], array(
 				'id'    => $id,
-				'price' => $menu->price * $count,
+				'price' => $menu->price,
 				'count' => $count,
 				'title' => $menu->title
 			));

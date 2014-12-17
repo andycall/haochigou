@@ -67,6 +67,13 @@ class MainController extends BaseController {
 	}
 
 	/**
+	 * 批量收藏店铺
+	 */
+	public function collectList(){
+		vardump(Input::get('add_collection'));
+	}
+
+	/**
 	 * 取消收藏某个商家
 	 *
 	 * 请求类型：POST
