@@ -1,1 +1,1 @@
-define(function(){return{cancelCollection:"cancelshop",addCollection:"collectshop",collectList:"collect_list"}});
+define(function(){return{cancelCollection:"/cancelshop",addCollection:"/collectshop",collectList:"/collectlist"}});

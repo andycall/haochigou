@@ -112,19 +112,19 @@ define(['jquery','home/port'], function($, port){
 
             break;
 
-            case "p_hot":
-                $(".collection-modal .new-res").css('display','none');
-                $(".collection-modal .p_new").removeClass('action');
-                $(".collection-modal .hot-res").css('display','block');
-                $(".collection-modal .p_hot").addClass('action');
-            break;
-
-            case "p_new":
-                $(".collection-modal .hot-res").css('display','none');
-                $(".collection-modal .p_hot").removeClass('action');
-                $(".collection-modal .new-res").css('display','block');
-                $(".collection-modal .p_new").addClass('action');
-            break;
+            //case "p_hot":
+            //    $(".collection-modal .new-res").css('display','none');
+            //    $(".collection-modal .p_new").removeClass('action');
+            //    $(".collection-modal .hot-res").css('display','block');
+            //    $(".collection-modal .p_hot").addClass('action');
+            //break;
+            //
+            //case "p_new":
+            //    $(".collection-modal .hot-res").css('display','none');
+            //    $(".collection-modal .p_hot").removeClass('action');
+            //    $(".collection-modal .new-res").css('display','block');
+            //    $(".collection-modal .p_new").addClass('action');
+            //break;
 
             default :
 
@@ -226,8 +226,6 @@ define(['jquery','home/port'], function($, port){
                 $(".modal-backdrop").css('display', 'block');
 
             }else{
-
-                alert("亲! 还没登录呢! ");
 
                 location.href = next_src;
 

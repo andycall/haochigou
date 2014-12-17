@@ -22,6 +22,11 @@ use Illuminate\Database\Eloquent\Collection;
 class MainController extends BaseController {
 
 	public function index(){
+		/*
+		if( !Auth::check() ){
+			return Redirect::to('/map');
+		}
+		*/
 		$data = array();
 
 		$data['userbar'] 		= $this->getUserBar();
@@ -67,11 +72,41 @@ class MainController extends BaseController {
 	}
 
 	/**
+	 * 批量收藏店铺
+	 */
+	public function collectList(){
+		$list = Input::get('add_collection');
+		$user = Auth::user();
+		foreach($list as $one){
+			$new_collect = array(
+				'uid' => $user->front_uid,
+				'shop_id' => $one['shop_id'],
+				'uptime' => time(),
+			);
+			$collect = new CollectShop($new_collect);
+			$collect->save();
+		}
+		$output = array(
+				'success' => 'true',
+				'state' => 200,
+				'nextSrc' => '',
+				'errMsg' => '',
+				'no' => 0
+		);
+		$stores = $this->getMyStore();
+		$output['data']['collection_shop'] = $stores['data'];
+		return $output;
+	}
+		//var_dump($hehe);
+		//return array('success' => true);
+		
+	/**
 	 * 取消收藏某个商家
 	 *
 	 * 请求类型：POST
 	 */
 	public function cancelShop(){
+
 		$user = Auth::user();
 		$rules = array(
 			'uid'     => 'required | integer',
@@ -81,6 +116,7 @@ class MainController extends BaseController {
 			'uid'     => $user->front_uid,
 			'shop_id' => Input::get('shop_id'),
 		);
+
 		$v = Validator::make($new_collect, $rules);
 		if( $v->fails() ){
 			$message         = $v->messages();	
@@ -88,6 +124,8 @@ class MainController extends BaseController {
 			$error['status'] = '400';
 			return $error;
 		}
+		//echo '呵呵';
+		
 		if( CollectShop::where('shop_id', Input::get('shop_id'))->where('uid', $user->front_uid)->delete() ){
 			$output = array(
 				'success' => 'true',
@@ -100,6 +138,7 @@ class MainController extends BaseController {
 			$output['data']['collection_shop'] = $stores['data'];
 			return $output;
 		}
+		
 	}
 
 	/**
@@ -120,12 +159,7 @@ class MainController extends BaseController {
 		);
 		$v = Validator::make($new_collect, $rules);
 		if( $v->fails() ){
-			return Redirect::to('http://baidu.com');
-
-			return Redirect::to('error')
-				->with('user', Auth::user())
-				->withErrors($v)
-				->withInput();
+			echo '错误了';
 		}
 
 		$collect = new CollectShop($new_collect);
@@ -178,7 +212,7 @@ class MainController extends BaseController {
 	public function getMyStore(){
 		if( !Auth::check() ){
 			return array(
-				'url'  => 'personal/collection/shop',
+				'url'  => url('personal/collection/shop'),
 				'data' => array()
 			);
 		}
@@ -187,7 +221,7 @@ class MainController extends BaseController {
 		$stores = CollectShop::where('uid', $user->front_uid)->orderBy('uptime', 'desc')->take(5)->lists('shop_id');
 
 		$my_store         = array();
-		$my_store['url']  = 'personal/collection/shop';
+		$my_store['url']  = url('personal/collection/shop');
 		$my_store['data'] = array();
 
 		foreach($stores as $store){
@@ -196,7 +230,7 @@ class MainController extends BaseController {
 			$shop                           = Shop::find($store);
 			$onestore['shop_id']            = $shop->id;
 			$onestore['place_id']           = 'null';					// 地址ID，暂时不用
-			$onestore['shop_url']           = 'shop/'.$shop->id;		 	// 点击跳转到相应商家
+			$onestore['shop_url']           = url('shop/'.$shop->id);		 	// 点击跳转到相应商家
 			$onestore['shop_logo']          = $shop->pic;		  	// 商家的logo图片地址
 			$onestore['deliver_time']       = (float)$shop->interval;	// 送货时间间隔
 			$onestore['deliver_start']      = $shop->operation_time;	// ----------------------------没有开始时间，只有一个时间字符串
@@ -215,10 +249,17 @@ class MainController extends BaseController {
 
 	/**
 	 * 点击我的收藏那个加号弹出的对话框
+	 * 必须登录才能操作
 	 */
 	public function getMyStoreAlert(){
+		if( !Auth::check() ){
+			return ;
+		} else{
+			$user = Auth::user();
+		}
+
 		$data = array();
-		$data['new_shop'] = array();
+		//$data['new_shop'] = array();
 		$data['hot_shop'] = array();
 
 #TODO：由前端获取用户坐标
@@ -232,13 +273,13 @@ class MainController extends BaseController {
 			$shop     = $oneshop['shopData'];
 			$shops->add($shop);
 		}
-
+		/* 取消最新餐厅这儿
 		$new_shops = $shops->sortByDesc('sold_num');
 		foreach($new_shops as $shop){
 			$one = array();
 			$one['shop_id']            = $shop->id;
 			$one['place_id']           = '123';
-			$one['shop_url']           = 'shop/'.$shop->id;
+			$one['shop_url']           = url('shop/'.$shop->id);
 			$one['shop_logo']          = $shop->pic;
 			$one['deliver_time']       = (float)$shop->interval;
 			$one['deliver_start']      = $shop->operation_time;
@@ -257,30 +298,25 @@ class MainController extends BaseController {
 			}
 			array_push($data['new_shop'], $one);
 		}
-
+		*/
 		$hot_shops = $shops->sortByDesc('addtime');
 		foreach($hot_shops as $shop){
-			$one = array();
-			$one['shop_id']            = $shop->id;
-			$one['place_id']           = '123';
-			$one['shop_url']           = 'shop/'.$shop->id;
-			$one['shop_logo']          = $shop->pic;
-			$one['deliver_time']       = (float)$shop->interval;
-			$one['deliver_start']      = $shop->operation_time;
-			$one['shop_name']          = $shop->name;
-			$one['shop_type']          = $shop->type;
-			$Level                     = $this->getLevel($shop);
-			$one['shop_level']         = $Level['thing_total'];
-			$one['order_count']        = (float)$shop->sold_num;
-			$one['is_opening']         = $shop->is_online;
-			$one['is_ready_for_order'] = $shop->reserve;
-			if( !Auth::check() ){
-				$one['is_collected'] = false;
-			} else{
-				$user = Auth::user();
-				$one['is_collected'] = in_array($shop->id, $user->collectShop->lists('shop_id'))?true:false;	// 是否被收藏了
-			}
-			array_push($data['hot_shop'], $one);
+				$one = array();
+				$one['shop_id']            = $shop->id;
+				$one['place_id']           = '123';
+				$one['shop_url']           = url('shop/'.$shop->id);
+				$one['shop_logo']          = $shop->pic;
+				$one['deliver_time']       = (float)$shop->interval;
+				$one['deliver_start']      = $shop->operation_time;
+				$one['shop_name']          = $shop->name;
+				$one['shop_type']          = $shop->type;
+				$Level                     = $this->getLevel($shop);
+				$one['shop_level']         = $Level['thing_total'];
+				$one['order_count']        = (float)$shop->sold_num;
+				$one['is_opening']         = $shop->is_online;
+				$one['is_ready_for_order'] = $shop->reserve;
+				$one['is_collected'] = in_array($shop->id, $user->collectShop->lists('shop_id'))?true:false;
+				array_push($data['hot_shop'], $one);	
 		}
 		return $data;
 	}
@@ -355,8 +391,8 @@ class MainController extends BaseController {
 			$onestore['isOnline']                = $shop->is_online?'true':'false';						// 是否营业		
 			$onestore['isSupportPay']            = in_array('1', explode(',', $shop->pay_method));	// 是否支持在线支付
 			$onestore['shop_id']                 = $shop->id;											// 商家id
-			$onestore['place_id']                = '不需要';									// -------------------位置经纬度和位置id后期再改数据库
-			$onestore['shop_url']                = 'shop/'.$shop->id;									// 点击跳转到相应商家
+			$onestore['place_id']                = 111111;									// -------------------位置经纬度和位置id后期再改数据库
+			$onestore['shop_url']                = url('shop/'.$shop->id);									// 点击跳转到相应商家
 			$onestore['shop_logo']               = $shop->pic;		  								// 商家的logo图片地址
 			$onestore['deliver_time']            = (float)$shop->interval;								// 送货时间间隔
 			$onestore['deliver_start']           = $shop->begin_time;								// 送货开始时间
@@ -429,6 +465,7 @@ class MainController extends BaseController {
 				"shop_chart"    => "cart",                				// 购物车地址
 				"user_mail"     => "mail",                				// 用户提醒的地址
 				"personal"      => url('usercenter'),                	// 个人中心地址
+				'checkout'		=> url('checkout'),						// 支付订单页面
 				"my_collection" => url('usercenter/collect_shop'),               		// 我的收藏地址
 				"my_secure"     => url('useraccount/personal_secure'),              	// 安全设置的地址
 				"loginout"      => url("logout"),              			// 退出登录的地址

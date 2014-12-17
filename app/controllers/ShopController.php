@@ -54,7 +54,7 @@ class ShopController extends BaseController {
 #TODO：未做分页功能
 	public function shopComments($shop_id){
 		$data = array();
-		$data['userbar'] = $this->getUserBar();
+		$data['userbar'] 		= $this->getUserBar();
 		$data['top_bar']        = $this->getTopbar($shop_id);
 		$data['announcement']   = $this->getAnnouncement($shop_id);
 		$data['good_category']  = $this->getGoodCategory($shop_id);		// 商家评论页要这个干嘛
@@ -189,6 +189,7 @@ class ShopController extends BaseController {
 		$key = 'laravel:user:'.$cartkey.':cart';
 
 		//var_dump(Redis::lrange($key, 0, -1));
+		//var_dump(Redis::lrange($key, 0, -1));
 		$shop_id = Redis::lrange($key, 0, 0);
 		$ids     = array_count_values(Redis::lrange($key, 1, -1));		
 
@@ -201,7 +202,7 @@ class ShopController extends BaseController {
 
 			array_push($output['data'], array(
 				'id'    => $id,
-				'price' => $menu->price * $count,
+				'price' => $menu->price,
 				'count' => $count,
 				'title' => $menu->title
 			));
@@ -619,13 +620,12 @@ class ShopController extends BaseController {
 			'data' => array()
 		);
 														
-		$top_bar['url']['return_back'] = '';					// 返回主页的地址
-		$top_bar['url']['shop_url']    = (string)$shop_id;		// 当前商家的地址
-		$top_bar['url']['comment_url'] = $shop_id.'/comments';	// 商家评论页的地址
-		$top_bar['url']['menu_url']    = (string)$shop_id;		// 商家菜单的地址
-		$top_bar['url']['photo_url']   = $shop_id.'/photo';		// 美食墙的地址
-		$top_bar['url']['message_url'] = $shop_id.'/message';	// 商家留言的地址
-#TODO：在routes前端自己写的数据里有map_url选项，API里有两个不同的top_bar->url
+		$top_bar['url']['return_back'] = url('/');					// 返回主页的地址
+		$top_bar['url']['shop_url']    = url('shop/'.$shop_id);		// 当前商家的地址
+		$top_bar['url']['comment_url'] = url('shop/'.$shop_id.'/comments');	// 商家评论页的地址
+		$top_bar['url']['menu_url']    = url('shop/'.$shop_id);		// 商家菜单的地址
+		//$top_bar['url']['photo_url']   = $shop_id.'/photo';		// 美食墙的地址
+		//$top_bar['url']['message_url'] = $shop_id.'/message';	// 商家留言的地址
 		$top_bar['url']['map_url']	   = '地图地址';
 		$top_bar['data'] = $this->getShopInfo($shop_id);
 		return $top_bar;
@@ -646,6 +646,7 @@ class ShopController extends BaseController {
 				"feedback"      => 'feedback',                			// 反馈留言地址
 				"shop_chart"    => "cart",                				// 购物车地址
 				"user_mail"     => "mail",                				// 用户提醒的地址
+				'checkout'		=> url('checkout'),						// 支付订单页面
 				"personal"      => url('usercenter'),                			// 个人中心地址
 				"my_collection" => url('usercenter/collect_shop'),               		// 我的收藏地址
 				"my_secure"     => url('useraccount/personal_secure'),              	// 安全设置的地址
