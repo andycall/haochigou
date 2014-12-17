@@ -25,6 +25,19 @@ Route::get("/register", function(){
     return View::make("template.login_register.register")->with($data);
 
 });
+
+# 找回密码
+Route::get("/find_password", function(){
+	$data = [
+		"find_email" => "",
+		"find_phone" => "",
+		"auth_image" => "http://t11.baidu.com/it/u=254287606,1076184673&fm=58"        //验证码
+	];
+
+	return View::make("template.find_password.find_password")->with($data);
+});
+
+
 Route::post('image_auth','UserAccessController@CaptchaChange');
 
 Route::post('loginAjax','UserAccessController@login');

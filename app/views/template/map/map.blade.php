@@ -15,7 +15,7 @@
               <div class="icon icon<%= i + 1 %>_b"></div>
               <h2><%= poiArr[i].name %></h2>
               <span><%= poiArr[i].address %></span>
-              <p>附件有<%= restaurantCount[i] %> 个</p>
+              <p>附近有<%= restaurantCount[i] %> 个</p>
           </li>
           <% } %>
 
