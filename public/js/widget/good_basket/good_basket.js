@@ -12,7 +12,7 @@ define([ "jquery", "underscore", "shop/port" ], function($, _, port) {
         $(".cgroup-item").each(function(i, item) {
             var self = $(item), id = self.data("good_id");
             cart.find(id, function(item) {
-                item && item.count && (self.find(".cdish-qty").val(item.count), self.find(".cdish-total").val(item.count * item.price));
+                item && item.count && (self.find(".cdish-qty").val(item.count), self.find(".cdish-total").html(item.count * item.price));
             });
         });
     }
