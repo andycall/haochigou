@@ -239,7 +239,7 @@ class MainController extends BaseController {
 			$Level                          = $this->getLevel($shop);
 			$onestore['shop_level']         = $Level['thing_total'];			// 商家评级
 			$onestore['order_count']        = (float)$shop->sold_num;		// 订单总量
-			$onestore['is_opening']         = $shop->state;			// 营业状态
+			$onestore['is_opening']         = $this->isOnline($shop->operation_time, date('H:i')) ? 0 : 1;			// 营业状态
 			$onestore['is_ready_for_order'] = $shop->reserve;// 是否接受预定
 
 			array_push($my_store['data'], $onestore);
@@ -313,7 +313,7 @@ class MainController extends BaseController {
 				$Level                     = $this->getLevel($shop);
 				$one['shop_level']         = $Level['thing_total'];
 				$one['order_count']        = (float)$shop->sold_num;
-				$one['is_opening']         = $shop->is_online;
+				$one['is_opening']         = $this->isOnline($shop->operation_time, date('H:i')) ? 0 : 1;
 				$one['is_ready_for_order'] = $shop->reserve;
 				$one['is_collected'] = in_array($shop->id, $user->collectShop->lists('shop_id'))?true:false;
 				array_push($data['hot_shop'], $one);	
@@ -390,9 +390,6 @@ class MainController extends BaseController {
 
 
 			$onestore['isOnline']                = $this->isOnline($shop->operation_time, date('H:i')) ? true : false;			// 是否营业	
-
-
-			
 			$onestore['isSupportPay']            = in_array('1', explode(',', $shop->pay_method));	// 是否支持在线支付
 			$onestore['shop_id']                 = $shop->id;											// 商家id
 			$onestore['place_id']                = 111111;									// -------------------位置经纬度和位置id后期再改数据库
@@ -412,7 +409,7 @@ echo $onestore['shop_name'];
 			$onestore['deliver_state_start']     = $shop->begin_price;
 			$onestore['deliver_start_statement'] = $shop->begin_price;		// 起送价描述
 			$onestore['shop_address']            = $shop->address;									// 商家地址
-			$onestore['is_opening']              = $shop->state;										// 0是正在营业，1是打烊了，2是太忙了
+			$onestore['is_opening']              = $this->isOnline($shop->operation_time, date('H:i')) ? 0 : 1;	// 0是正在营业，1是打烊了，2是太忙了
 			$onestore['is_ready_for_order']      = $shop->reserve;							// 是否接收预定
 			$onestore['close_msg']               = $shop->close_msg;									// 关门信息
 			$onestore['business_hours']          = $shop->operation_time;						// 营业时间
