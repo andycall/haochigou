@@ -9,7 +9,7 @@
 @stop
 
 @section("form")
-    @if("email_change" == "0")
+    @if($email_change == "1")
         @include("widget.find_password.find_password")
     @else
         @include("widget.find_password_change.find_password_change")
