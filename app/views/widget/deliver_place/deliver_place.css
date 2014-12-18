@@ -267,7 +267,7 @@ ul, ol {
   left: 0;
   top: 0;
   z-index: 1000;
-  /* display: none; */ }
+  display: none; }
 
 .sms-auth {
   width: 598px;

@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title></title>
+    <title>好吃狗-网上订餐</title>
     @yield("css")
     <script>
        window.onload = function(){

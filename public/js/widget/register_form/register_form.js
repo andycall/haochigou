@@ -52,7 +52,7 @@ define([ "jquery", "register/port", "registerPort" ], function($, port, register
                 } catch (err) {
                     return void alert("服务器异常，稍后再试");
                 }
-                res.success ? (alert("注册成功"), location.href = registerPort.jump_port) : alert(res.inutMsg ? res.inputMsg : res.otherMsg ? res.otherMsg : "注册失败!!!");
+                res.success ? (alert("注册成功"), location.href = registerPort.jump_port) : alert(res.errMsg.inutMsg || res.errMsg.otherMsg ? res.errMsg.inputMsg || res.errMsg.otherMsg : "注册失败!!!");
             }
         });
     }

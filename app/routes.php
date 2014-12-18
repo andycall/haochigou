@@ -27,6 +27,19 @@ Route::get("/register", function(){
     return View::make("template.login_register.register")->with($data);
 
 });
+
+# 找回密码
+Route::get("/find_password", function(){
+	$data = [
+		"find_email" => "",
+		"find_phone" => "",
+		"auth_image" => url('captcha')    //验证码
+	];
+
+	return View::make("template.find_password.find_password")->with($data);
+});
+
+
 Route::post('image_auth','UserAccessController@CaptchaChange');
 
 Route::post('loginAjax','UserAccessController@login');
@@ -34,7 +47,7 @@ Route::post('login','UserAccessController@login');
 
 Route::get("/login", function(){
     $data = [
-        "find_password" => "#",
+        "find_password" => url("find_password"),
         "auth_image" => url('captcha')
     ];
 

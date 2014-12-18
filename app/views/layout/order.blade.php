@@ -1,7 +1,7 @@
 <!Doctype html>
 	<html>
 		<head>
-			<title>确认订单</title>
+			<title>好吃狗-网上订餐-确认订单</title>
 			@yield("css")
 		</head>
 		<body>
