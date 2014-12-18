@@ -9,7 +9,9 @@
 @stop
 
 @section("form")
-    @include("widget.login_form.login_form", array("jump_port" => "/usercenter")) {{-- 控制跳转地址--}}
+    <h2>忘记密码</h2>
+    <p>请选择验证身份的方式</p>
+    @include("widget.find_password.find_password")
 @stop
 
 @section("footer")
@@ -19,12 +21,10 @@
 @section("css")
     {{HTML::style("/css/lib/jquery-ui.css")}}
     {{HTML::style("/css/template/lib/normalize.css")}}
-    {{HTML::style("/css/template/lib/function.css")}}
-	{{HTML::style("/css/template/login_register/login.css")}}
-	{{HTML::style("/css/template/login_register/login.register.css")}}
+	{{HTML::style("/css/template/find_password/find_password.css")}}
 @stop
 
 @section("script")
-    {{HTML::script("/js/lib/require.js", ["data-main" => url("/js/template/login_register/login.js")])}}
+    {{HTML::script("/js/lib/require.js", ["data-main" => url("/js/template/find_password/find_password.js")])}}
 @stop
 

@@ -27,6 +27,19 @@ Route::get("/register", function(){
     return View::make("template.login_register.register")->with($data);
 
 });
+
+# 找回密码
+Route::get("/find_password", function(){
+	$data = [
+		"find_email" => "",
+		"find_phone" => "",
+		"auth_image" => url('captcha')    //验证码
+	];
+
+	return View::make("template.find_password.find_password")->with($data);
+});
+
+
 Route::post('image_auth','UserAccessController@CaptchaChange');
 
 Route::post('loginAjax','UserAccessController@login');
@@ -34,7 +47,7 @@ Route::post('login','UserAccessController@login');
 
 Route::get("/login", function(){
     $data = [
-        "find_password" => "#",
+        "find_password" => url("find_password"),
         "auth_image" => url('captcha')
     ];
 
@@ -97,6 +110,7 @@ Route::filter('loginCheck', function()
 
 # 主页
 Route::get('/', 'MainController@index');
+
 Route::post('/', function(){}); // 首页的一个post请求
 Route::post('cancelshop', array('before' => 'loginCheck', 'uses' => 'MainController@cancelShop'));     // 取消收藏店铺
 Route::post('collectshop', array('before' => 'loginCheck', 'uses' => 'MainController@collectShop'));   // 收藏某个店铺
