@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4e38430b-564b-4938-a948-218836f316aa" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/widget/shop_collect_bar/shop_collect_bar.js" afterPath="$PROJECT_DIR$/app/views/widget/shop_collect_bar/shop_collect_bar.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/widget/shop_collect_bar/shop_collect_bar.js" afterPath="$PROJECT_DIR$/public/js/widget/shop_collect_bar/shop_collect_bar.js" />
     </list>
     <ignored path="haochigo.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -92,8 +93,8 @@
       <file leaf-file-name="shop_collect_bar.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/widget/shop_collect_bar/shop_collect_bar.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.52048194" vertical-offset="1026" max-vertical-offset="1548">
-              <caret line="69" column="16" selection-start-line="69" selection-start-column="16" selection-end-line="69" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.43373495" vertical-offset="1062" max-vertical-offset="1530">
+              <caret line="69" column="38" selection-start-line="69" selection-start-column="38" selection-end-line="69" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -1061,8 +1062,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/widget/shop_collect_bar/shop_collect_bar.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.52048194" vertical-offset="1026" max-vertical-offset="1548">
-          <caret line="69" column="16" selection-start-line="69" selection-start-column="16" selection-end-line="69" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.43373495" vertical-offset="1062" max-vertical-offset="1530">
+          <caret line="69" column="38" selection-start-line="69" selection-start-column="38" selection-end-line="69" selection-end-column="38" />
           <folding />
         </state>
       </provider>
