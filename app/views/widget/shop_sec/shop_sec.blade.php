@@ -8,6 +8,7 @@
         return $str_cut;
     }
 ?>
+<?php var_dump($shops)  ?>
 @for ($i = 0; $i < count($shops); $i++)
     <a href="{{$shops[$i]['shop_url']}}" class="restaurant-{{$shops[$i]['shop_id']}}">
 @if($shops[$i]['is_opening'])
@@ -36,6 +37,7 @@
                 <div class="title">
                     <p>{{substr_cut($shops[$i]['shop_name'],6)}}</p>
                 </div>
+
 @if($shops[$i]['is_opening'])
                 <div class="busy">
 @if($shops[$i]['is_opening']==1)
