@@ -142,7 +142,7 @@ Route::post('modifyorder', array('before' => 'loginCheck', 'uses' => 'PersonalCo
 Route::get('checkout', 'CheckoutController@index');
 #测试
 Route::post('test', 'MainController@isOnline');
-Route::get('test', 'MapController@getAmount');
+Route::get('test', 'MapController@test');
 
 
 
