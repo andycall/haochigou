@@ -75,14 +75,15 @@ define(['jquery','order/port'], function($,port){
 	      	ev.preventDefault();
 	     }else{
 		    $(".js-show-addr-info").find(".current_addr").text(authInfo.addr).end().find('.current_name').text(authInfo.name).end().find(".current_tel").text(authInfo.phone).end().find(".current_bkTel").text(authInfo.bkTel);
-		    $(".u-mask").hide();$(".js-cmodal-wrapper").hide();
+		    $(".u-mask").hide();
+             alert(12467);
+            $(".js-cmodal-wrapper").hide();
 	     }
     });
 
 	//验证必填项
 	function checkForm(){
 		var $modifyAdress = $(".js-adress-modify");
-
 		var $telInput  = $modifyAdress.find(".tel"),
 		    $nameInput = $modifyAdress.find(".name"),
 		    $addrInput = $modifyAdress.find(".addr"),
