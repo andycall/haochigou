@@ -9,9 +9,11 @@
 @stop
 
 @section("form")
-    <h2>忘记密码</h2>
-    <p>请选择验证身份的方式</p>
-    @include("widget.find_password.find_password")
+    @if("email_change" == "0")
+        @include("widget.find_password.find_password")
+    @else
+        @include("widget.find_password_change.find_password_change")
+    @endif
 @stop
 
 @section("footer")

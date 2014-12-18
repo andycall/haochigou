@@ -16,11 +16,8 @@ require.config({
 });
 // 加载项目所需的所有依赖项
 define([
-	"find_password/find_password"
+	"find_password/find_password",
+	"jquery-ui"
 ], function($){
 	console.log("init");
 });
-
-
-
-s

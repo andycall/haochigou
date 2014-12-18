@@ -33,7 +33,19 @@ Route::get("/find_password", function(){
 	$data = [
 		"find_email" => "",
 		"find_phone" => "",
-		"auth_image" => url('captcha')    //验证码
+		"auth_image" => url('captcha'),    //验证码
+		"email_change" => "1"
+	];
+
+	return View::make("template.find_password.find_password")->with($data);
+});
+
+Route::get("/find_password_change", function(){
+
+	$data = [
+		"find_email" => "",
+		"email_change" => "0",
+		"auth_image" => url('captcha'),    //验证码
 	];
 
 	return View::make("template.find_password.find_password")->with($data);
