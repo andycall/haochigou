@@ -15,7 +15,7 @@ define(["jquery", "shop/port"], function($, port){
 
 		//按钮变红 || 取消变红
 		$favorBar.toggleClass("on");
-        
+
 		if(  $favorBar. hasClass("on") ){   //如果收藏
 			$favorStatus.text("已收藏");
 

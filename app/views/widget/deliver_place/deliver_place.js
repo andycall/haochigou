@@ -243,7 +243,7 @@ define(['jquery','order/port'], function($,port){
             console.log(callback);
 
 			if( res.success){ //成功
-				callback.sccuess(res);
+				callback.success(res);
 
 			}else{                      //失败
 				callback.failed(res);
