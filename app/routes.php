@@ -33,7 +33,19 @@ Route::get("/find_password", function(){
 	$data = [
 		"find_email" => "",
 		"find_phone" => "",
-		"auth_image" => url('captcha')    //验证码
+		"auth_image" => url('captcha'),    //验证码
+		"email_change" => "1"
+	];
+
+	return View::make("template.find_password.find_password")->with($data);
+});
+
+Route::get("/find_password_change", function(){
+
+	$data = [
+		"find_email" => "",
+		"email_change" => "0",
+		"auth_image" => url('captcha'),    //验证码
 	];
 
 	return View::make("template.find_password.find_password")->with($data);
@@ -114,6 +126,7 @@ Route::get('/', 'MainController@index');
 Route::post('/', function(){}); // 首页的一个post请求
 Route::post('cancelshop', array('before' => 'loginCheck', 'uses' => 'MainController@cancelShop'));     // 取消收藏店铺
 Route::post('collectshop', array('before' => 'loginCheck', 'uses' => 'MainController@collectShop'));   // 收藏某个店铺
+
 Route::post('collectlist', array('before' => 'loginCheck', 'uses' => 'MainController@collectList'));    // 批量收藏功能
 #搜索
 Route::post('userBarSearch', 'SearchController@mainSearch');
@@ -129,10 +142,6 @@ Route::post('cartSetCount', 'ShopController@cartSetCount'); // 这是在提交�
 Route::get('userBarCart', 'ShopController@getUserBarCart');    // 获取购物车信息
 Route::post('cartClear', 'ShopController@cartClear');  // 清空购物车
 Route::post('cartDel', 'ShopController@cartDel');  // 从购物车删除
-//Route::post('collectshop', 'ShopController@collectShop');       // 收藏某个店铺
-//Route::post('collectmenu', 'ShopController@cancelShop');        // 取消收藏某个店铺
-
-
 
 # 用户
 Route::get('mail', function(){});                               // 用户提醒
@@ -144,8 +153,8 @@ Route::post('confirmorder', array('before' => 'loginCheck', 'uses' => 'PersonalC
 Route::post('modifyorder', array('before' => 'loginCheck', 'uses' => 'PersonalController@modifyOrder'));	// 修改订单状态：0表示已提交未付款，1表示已付款未收货，2表示已收获，3表示取消订单
 Route::get('checkout', 'CheckoutController@index');
 #测试
-Route::post('test', 'ShopController@cartDel');
-Route::get('test/{shop_id}', 'ShopController@getCategory');
+Route::post('test', 'MainController@isOnline');
+Route::get('test', 'MapController@getAmount');
 
 
 

@@ -1,4 +1,14 @@
-<div id="tabs">
+<div class="success_info" style="display: none;">
+        <h2>重设密码邮件发送成功</h2>
+        <p>
+        请您移驾去注册邮箱查阅来自饿了么的邮件,重设您的密码
+        感谢您对好吃狗的支持。^_^
+        </p>
+</div>
+
+<div id="tabs" style="display: none;">
+    <h2>忘记密码</h2>
+    <p>请选择验证身份的方式</p>
   <ul>
     <li><a href="#tabs-1">注册邮箱</a></li>
     <li><a href="#tabs-2">已绑定手机</a></li>
@@ -14,16 +24,6 @@
             <input class="tooltips"  type="text" placeholder="验证码" name="auth_code" id="auth_code" />
             <img class="auth_image" src="{{$auth_image}}" alt=""/>
             <div class="u-error-tip f-dn">请填写正确的验证码</div>
-        </section>
-
-        <section>
-            <input  class="tooltips" type="text" placeholder="新密码" name="new_psw"  id="new_psw" />
-            <div class="u-error-tip f-dn">密码填写错误</div>
-        </section>
-
-        <section>
-            <input  class="tooltips" type="text" placeholder="确认密码" name="repeat_psw"  id="repeat_psw" />
-            <div class="u-error-tip f-dn">2次密码不相同</div>
         </section>
 
         <section>
@@ -60,6 +60,8 @@
     {{Form::close()}}
   </div>
 </div>
+
+
 
 
 @section("css")

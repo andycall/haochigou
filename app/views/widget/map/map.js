@@ -387,7 +387,7 @@ define([ 'jquery', 'underscore', 'search/port', "JSON"], function($, _, port){
 						async: false,
 						success: function(data) {
 
-							autoComplete.restaurantCount = data;
+							autoComplete.restaurantCount = data['data'];
 							autoComplete.windowsArr = [];
 							autoComplete.marker = [];
 							autoComplete.data = data;

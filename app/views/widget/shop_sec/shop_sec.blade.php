@@ -36,6 +36,7 @@
                 <div class="title">
                     <p>{{substr_cut($shops[$i]['shop_name'],6)}}</p>
                 </div>
+
 @if($shops[$i]['is_opening'])
                 <div class="busy">
 @if($shops[$i]['is_opening']==1)
