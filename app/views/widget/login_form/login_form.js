@@ -198,7 +198,6 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
                         return;
                     }
                 }
-                console.log(res);
                 if(res.success){
                     alert("登陆成功!");
                     location.href = loginPort['jump_port'];
