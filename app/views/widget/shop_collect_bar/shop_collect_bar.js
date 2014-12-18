@@ -3,14 +3,13 @@ define(["jquery", "shop/port"], function($, port){
 /*
  *  @include "侧边栏收藏按钮"
 */
+    var $this      = $(".js-fav-shop"),
+        $favorBar  = $this.find(".glyph"),   //红心
+        $favorStatus = $this.find(".status");  //状态
 	$(".js-fav-shop").on("click", function(){
-		var $this             = $(this),
-		      $favorBar      = $this.find(".glyph"),   //红心
-		      $favorStatus = $this.find(".status");  //状态
-
 		 //商家信息
 		 var shopInfo  = {
-		 	'shop_id'         : "",
+		 	'shop_id'    : $(".res_info .res_info_header").attr("data-shop_id"),
 		 	"shop_name"  : ""
 		 };
 
@@ -21,7 +20,7 @@ define(["jquery", "shop/port"], function($, port){
 			$favorStatus.text("已收藏");
 
 			shopFavorAjax( shopInfo );
-		}else{                                               //如果取消收藏
+		}else{            //如果取消收藏
 			$favorStatus.text("收藏餐厅");
 
 			delShopFavor( shopInfo );
@@ -41,7 +40,7 @@ define(["jquery", "shop/port"], function($, port){
 			}
                                     
             //失败的话
-			if( res.success != "true" ){
+			if( res.success  != "true"){
 				if(res.errMsg){
 					alert(res.errMsg);
 				}else{
@@ -66,7 +65,7 @@ define(["jquery", "shop/port"], function($, port){
 			}
                                     
                                     //失败的话
-			if( res.success != "true" ){
+			if( res.success != "true"){
 				if(res.errMsg){
 					alert(res.errMsg);
 				}else{

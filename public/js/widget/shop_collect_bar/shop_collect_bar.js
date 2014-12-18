@@ -27,13 +27,17 @@ define([ "jquery", "shop/port" ], function($, port) {
             $favorStatus.text("已收藏"));
         });
     }
-    console.log("shop collection bar loaded"), /*
+    console.log("shop collection bar loaded");
+    /*
  *  @include "侧边栏收藏按钮"
 */
+    var $this = $(".js-fav-shop"), $favorBar = $this.find(".glyph"), //红心
+    $favorStatus = $this.find(".status");
+    //状态
     $(".js-fav-shop").on("click", function() {
-        var $this = $(this), $favorBar = $this.find(".glyph"), //红心
-        $favorStatus = $this.find(".status"), shopInfo = {
-            shop_id: "",
+        //商家信息
+        var shopInfo = {
+            shop_id: $(".res_info .res_info_header").attr("data-shop_id"),
             shop_name: ""
         };
         //按钮变红 || 取消变红
