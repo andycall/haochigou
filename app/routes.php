@@ -131,8 +131,8 @@ Route::post('confirmorder', array('before' => 'loginCheck', 'uses' => 'PersonalC
 Route::post('modifyorder', array('before' => 'loginCheck', 'uses' => 'PersonalController@modifyOrder'));	// 修改订单状态：0表示已提交未付款，1表示已付款未收货，2表示已收获，3表示取消订单
 Route::get('checkout', 'CheckoutController@index');
 #测试
-Route::post('test', 'ShopController@cartDel');
-Route::get('test/{shop_id}', 'ShopController@getCategory');
+Route::post('test', 'MainController@isOnline');
+Route::get('test', 'MainController@getShopList');
 
 
 

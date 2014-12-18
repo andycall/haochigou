@@ -378,7 +378,6 @@ class MainController extends BaseController {
 		$geohash   = new Geohash();
 		$shopArray = $geohash->geohashGet($user_x, $user_y);
 		$shops     = $shopArray['data'];
-#TODO：这个地方的$shops就应该进缓存了
 		$num       = 0; // 计数器，只15个
 
 		foreach($shops as $oneshop){
@@ -388,7 +387,12 @@ class MainController extends BaseController {
 			$support_activity = explode(',', $shop->support_activity);
 			$onestore['support_activity']        = $support_activity[0]==''?[]:$support_activity;		// 所有支持的活动id
 			$onestore['isHot']                   = $shop->is_hot?'true':'false';								// 是否是热门餐厅
-			$onestore['isOnline']                = $shop->is_online?'true':'false';						// 是否营业		
+
+
+			$onestore['isOnline']                = $this->isOnline($shop->operation_time, date('H:i')) ? true : false;			// 是否营业	
+
+
+			
 			$onestore['isSupportPay']            = in_array('1', explode(',', $shop->pay_method));	// 是否支持在线支付
 			$onestore['shop_id']                 = $shop->id;											// 商家id
 			$onestore['place_id']                = 111111;									// -------------------位置经纬度和位置id后期再改数据库
@@ -397,6 +401,10 @@ class MainController extends BaseController {
 			$onestore['deliver_time']            = (float)$shop->interval;								// 送货时间间隔
 			$onestore['deliver_start']           = $shop->begin_time;								// 送货开始时间
 			$onestore['shop_name']               = $shop->name;										// 商家名称
+/*
+echo $onestore['isOnline'];
+echo $onestore['shop_name'];
+*/
 			$onestore['shop_type']               = $shop->type;
 			$Level                               = $this->getLevel($shop);
 			$onestore['shop_level']              = $Level['thing_total'];										// 五分制
@@ -419,13 +427,30 @@ class MainController extends BaseController {
 			$onestore['additions']               = array();													// 额外的内容
 
 			$num = $num + 1;
-			if($num < 2){
+			if($num < 4){													// 更多餐厅和上面那排餐厅的数量
 				array_push($result['shop_list']['data']['shops'] , $onestore);
 			}else{
 				array_push($result['more_shop']['data'], $onestore);
 			}
 		}
 		return $result;
+	}
+
+	/**
+	 * 是否在营业
+	 * 09:50 - 13:30 / 16:00 - 19:30
+	 * 这样的一个字符串
+	 */
+	public function isOnline($timeStr, $now){
+		$times = explode(' ', $timeStr);// 不需要正则，用空格判断即可
+		$len = count($times);
+		// 然后看现在的时间在哪个区间，直接比较字符串即可
+		for($i = 0; $i < $len; $i += 4){
+			if( $times[$i] <= $now and $times[$i + 2] > $now){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
