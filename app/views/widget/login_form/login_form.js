@@ -201,12 +201,12 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
                 if(res.success){
                     alert("登陆成功!");
                     location.href = loginPort['jump_port']
-                }else if( res.inutMsg){
-                    alert(res.inputMsg);
-                }else if(res.otherMsg){
+                }else if( res.errMsg.inutMsg){
+                    alert(res.errMsg.inputMsg);
+                }else if(res.errMsg.otherMsg){
                     alert(res.otherMsg);
                 }else{
-                    alert("注册失败!!!");
+                    alert("登陆失败!!!");
                 }
             }
         });
