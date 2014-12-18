@@ -471,7 +471,7 @@ class ShopController extends BaseController {
 			}
 			Response::json($output);
 		}else{
-			return Redirect::to('http://baidu.com');
+			return ;
 		}
 	}
 
