@@ -44,7 +44,7 @@ define([ "jquery", "order/port" ], function($, port) {
                 return void alert("服务器数据错误！！！");
             }
             console.log(callback), res.success ? //成功
-            callback.sccuess(res) : //失败
+            callback.success(res) : //失败
             callback.failed(res);
         });
     }
