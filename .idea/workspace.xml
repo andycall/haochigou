@@ -92,8 +92,8 @@
       <file leaf-file-name="shop_collect_bar.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/widget/shop_collect_bar/shop_collect_bar.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.52048194" vertical-offset="540" max-vertical-offset="1548">
-              <caret line="42" column="27" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="27" />
+            <state vertical-scroll-proportion="0.6939759" vertical-offset="1080" max-vertical-offset="1548">
+              <caret line="76" column="28" selection-start-line="76" selection-start-column="28" selection-end-line="76" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -1061,8 +1061,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/widget/shop_collect_bar/shop_collect_bar.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.52048194" vertical-offset="540" max-vertical-offset="1548">
-          <caret line="42" column="27" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="27" />
+        <state vertical-scroll-proportion="0.6939759" vertical-offset="1080" max-vertical-offset="1548">
+          <caret line="76" column="28" selection-start-line="76" selection-start-column="28" selection-end-line="76" selection-end-column="28" />
           <folding />
         </state>
       </provider>
