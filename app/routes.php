@@ -114,6 +114,7 @@ Route::get('/', 'MainController@index');
 Route::post('/', function(){}); // 首页的一个post请求
 Route::post('cancelshop', array('before' => 'loginCheck', 'uses' => 'MainController@cancelShop'));     // 取消收藏店铺
 Route::post('collectshop', array('before' => 'loginCheck', 'uses' => 'MainController@collectShop'));   // 收藏某个店铺
+
 Route::post('collectlist', array('before' => 'loginCheck', 'uses' => 'MainController@collectList'));    // 批量收藏功能
 #搜索
 Route::post('userBarSearch', 'SearchController@mainSearch');
@@ -129,10 +130,6 @@ Route::post('cartSetCount', 'ShopController@cartSetCount'); // 这是在提交�
 Route::get('userBarCart', 'ShopController@getUserBarCart');    // 获取购物车信息
 Route::post('cartClear', 'ShopController@cartClear');  // 清空购物车
 Route::post('cartDel', 'ShopController@cartDel');  // 从购物车删除
-//Route::post('collectshop', 'ShopController@collectShop');       // 收藏某个店铺
-//Route::post('collectmenu', 'ShopController@cancelShop');        // 取消收藏某个店铺
-
-
 
 # 用户
 Route::get('mail', function(){});                               // 用户提醒
@@ -145,7 +142,7 @@ Route::post('modifyorder', array('before' => 'loginCheck', 'uses' => 'PersonalCo
 Route::get('checkout', 'CheckoutController@index');
 #测试
 Route::post('test', 'MainController@isOnline');
-Route::get('test', 'MainController@getShopList');
+Route::get('test', 'MapController@getAmount');
 
 
 

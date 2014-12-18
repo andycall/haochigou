@@ -82,7 +82,42 @@ class Geohash extends Eloquent{
                 'msg'=>'店铺geohash设置失败'
             );
         }
+    }
 
+    /**
+     * 根据坐标获取坐标周围店铺的数量
+     */
+    public function getAmount($x, $y){
+        if( !$this->coordCheck($x, $y) ){
+            return array(
+                'status' => 'error',
+                'msg' => '坐标格式不合法'
+            );
+        }
+
+        $geohash = App::make('GeohashClass'); // 引入geohash扩展
+        $hash = $geohash->encode($x, $y);
+        $prefix = substr($hash, 0, 6);      // 根据前缀确定范围
+        // 相邻8个区域
+        $neighbors = $geohash->neighbors($prefix);
+        array_push($neighbors, $prefix);
+
+        $shopArray = array();
+        $i = 0;
+        $amount = 0;    // 最终返回的数量
+
+        //分别按八个区域的geohash前缀，去查询对应的shop
+        foreach($neighbors as $value){
+            $shopData = $this->where('geohash','like',$value.'%')->get();
+            $dataArray = $shopData->toArray();
+            if(empty($dataArray)){
+                continue;
+            }
+            $amount += count($dataArray);
+        }
+        // 先看看有没有可能是重复的
+        //echo $amount;
+        return 3;
     }
 
 
