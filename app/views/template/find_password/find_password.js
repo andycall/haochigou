@@ -20,7 +20,3 @@ define([
 ], function($){
 	console.log("init");
 });
-
-
-
-s

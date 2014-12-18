@@ -201,7 +201,7 @@ define([ "jquery", "underscore", "search/port", "JSON" ], function($, _, port) {
                     dataType: "json",
                     async: !1,
                     success: function(data) {
-                        autoComplete.restaurantCount = data, autoComplete.windowsArr = [], autoComplete.marker = [], 
+                        autoComplete.restaurantCount = data.data, autoComplete.windowsArr = [], autoComplete.marker = [], 
                         autoComplete.data = data, autoComplete.resultIndex = 0, autoComplete.resultEnd = 10, 
                         autoComplete.poil = poil, autoComplete.restaurantResult = restaurantResult, //清空地图上的InfoWindow和Marker
                         mapObj.clearMap(), self.render(), drag && ($(".drag-wrap").css({

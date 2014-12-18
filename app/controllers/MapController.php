@@ -25,15 +25,21 @@ class MapController extends BaseController{
         }
 
         $shopData = array();
+        $geoHash = new Geohash();
         foreach($locations as $key=>$value){
+            /* 
             $shopModel = Geohash::where('x','=',$value['0'])->where('y','=',$value['1'])->first();
 
             if(empty($shopModel)){
                 continue;
             }
+            */
+           
+           array_push($shopData, 12);//$geoHash->getAmount($value['0'], $value['1']));
 
-            $shopData[] = $key;
+           //$shopData[] = $key;
         }
+        // var_dump($shopData);
 
        echo json_encode(array(
            'success'=>true,

@@ -240,7 +240,7 @@ define(['jquery','order/port'], function($,port){
 				}
 			}
 
-			if( res.success == "true"){ //成功
+			if( res.success){ //成功
 				callback.sccuess(res);
 
 			}else{                      //失败
