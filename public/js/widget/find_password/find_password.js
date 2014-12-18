@@ -1,5 +1,5 @@
 define([ "jquery", "timer", "find_password_template/port", "JSON", "jquery-ui" ], function($, Timer, port) {
-    $("#tabs").tabs(), $.prototype.serializeObject = function() {
+    $("#tabs").tabs().show(), $.prototype.serializeObject = function() {
         var obj = new Object();
         return $.each(this.serializeArray(), function(index, param) {
             param.name in obj || (obj[param.name] = param.value);

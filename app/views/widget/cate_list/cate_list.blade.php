@@ -84,6 +84,12 @@
     </section>
     @endforeach
 </div>
+
+{{-- Template --}}
+
+
+
+
 @section("css")
     @parent
     {{HTML::style("/css/widget/cate_list/cate_list.css")}}

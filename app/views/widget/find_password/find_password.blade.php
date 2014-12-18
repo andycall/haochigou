@@ -6,7 +6,7 @@
         </p>
 </div>
 
-<div id="tabs">
+<div id="tabs" style="display: none;">
     <h2>忘记密码</h2>
     <p>请选择验证身份的方式</p>
   <ul>
