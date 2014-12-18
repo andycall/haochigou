@@ -54,7 +54,7 @@ define([ "jquery", "login/port", "loginPort" ], function($, port, loginPort) {
                     return void alert("服务器异常，稍后再试");
                 }
                 console.log(res), res.success && (alert("登陆成功!"), location.href = loginPort.jump_port), 
-                alert(res.errMsg.inputMsg ? res.errMsg.inputMsg : "登陆失败!!!");
+                alert(res.errMsg.inputMsg ? res.errMsg.inputMsg : res.errMsg.otherMsg ? res.errMsg.otherMsg : "登陆失败!!!");
             }
         });
     }

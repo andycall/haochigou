@@ -205,6 +205,8 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
                 }
                 if(res.errMsg.inputMsg){
                     alert(res.errMsg.inputMsg);
+                }else if(res.errMsg.otherMsg){
+                    alert(res.errMsg.otherMsg);
                 }else{
                     alert("登陆失败!!!");
                 }
