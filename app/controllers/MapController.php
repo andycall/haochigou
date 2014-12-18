@@ -42,4 +42,6 @@ class MapController extends BaseController{
            'data'=>$shopData
        ));
     }
+
+
 }
