@@ -7,10 +7,9 @@ define(["jquery", "shop/port"], function($, port){
         $favorBar  = $this.find(".glyph"),   //红心
         $favorStatus = $this.find(".status");  //状态
 	$(".js-fav-shop").on("click", function(){
-
 		 //商家信息
 		 var shopInfo  = {
-		 	'shop_id'         : "",
+		 	'shop_id'    : $(".res_info .res_info_header").attr("data-shop_id"),
 		 	"shop_name"  : ""
 		 };
 

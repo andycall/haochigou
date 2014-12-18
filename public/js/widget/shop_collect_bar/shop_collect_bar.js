@@ -37,7 +37,7 @@ define([ "jquery", "shop/port" ], function($, port) {
     $(".js-fav-shop").on("click", function() {
         //商家信息
         var shopInfo = {
-            shop_id: "",
+            shop_id: $(".res_info .res_info_header").attr("data-shop_id"),
             shop_name: ""
         };
         //按钮变红 || 取消变红
