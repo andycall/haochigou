@@ -166,10 +166,10 @@ define(["jquery", "register/port", 'registerPort'], function($, port, registerPo
                     alert("登陆成功!");
                     location.href = loginPort['jump_port'];
                 }
-                if(res.errMsg.inputMsg){
-                    alert(res.errMsg.inputMsg);
-                }else if(res.errMsg.otherMsg){
-                    alert(res.errMsg.otherMsg);
+                if(res.inputMsg){
+                    alert(res.inputMsg);
+                }else if(res.otherMsg){
+                    alert(res.otherMsg);
                 }else{
                     alert("登陆失败!!!");
                 }
