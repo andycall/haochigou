@@ -94,6 +94,13 @@ class Geohash extends Eloquent{
                 'msg' => '坐标格式不合法'
             );
         }
+        $geohash = App::make('GeohashClass'); // 引入geohash扩展
+        $hash = $geohash->encode($x, $y);
+        $prefix = substr($hash, 0, 6);          // 根据前缀确定范围
+        // 取相邻8个区域
+        
+        $neighbors = $geohash->neighbors($prefix);
+        array_push($neighbors, $prefix);
 
         $geohash = App::make('GeohashClass'); // 引入geohash扩展
         $hash = $geohash->encode($x, $y);
@@ -108,18 +115,11 @@ class Geohash extends Eloquent{
 
         //分别按八个区域的geohash前缀，去查询对应的shop
         foreach($neighbors as $value){
-            $shopData = $this->where('geohash','like',$value.'%')->get();
-            $dataArray = $shopData->toArray();
-            if(empty($dataArray)){
-                continue;
-            }
-            $amount += count($dataArray);
+            $count = $this->where('geohash','like',$value.'%')->count();
+            $amount += $count;
         }
-        // 先看看有没有可能是重复的
-        //echo $amount;
-        return 3;
+        return $amount;
     }
-
 
     /*
      **根据坐标对geohash进行查询，查询对应范围内的商铺
@@ -159,7 +159,6 @@ class Geohash extends Eloquent{
                 $shopArray[$i]['shopData'] = $data->shop;
                 $i++;
             }
-
         }
 
         return array(
@@ -167,7 +166,6 @@ class Geohash extends Eloquent{
             'msg'=>'查询成功',
             'data'=>$shopArray
         );
-
     }
 
 
