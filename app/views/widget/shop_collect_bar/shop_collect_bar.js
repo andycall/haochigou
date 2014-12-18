@@ -20,7 +20,7 @@ define(["jquery", "shop/port"], function($, port){
 			$favorStatus.text("已收藏");
 
 			shopFavorAjax( shopInfo );
-		}else{                                               //如果取消收藏
+		}else{            //如果取消收藏
 			$favorStatus.text("收藏餐厅");
 
 			delShopFavor( shopInfo );
@@ -40,7 +40,7 @@ define(["jquery", "shop/port"], function($, port){
 			}
                                     
             //失败的话
-			if( res.succes ){
+			if( res.succes  == "true"){
 				if(res.errMsg){
 					alert(res.errMsg);
 				}else{

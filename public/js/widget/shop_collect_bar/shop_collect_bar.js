@@ -8,7 +8,7 @@ define([ "jquery", "shop/port" ], function($, port) {
                 alert("服务器数据错误！！！");
             }
             //失败的话
-            res.succes && (alert(res.errMsg ? res.errMsg : "收藏失败!"), $favorBar.toggleClass("on"), 
+            "true" == res.succes && (alert(res.errMsg ? res.errMsg : "收藏失败!"), $favorBar.toggleClass("on"), 
             //取消变红
             $favorStatus.text("收藏餐厅"));
         });
