@@ -162,16 +162,15 @@ define(["jquery", "register/port", 'registerPort'], function($, port, registerPo
                         return;
                     }
                 }
-                if(res.success){
-                    alert("登陆成功!");
-                    location.href = loginPort['jump_port'];
-                }
-                if(res.inputMsg){
+                if( res.success ){
+                    alert("注册成功");
+	                location.href = registerPort['jump_port'];
+                }else if( res.inutMsg){
                     alert(res.inputMsg);
                 }else if(res.otherMsg){
                     alert(res.otherMsg);
                 }else{
-                    alert("登陆失败!!!");
+                    alert("注册失败!!!");
                 }
 
             }

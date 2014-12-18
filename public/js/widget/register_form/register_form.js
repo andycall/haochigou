@@ -1,4 +1,4 @@
-define([ "jquery", "register/port", "registerPort" ], function($, port) {
+define([ "jquery", "register/port", "registerPort" ], function($, port, registerPort) {
     //验证码ajax请求
     function getAuth(data) {
         $.post(data.auth_port, data, function(res) {
@@ -52,7 +52,7 @@ define([ "jquery", "register/port", "registerPort" ], function($, port) {
                 } catch (err) {
                     return void alert("服务器异常，稍后再试");
                 }
-                res.success && (alert("登陆成功!"), location.href = loginPort.jump_port), alert(res.inputMsg ? res.inputMsg : res.otherMsg ? res.otherMsg : "登陆失败!!!");
+                res.success ? (alert("注册成功"), location.href = registerPort.jump_port) : alert(res.inutMsg ? res.inputMsg : res.otherMsg ? res.otherMsg : "注册失败!!!");
             }
         });
     }
