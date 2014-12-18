@@ -209,7 +209,7 @@ define(['jquery','order/port'], function($,port){
 			},
 			'failed'  : function(res){
 				if( res.errMsg ){  //失败且有错误信息
-					alert( res.Msg );
+					alert( res.errMsg );
 				}else{    //默认错误信息
 					alert("验证码发送失败, 请重试！！");
 				}
@@ -240,7 +240,7 @@ define(['jquery','order/port'], function($,port){
 				}
 			}
 
-			if( res.success == "true"){ //成功
+			if( res.success){ //成功
 				callback.sccuess(res);
 
 			}else{                      //失败
