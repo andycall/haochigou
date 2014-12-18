@@ -8,7 +8,7 @@ define([ "jquery", "shop/port" ], function($, port) {
                 alert("服务器数据错误！！！");
             }
             //失败的话
-            "true" != res.success && (alert(res.errMsg ? res.errMsg : "收藏失败!"), $favorBar.toggleClass("on"), 
+            res.succes && (alert(res.errMsg ? res.errMsg : "收藏失败!"), $favorBar.toggleClass("on"), 
             //取消变红
             $favorStatus.text("收藏餐厅"));
         });
@@ -22,17 +22,21 @@ define([ "jquery", "shop/port" ], function($, port) {
                 alert("服务器数据错误！！！");
             }
             //失败的话
-            "true" != res.success && (alert(res.errMsg ? res.errMsg : "取消收藏失败!"), $favorBar.toggleClass("on"), 
+            res.success && (alert(res.errMsg ? res.errMsg : "取消收藏失败!"), $favorBar.toggleClass("on"), 
             //取消 不 变红
             $favorStatus.text("已收藏"));
         });
     }
-    console.log("shop collection bar loaded"), /*
+    console.log("shop collection bar loaded");
+    /*
  *  @include "侧边栏收藏按钮"
 */
+    var $this = $(".js-fav-shop"), $favorBar = $this.find(".glyph"), //红心
+    $favorStatus = $this.find(".status");
+    //状态
     $(".js-fav-shop").on("click", function() {
-        var $this = $(this), $favorBar = $this.find(".glyph"), //红心
-        $favorStatus = $this.find(".status"), shopInfo = {
+        //商家信息
+        var shopInfo = {
             shop_id: "",
             shop_name: ""
         };

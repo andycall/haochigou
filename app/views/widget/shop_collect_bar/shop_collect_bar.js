@@ -3,10 +3,10 @@ define(["jquery", "shop/port"], function($, port){
 /*
  *  @include "侧边栏收藏按钮"
 */
+    var $this      = $(".js-fav-shop"),
+        $favorBar  = $this.find(".glyph"),   //红心
+        $favorStatus = $this.find(".status");  //状态
 	$(".js-fav-shop").on("click", function(){
-		var $this             = $(this),
-		      $favorBar      = $this.find(".glyph"),   //红心
-		      $favorStatus = $this.find(".status");  //状态
 
 		 //商家信息
 		 var shopInfo  = {
@@ -41,7 +41,7 @@ define(["jquery", "shop/port"], function($, port){
 			}
                                     
             //失败的话
-			if( res.success != "true" ){
+			if( res.succes ){
 				if(res.errMsg){
 					alert(res.errMsg);
 				}else{
@@ -66,7 +66,7 @@ define(["jquery", "shop/port"], function($, port){
 			}
                                     
                                     //失败的话
-			if( res.success != "true" ){
+			if( res.success ){
 				if(res.errMsg){
 					alert(res.errMsg);
 				}else{
