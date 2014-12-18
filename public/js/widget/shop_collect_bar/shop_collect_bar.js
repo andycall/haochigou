@@ -22,7 +22,7 @@ define([ "jquery", "shop/port" ], function($, port) {
                 alert("服务器数据错误！！！");
             }
             //失败的话
-            "true" == res.success && (alert(res.errMsg ? res.errMsg : "取消收藏失败!"), $favorBar.toggleClass("on"), 
+            "true" != res.success && (alert(res.errMsg ? res.errMsg : "取消收藏失败!"), $favorBar.toggleClass("on"), 
             //取消 不 变红
             $favorStatus.text("已收藏"));
         });
