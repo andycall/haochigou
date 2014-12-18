@@ -199,11 +199,10 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
                     }
                 }
                 console.log(res);
-                alert(res.errMsg.inputMsg);
                 if(res.success){
                     alert("登陆成功!");
                     location.href = loginPort['jump_port'];
-                }else if(res.errMsg){
+                }else if(2){
                     alert(res.errMsg.inputMsg);
                 }else{
                     alert("登陆失败!!!");
