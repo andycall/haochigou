@@ -40,7 +40,7 @@ define(["jquery", "shop/port"], function($, port){
 			}
                                     
             //失败的话
-			if( res.succes  == "true"){
+			if( res.success  == "true"){
                 alert("收藏成功");
 				if(res.errMsg){
 					alert(res.errMsg);
