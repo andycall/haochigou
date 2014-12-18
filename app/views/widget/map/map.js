@@ -369,6 +369,7 @@ define([ 'jquery', 'underscore', 'search/port', "JSON"], function($, _, port){
 						restaurantResult = [],
 						real_data = {};
 
+					console.log(111111);
 
 					var poil = data.poiList.pois;
 

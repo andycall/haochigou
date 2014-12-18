@@ -88,9 +88,6 @@
   margin-left: 10px;
   cursor: pointer;
 }
-.collection-modal .collection-row .hot-res {
-  display: none;
-}
 .collection-modal .collection-footer {
   padding: 14px 15px 15px;
   margin-bottom: 0;

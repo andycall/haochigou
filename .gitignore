@@ -1,5 +1,6 @@
 # webstorm
 .idea/**
+.idea/workspace.xml
 
 # elm
 elm/

@@ -25,6 +25,6 @@
 @stop
 
 @section("script")
-    {{HTML::script("/js/lib/require.js", ["data-main" => url("js/template/login_register/login.js")])}}
+    {{HTML::script("/js/lib/require.js", ["data-main" => url("/js/template/login_register/login.js")])}}
 @stop
 

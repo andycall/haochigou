@@ -45,7 +45,7 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
             if( res.success ){
                 if(res.nextSrc){
                     $(".captcha-img").attr("src", res.nextSrc+'?t='+Math.random()*1000);
-                }else{
+                }else{d
                     alert("短信已经发送，请注意接收验证码");
                     
                     //计时禁止连续发送30秒
@@ -200,44 +200,15 @@ define(['jquery','login/port', 'loginPort'], function($, port, loginPort){
                 }
                 if(res.success){
                     alert("登陆成功!");
-                    location.href = loginPort['jump_port']
-                }else{
-                    if( res.no || (res.no >= 1 && res.no <= 4) ){ //填写错误
-
-                        switch( res.no ){
-                            //用户名错误
-                            case 1: showInputError($divUserEmail,res.errMsg.inputMsg);
-                            break;
-                            
-                            //密码错误
-                            case 2: showInputError($divUserPWd,res.errMsg.inputMsg);
-                            break;
-
-                            //电话号码码错误
-                            case 3: (function(){
-                                if(loginWay == "mobile"){
-                                    showInputError($divUserTel,res.errMsg.inputMsg);
-                                }
-                            })();
-                            break;
-                            
-                            //验证码错误
-                            case 4: (function(){
-
-                                if( loginWay == "normal" ){ showInputError($divAuth1,res.errMsg.inputMsg);}
-                                 else if(loginWay == "mobile"){ showInputError($divAuth2,res.errMsg.inputMsg);}
-
-                            })();
-                            break;
-                        }
-
-                    }else if(res.errMsg && res.errMsg.otherMsg){ //其它错误
-                        alert(res.errMsg.otherMsg);
-                    }else{
-                        alert("登录失败！！！请重试");
-                    }
+                    location.href = loginPort['jump_port'];
                 }
-
+                if(res.errMsg.inputMsg){
+                    alert(res.errMsg.inputMsg);
+                }else if(res.errMsg.otherMsg){
+                    alert(res.errMsg.otherMsg);
+                }else{
+                    alert("登陆失败!!!");
+                }
             }
         });
     }
