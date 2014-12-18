@@ -38,7 +38,8 @@ define([ "jquery", "shop/port" ], function($, port) {
         //商家信息
         var shopInfo = {
             shop_id: $(".res_info .res_info_header").attr("data-shop_id"),
-            shop_name: ""
+            //shop_id
+            shop_name: $(".res_info_title a").text()
         };
         //按钮变红 || 取消变红
         $favorBar.toggleClass("on"), $favorBar.hasClass("on") ? (//如果收藏
