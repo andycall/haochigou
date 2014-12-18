@@ -31,7 +31,7 @@ class UserAccessController extends BaseController{
             echo json_encode(array(
                 'success'=>false,
                 'state'=>200,
-                array(
+                'errMsg'=>array(
                     'inputMsg'=>'验证码验证失败!'
                 )
             ));
@@ -46,7 +46,7 @@ class UserAccessController extends BaseController{
             echo json_encode(array(
                 'success'=>false,
                 'state'=>200,
-                array(
+                'errMsg'=>array(
                     'inputMsg'=>'该手机号或邮箱已经被注册!'
                 )
             ));
@@ -71,7 +71,14 @@ class UserAccessController extends BaseController{
         if($user->save()){
             $uid = $user->uid;
         }else{
-            echo "user base Error";
+            echo json_encode(array(
+                'success'=>false,
+                'state'=>200,
+                'errMsg'=>array(
+                    'inputMsg'=>'user base Error!'
+                )
+            ));
+
             exit;
         }
 
