@@ -21,7 +21,7 @@ class QueueSendMessage{
         );
         $log = json_encode($log);
 
-        Log::info($log);
+        error_log($log,3,storage_path().'/logs/messageSend.log');
 
         $job->delete();// 删除任务
     }

@@ -1,5 +1,5 @@
-define([ "jquery", "timer", "find_password_template/port", "JSON", "jquery-ui" ], function($, Timer, port) {
-    $("#tabs").tabs().show(), $.prototype.serializeObject = function() {
+define([ "jquery", "timer", "find_password_template/port", "JSON" ], function($, Timer, port) {
+    $("#tabs").tabs(), $.prototype.serializeObject = function() {
         var obj = new Object();
         return $.each(this.serializeArray(), function(index, param) {
             param.name in obj || (obj[param.name] = param.value);
@@ -64,6 +64,6 @@ define([ "jquery", "timer", "find_password_template/port", "JSON", "jquery-ui" ]
                 flag = !1;
             }
         }), data.new_psw != data.repeat_psw && (flag = !1, $("input[name='repeat_psw']").parent().find("div.u-error-tip").show()), 
-        flag ? "form" == target.id ? ($("#tabs").hide(), $(".success_info").show(), !1) : void 0 : !1;
+        flag ? ("form" == target.id && ($("#tabs").hide(), $(".success_info").show()), !1) : !1;
     });
 });

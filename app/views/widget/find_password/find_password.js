@@ -1,5 +1,6 @@
 define(['jquery', 'timer', 'find_password_template/port',  "JSON", 'jquery-ui'], function($,  Timer, port){
-	$( "#tabs" ).tabs();
+	$( "#tabs" ).tabs().show();
+
 	$.prototype.serializeObject=function(){
 		var obj= new Object();
 		$.each(this.serializeArray(),function(index,param){
@@ -9,6 +10,7 @@ define(['jquery', 'timer', 'find_password_template/port',  "JSON", 'jquery-ui'],
 		});
 		return obj;
 	};
+
 
 	var RegObj = {
 			register_email : /(?:^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$)|(?:^[\d]{6,16})$/,
@@ -118,10 +120,11 @@ define(['jquery', 'timer', 'find_password_template/port',  "JSON", 'jquery-ui'],
 		if(! flag) return false;
 
 
-		
+		if(target.id == 'form'){
+			$('#tabs').hide();
+			$('.success_info').show();
+			return false;
+		}
 
-
-
-		return false;
 	});
 });

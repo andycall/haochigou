@@ -43,8 +43,8 @@ define([ "jquery", "order/port" ], function($, port) {
             } catch (err) {
                 return void alert("服务器数据错误！！！");
             }
-            "true" == res.success ? //成功
-            callback.sccuess(res) : //失败
+            console.log(callback), res.success ? //成功
+            callback.success(res) : //失败
             callback.failed(res);
         });
     }
@@ -89,7 +89,7 @@ define([ "jquery", "order/port" ], function($, port) {
     //保存
     $(".js-save-edit").on("click", function(ev) {
         checkForm() ? ($(".js-show-addr-info").find(".current_addr").text(authInfo.addr).end().find(".current_name").text(authInfo.name).end().find(".current_tel").text(authInfo.phone).end().find(".current_bkTel").text(authInfo.bkTel), 
-        $(".u-mask").hide$(".js-cmodal-wrapper").hide()) : ev.preventDefault();
+        $(".u-mask").hide(), alert(12467), $(".js-cmodal-wrapper").hide()) : ev.preventDefault();
     }), //短信验证框打开
     //,发送验证码请求到服务器
     $reallyForm.on("submit", function(ev) {
