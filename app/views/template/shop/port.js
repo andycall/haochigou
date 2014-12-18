@@ -12,7 +12,11 @@ define(function(){
         cartInit: "cartInit",     //购物车初始化
 
        	shopFavor : "collectshop", //收藏店铺
-       	delShopFavor : "cancelshop"
+       	delShopFavor : "cancelshop", //取消收藏商品
+
+        goodFavor :  "/collect",    //收藏商品
+        delGoodFavor : "/delCollect", //取消收藏商品
+        getComments  : "/goods_comments"   //获得评论
 
 	};
 

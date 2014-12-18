@@ -1,6 +1,7 @@
-define(['jquery'], function(){
+define(['jquery', "shop/port"], function($, port){
 
 	console.log("pop windows loaded");
+    console.log(port);
 
 	/*
 	 *@include "左侧评论打开与关闭"
@@ -51,7 +52,7 @@ define(['jquery'], function(){
 
 	//ajax
 	function ajaxGetConmments(data){
-		$.get("/goods_comments", function(res){
+		$.get(port['getComments'], function(res){
 
             if( typeof res != "object" ){
 
@@ -115,7 +116,7 @@ define(['jquery'], function(){
     
     //收藏商品ajax
     function collectAjax(data){
-        $.post("/collect", data, function(res){
+        $.post(port['goodFavor'], data, function(res){
             if( typeof res != "object" ){
 
                 try{
@@ -151,7 +152,7 @@ define(['jquery'], function(){
     
     //取消收藏商品ajax
     function delCollectAjax(data){
-        $.post("/delCollect", data, function(res){
+        $.post(port['delGoodFavor'], data, function(res){
             if( typeof res != "object" ){
 
                 try{

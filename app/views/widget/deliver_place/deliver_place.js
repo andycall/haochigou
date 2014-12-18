@@ -217,7 +217,7 @@ define(['jquery','order/port'], function($,port){
 
 			}
 		});
-	})
+	});
     
     //发送ajax
 	function uRequestAuthAjax(callback){
@@ -228,7 +228,7 @@ define(['jquery','order/port'], function($,port){
 			'csrf_token' :  authInfo.csrf_token
 		},callback);
 	}
-    
+
 	//验证码ajax
 	function authAjax(url,data, callback){
 		$.post(url, data, function(res){
