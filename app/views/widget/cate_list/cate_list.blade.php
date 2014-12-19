@@ -26,10 +26,10 @@
                 </ul>
             </div>
         </div>
-        <a href="" data-target="default" class="tool_item ui_on">默认排序<i class="glyph-sort-up"></i></a>
-        <a href="" data-target="good_level" class="tool_item">评分<i class="glyph-sort-down"></i></a>
-        <a href="" data-target="good_sails" class="tool_item">销量<i class="glyph-sort-down"></i></a>
-        <a href="" data-target="good_price" class="tool_item">价格<i class="glyph-sort-down"></i></a>
+        <a href="javascript:void(0)" data-target="default" class="tool_item ui_on">默认排序<i class="glyph-sort-up"></i></a>
+        <a href="javascript:void(0)" data-target="good_level" class="tool_item">评分<i class="glyph-sort-down"></i></a>
+        <a href="javascript:void(0)" data-target="good_sails" class="tool_item">销量<i class="glyph-sort-down"></i></a>
+        <a href="javascript:void(0)" data-target="good_price" class="tool_item">价格<i class="glyph-sort-down"></i></a>
     </div>
 </div>
 
