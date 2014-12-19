@@ -1,5 +1,6 @@
 define(["jquery", "shop/port"], function($, port){
 	console.log("shop collection bar loaded");
+    console.log(port);
 /*
  *  @include "侧边栏收藏按钮"
 */
