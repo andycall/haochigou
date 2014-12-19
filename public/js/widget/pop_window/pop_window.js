@@ -1,7 +1,7 @@
 define([ "jquery", "shop/port" ], function($, port) {
     //ajax
     function ajaxGetConmments(data) {
-        $.post(port.getComments, data, function(res) {
+        consoe.log(data), $.post(port.getComments, data, function(res) {
             if ("object" != typeof res) try {
                 res = $.parseJSON(res);
             } catch (err) {
@@ -14,7 +14,7 @@ define([ "jquery", "shop/port" ], function($, port) {
     //ajax获取成功后的操作 将数据填进dom中
     function showConmments(data) {
         //保存商品名称
-        data.good_name = goodInfo.goodName;
+        data.good_name = goodInfo.goods_name;
         //获取模板填数据
         var temp = _.template($("#drawer-temp").html())(data);
         //渲染
@@ -22,7 +22,7 @@ define([ "jquery", "shop/port" ], function($, port) {
     }
     //收藏商品ajax
     function collectAjax(data) {
-        $.post(port.goodFavor, data, function(res) {
+        console.log(data), $.post(port.goodFavor, data, function(res) {
             if ("object" != typeof res) try {
                 res = $.parseJSON(res);
             } catch (err) {
@@ -31,24 +31,24 @@ define([ "jquery", "shop/port" ], function($, port) {
             if ("true" == res.success) {
                 var itemFavor = $(".rst-aside-dish-item").eq(0).clone(!0);
                 itemFavor.attr({
-                    "data-good-id": goodInfo.goodId,
+                    "data-good-id": goodInfo.goods_id,
                     "data-shop-id": goodInfo.shopId
                 }), //设置id
-                itemFavor.find(".food_name").text(goodInfo.goodName), itemFavor.find(".symbol-rmb").text(goodInfo.goodPrice), 
+                itemFavor.find(".food_name").text(goodInfo.goods_name), itemFavor.find(".symbol-rmb").text(goodInfo.goods_price), 
                 listsWrapper.find(".rst-aside-dish-item").eq(0).before(itemFavor);
             } else res.errMsg && alert(res.errMsg);
         });
     }
     //取消收藏商品ajax
     function delCollectAjax(data) {
-        $.post(port.delGoodFavor, data, function(res) {
+        console.log(data), $.post(port.delGoodFavor, data, function(res) {
             if ("object" != typeof res) try {
                 res = $.parseJSON(res);
             } catch (err) {
                 return alert("服务器数据错误"), void $(".pop_window .u-favor").toggleClass("on");
             }
             "true" == res.success ? listsWrapper.find(".rst-aside-dish-item").each(function(i, $ele) {
-                $ele = $($ele), $ele.attr("data-good-id") == data.goodId && $ele.attr("data-shop-id") == data.shopId && $ele.find(".food_name").text() == data.goodName && $ele.remove();
+                $ele = $($ele), $ele.attr("data-good-id") == data.goods_id && $ele.attr("data-shop-id") == data.shopId && $ele.find(".food_name").text() == data.goods_name && $ele.remove();
             }) : res.errMsg && alert(res.errMsg);
         });
     }
@@ -60,11 +60,11 @@ define([ "jquery", "shop/port" ], function($, port) {
 	*/
     //跟踪侧边栏商品信息
     var goodInfo = {
-        goodName: "",
+        goods_name: "",
         //名称
-        goodId: "",
+        goods_id: "",
         //商品id
-        goodPrice: "",
+        goods_price: "",
         //价格
         shopId: $(".pop_window .pop_inner").attr("data-shop-id")
     }, $popWindow = $(".pop_window"), $windowMask = $(".u-mask");
@@ -75,8 +75,8 @@ define([ "jquery", "shop/port" ], function($, port) {
         var data = {
             good_id: $this.parents(".js-get-good-id").attr("data-good_id")
         };
-        goodInfo.goodId = data.good_id, goodInfo.goodName = $this.parents(".menu_sec_status").siblings(".menu_sec_info").find(".menu_sec_desc").text(), 
-        goodInfo.goodPrice = $this.parents(".menu_sec_status").siblings(".menu_sec_action").find(".symbol-rmb").text(), 
+        goodInfo.goods_id = data.good_id, goodInfo.goods_name = $this.parents(".menu_sec_status").siblings(".menu_sec_info").find(".menu_sec_desc").text(), 
+        goodInfo.good_price = $this.parents(".menu_sec_status").siblings(".menu_sec_action").find(".symbol-rmb").text(), 
         ajaxGetConmments(data);
     }), //关闭左侧框
     $(document).on("click", ".js-close-pop-window, .u-mask", function() {
@@ -96,8 +96,8 @@ define([ "jquery", "shop/port" ], function($, port) {
     }), //hmphmphmp
     $(".favor_btn").on("click", function() {
         var $this = $(this);
-        $this.toggleClass("on"), goodInfo.goodId = $this.parents(".js-get-good-id").attr("data-good_id"), 
-        goodInfo.goodName = $this.parents(".menu_sec_title").siblings(".menu_sec_desc").attr("title"), 
+        $this.toggleClass("on"), goodInfo.goods_id = $this.parents(".js-get-good-id").attr("data-good_id"), 
+        goodInfo.goods_name = $this.parents(".menu_sec_title").siblings(".menu_sec_desc").attr("title"), 
         console.log(goodInfo), $this.hasClass("on") ? collectAjax(goodInfo) : delCollectAjax(goodInfo);
     }), /*------------------------------------
     *           有内容的评价显示控件(待定)

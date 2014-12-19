@@ -12,9 +12,9 @@ define(['jquery', "shop/port"], function($, port){
 
     //跟踪侧边栏商品信息
     var goodInfo = {
-        "goodName"  : "", //名称
-        "goodId"    : "", //商品id
-        "goodPrice" : "", //价格
+        "goods_name"  : "", //名称
+        "goods_id"    : "", //商品id
+        "goods_price" : "", //价格
         "shopId"    : $(".pop_window .pop_inner").attr("data-shop-id")  //商家id
     };
 
@@ -37,9 +37,9 @@ define(['jquery', "shop/port"], function($, port){
     		"good_id"  :  $this.parents(".js-get-good-id").attr("data-good_id")
     	};
 
-        goodInfo.goodId    = data.good_id;
-        goodInfo.goodName  = $this.parents(".menu_sec_status").siblings(".menu_sec_info").find(".menu_sec_desc").text();
-        goodInfo.goodPrice = $this.parents(".menu_sec_status").siblings(".menu_sec_action").find(".symbol-rmb").text();
+        goodInfo.goods_id    = data.good_id;
+        goodInfo.goods_name  = $this.parents(".menu_sec_status").siblings(".menu_sec_info").find(".menu_sec_desc").text();
+        goodInfo.good_price = $this.parents(".menu_sec_status").siblings(".menu_sec_action").find(".symbol-rmb").text();
 
     	ajaxGetConmments(data);
     });
@@ -53,6 +53,7 @@ define(['jquery', "shop/port"], function($, port){
 
 	//ajax
 	function ajaxGetConmments(data){
+        consoe.log(data);
 		$.post(port['getComments'], data, function(res){
 
             if( typeof res != "object" ){
@@ -86,7 +87,7 @@ define(['jquery', "shop/port"], function($, port){
 	//ajax获取成功后的操作 将数据填进dom中
 	function showConmments(data){
         //保存商品名称
-        data.good_name = goodInfo.goodName;
+        data.good_name = goodInfo.goods_name;
         //获取模板填数据
 		var temp = _.template( $("#drawer-temp").html() )(data);
 
@@ -120,8 +121,8 @@ define(['jquery', "shop/port"], function($, port){
 
         $this.toggleClass("on");
 
-        goodInfo.goodId = $this.parents(".js-get-good-id").attr("data-good_id");
-        goodInfo.goodName = $this.parents(".menu_sec_title").siblings(".menu_sec_desc").attr("title");
+        goodInfo.goods_id = $this.parents(".js-get-good-id").attr("data-good_id");
+        goodInfo.goods_name = $this.parents(".menu_sec_title").siblings(".menu_sec_desc").attr("title");
 
         console.log(goodInfo);
         if($this.hasClass('on')){
@@ -133,6 +134,7 @@ define(['jquery', "shop/port"], function($, port){
     
     //收藏商品ajax
     function collectAjax(data){
+        console.log(data);
         $.post(port['goodFavor'], data, function(res){
             if( typeof res != "object" ){
 
@@ -151,12 +153,12 @@ define(['jquery', "shop/port"], function($, port){
                 var itemFavor    = $(".rst-aside-dish-item").eq(0).clone(true);
 
                 itemFavor.attr({
-                    'data-good-id' : goodInfo.goodId,
+                    'data-good-id' : goodInfo.goods_id,
                     'data-shop-id' : goodInfo.shopId
                 }); //设置id
 
-                itemFavor.find(".food_name").text(goodInfo.goodName);
-                itemFavor.find(".symbol-rmb").text(goodInfo.goodPrice);
+                itemFavor.find(".food_name").text(goodInfo.goods_name);
+                itemFavor.find(".symbol-rmb").text(goodInfo.goods_price);
 
                 listsWrapper.find(".rst-aside-dish-item").eq(0).before(itemFavor); //追加
             }else{
@@ -169,6 +171,7 @@ define(['jquery', "shop/port"], function($, port){
     
     //取消收藏商品ajax
     function delCollectAjax(data){
+        console.log(data);
         $.post(port['delGoodFavor'], data, function(res){
             if( typeof res != "object" ){
 
@@ -187,7 +190,7 @@ define(['jquery', "shop/port"], function($, port){
 
                 listsWrapper.find(".rst-aside-dish-item").each(function(i,$ele){
                     $ele = $($ele);
-                    if( ( $ele.attr("data-good-id") == data.goodId ) && ( $ele.attr("data-shop-id") == data.shopId ) && ( $ele.find(".food_name").text() == data.goodName ) ){
+                    if( ( $ele.attr("data-good-id") == data.goods_id ) && ( $ele.attr("data-shop-id") == data.shopId ) && ( $ele.find(".food_name").text() == data.goods_name ) ){
                         $ele.remove(); //移除
                     }
                 })
