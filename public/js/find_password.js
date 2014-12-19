@@ -79,12 +79,7 @@ define([ "jquery", "timer", "find_password_template/port", "JSON", "jquery-ui" ]
         }).done(function(data) {
             data.errMsg && alert(data.errMsg), $("#tabs").hide(), $(".success_info").show();
         }).fail(function(data) {
-            if (data.errTarget) {
-                var targets = data.errTarget.split(",");
-                targets.forEach(function(value) {
-                    $("input[name='" + value + "'").parent().find("div.u-error-tip").show();
-                });
-            } else alert("服务器错误！");
+            alert(data.errTarget ? data.errMsg : "服务器错误！");
         }), !1) : void 0 : !1;
     });
 });
