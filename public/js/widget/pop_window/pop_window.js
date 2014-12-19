@@ -73,9 +73,9 @@ define([ "jquery", "shop/port" ], function($, port) {
         var $this = $(this);
         $popWindow.css("left", "0px"), $windowMask.show();
         var data = {
-            good_id: $this.parents(".js-get-good-id").attr("data-good_id")
+            goods_id: $this.parents(".js-get-good-id").attr("data-good_id")
         };
-        goodInfo.goods_id = data.good_id, goodInfo.goods_name = $this.parents(".menu_sec_status").siblings(".menu_sec_info").find(".menu_sec_desc").text(), 
+        goodInfo.goods_id = data.goods_id, goodInfo.goods_name = $this.parents(".menu_sec_status").siblings(".menu_sec_info").find(".menu_sec_desc").text(), 
         goodInfo.goods_price = $this.parents(".menu_sec_status").siblings(".menu_sec_action").find(".symbol-rmb").text(), 
         ajaxGetConmments(data);
     }), //关闭左侧框
