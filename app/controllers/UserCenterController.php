@@ -307,16 +307,11 @@ class UserCenterController extends BaseController{
      * 收藏美食页面
      **/
     public function menuCollect(){
-
         $menuData = FrontUser::find($this->uid)->collectMenu;
-
         $data['good_count'] = $menuData->count();
-
         $data['goods'] = array();
-
-        $i = 0;
         foreach($menuData as $value){
-            $data['goods'][$i] = array(
+            array_push($data['goods'], array(
                 'good_id'=>$value->menu_id,
                 'good_name'=>$value->menu->title,
                 'shop_name'=>$value->menu->shop->name,
@@ -326,19 +321,12 @@ class UserCenterController extends BaseController{
                 'good_price'=>$value->menu->price,
                 'delete_good'=>url('cancelmenu'),
                 'shop_hot'=>''
-
-            );
-
-            $i++;
-
+            ));
         }
-
         $data['sidebar'] = $this->sideBar();
-
         $data['userbar'] = $this->userBar();
-
+        //var_dump($data);
         return View::make("template.personal.personal_collection_goods")->with($data);
-
     }
 
     /**

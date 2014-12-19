@@ -123,10 +123,9 @@ class UserAccessController extends BaseController{
 
         $account = Input::get('user_email');
         $password = Input::get('user_psw');
-
         $rememberMe = Input::get('user_remember');
-
         $captcha = Input::get('user_auth');
+
         $ip = $this->getIP();
         $codeKey = md5($ip);
         $captchaCode = Cache::tags('register','code')->get($codeKey);
@@ -140,7 +139,6 @@ class UserAccessController extends BaseController{
                 ),
                 'no'=>1
             ));
-
             exit();
         }
 
@@ -254,8 +252,6 @@ class UserAccessController extends BaseController{
             'nextSrc'=>'',
             'errMsg'=>''
         ));
-
-
     }
 
 
@@ -270,8 +266,6 @@ class UserAccessController extends BaseController{
         }else{
             return false;
         }
-
-
     }
 
 
@@ -306,8 +300,6 @@ class UserAccessController extends BaseController{
         }
         return $cip;
     }
-
-
 }
 
 
