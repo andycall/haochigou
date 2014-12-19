@@ -1,1 +1,107 @@
-define(["jquery"],function(){function a(){$.get("/goods_comments",function(a){if("object"!=typeof a)try{a=$.parseJSON(a)}catch(c){return void alert("服务器数据错误")}"true"==a.success?b(a.nextSrc?a:a):a.errMsg&&alert(a.errMsg)})}function b(a){a.good_name=e.goodName;var b=_.template($("#drawer-temp").html())(a);$(".pop_inner").html(b)}function c(a){$.post("/collect",a,function(a){if("object"!=typeof a)try{a=$.parseJSON(a)}catch(b){return alert("服务器数据错误"),void $(".pop_window .u-favor").toggleClass("on")}if("true"==a.success){var c=$(".rst-aside-dish-item").eq(0).clone(!0);c.attr({"data-good-id":e.goodId,"data-shop-id":e.shopId}),c.find(".food_name").text(e.goodName),c.find(".symbol-rmb").text(e.goodPrice),h.find(".rst-aside-dish-item").eq(0).before(c)}else a.errMsg&&alert(a.errMsg)})}function d(a){$.post("/delCollect",a,function(b){if("object"!=typeof b)try{b=$.parseJSON(b)}catch(c){return alert("服务器数据错误"),void $(".pop_window .u-favor").toggleClass("on")}"true"==b.success?h.find(".rst-aside-dish-item").each(function(b,c){c=$(c),c.attr("data-good-id")==a.goodId&&c.attr("data-shop-id")==a.shopId&&c.find(".food_name").text()==a.goodName&&c.remove()}):b.errMsg&&alert(b.errMsg)})}console.log("pop windows loaded");var e={goodName:"",goodId:"",goodPrice:"",shopId:$(".pop_window .pop_inner").attr("data-shop-id")},f=$(".pop_window"),g=$(".u-mask");$(".js-open-pop-window").on("click",function(){var b=$(this);f.css("left","0px"),g.show();var c={good_id:b.parents(".js-get-good-id").attr("data-good_id")};e.goodId=c.good_id,e.goodName=b.parents(".menu_sec_status").siblings(".menu_sec_info").find(".menu_sec_desc").text(),e.goodPrice=b.parents(".menu_sec_status").siblings(".menu_sec_action").find(".symbol-rmb").text(),a(c)}),$(document).on("click",".js-close-pop-window, .u-mask",function(){f.css("left","-400px"),g.hide()});var h=$(".rst-aside-menu-list");$(".pop_window").on("click",".u-favor",function(){var a=$(this);a.toggleClass("on"),a.hasClass("on")?c(e):d(e)}),$(".pop_window").on("click","#btn-check",function(){})});
+define([ "jquery", "shop/port" ], function($, port) {
+    //ajax
+    function ajaxGetConmments(data) {
+        console.log(data), $.post(port.getComments, data, function(res) {
+            if ("object" != typeof res) try {
+                res = $.parseJSON(res);
+            } catch (err) {
+                return void alert("服务器数据错误");
+            }
+            //请求成功后
+            "true" == res.success ? showConmments(res.nextSrc ? res : res) : res.errMsg && alert(res.errMsg);
+        });
+    }
+    //ajax获取成功后的操作 将数据填进dom中
+    function showConmments(data) {
+        //保存商品名称
+        data.good_name = goodInfo.goods_name;
+        //获取模板填数据
+        var temp = _.template($("#drawer-temp").html())(data);
+        //渲染
+        $(".pop_inner").html(temp);
+    }
+    //收藏商品ajax
+    function collectAjax(data) {
+        console.log(data), $.post(port.goodFavor, data, function(res) {
+            if ("object" != typeof res) try {
+                res = $.parseJSON(res);
+            } catch (err) {
+                return alert("服务器数据错误"), void $(".pop_window .u-favor").toggleClass("on");
+            }
+            if ("true" == res.success) {
+                var itemFavor = $(".rst-aside-dish-item").eq(0).clone(!0);
+                itemFavor.attr({
+                    "data-good-id": goodInfo.goods_id,
+                    "data-shop-id": goodInfo.shop_id
+                }), //设置id
+                itemFavor.find(".food_name").text(goodInfo.goods_name), itemFavor.find(".symbol-rmb").text(goodInfo.goods_price), 
+                listsWrapper.find(".rst-aside-dish-item").eq(0).before(itemFavor);
+            } else res.errMsg && alert(res.errMsg);
+        });
+    }
+    //取消收藏商品ajax
+    function delCollectAjax(data) {
+        console.log(data), $.post(port.delGoodFavor, data, function(res) {
+            if ("object" != typeof res) try {
+                res = $.parseJSON(res);
+            } catch (err) {
+                return alert("服务器数据错误"), void $(".pop_window .u-favor").toggleClass("on");
+            }
+            "true" == res.success ? listsWrapper.find(".rst-aside-dish-item").each(function(i, $ele) {
+                $ele = $($ele), $ele.attr("data-good-id") == data.goods_id && $ele.attr("data-shop-id") == data.shop_id && $ele.find(".food_name").text() == data.goods_name && $ele.remove();
+            }) : res.errMsg && alert(res.errMsg);
+        });
+    }
+    console.log("pop windows loaded"), console.log("pop_window"), console.log(port);
+    /*
+	 *@include "左侧评论打开与关闭"
+	 *@include "ajax获取评论并显示出来" 
+     *@include "收藏"
+	*/
+    //跟踪侧边栏商品信息
+    var goodInfo = {
+        goods_name: "",
+        //名称
+        goods_id: "",
+        //商品id
+        goods_price: "",
+        //价格
+        shop_id: $(".pop_window .pop_inner").attr("data-shop-id")
+    }, $popWindow = $(".pop_window"), $windowMask = $(".u-mask");
+    //打开左侧框
+    $(".js-open-pop-window").on("click", function() {
+        var $this = $(this);
+        $popWindow.css("left", "0px"), $windowMask.show();
+        var data = {
+            goods_id: $this.parents(".js-get-good-id").attr("data-good_id")
+        };
+        goodInfo.goods_id = data.goods_id, goodInfo.goods_name = $this.parents(".menu_sec_status").siblings(".menu_sec_info").find(".menu_sec_desc").text(), 
+        goodInfo.goods_price = $this.parents(".menu_sec_status").siblings(".menu_sec_action").find(".symbol-rmb").text(), 
+        ajaxGetConmments(data);
+    }), //关闭左侧框
+    $(document).on("click", ".js-close-pop-window, .u-mask", function() {
+        $popWindow.css("left", "-400px"), $windowMask.hide();
+    });
+    /*---------------------------------------------
+     *          商品收藏
+     *---------------------------------------------
+    */
+    var listsWrapper = $(".rst-aside-menu-list");
+    //列表
+    //收藏商品
+    $(".pop_window").on("click", ".u-favor", function() {
+        var $this = $(this);
+        //感应
+        $this.toggleClass("on"), $this.hasClass("on") ? collectAjax(goodInfo) : delCollectAjax(goodInfo);
+    }), //hmphmphmp
+    $(".favor_btn").on("click", function() {
+        var $this = $(this);
+        $this.toggleClass("on"), goodInfo.goods_id = $this.parents(".js-get-good-id").attr("data-good_id"), 
+        goodInfo.goods_name = $this.parents(".menu_sec_title").siblings(".menu_sec_desc").attr("title"), 
+        console.log(goodInfo), $this.hasClass("on") ? collectAjax(goodInfo) : delCollectAjax(goodInfo);
+    }), /*------------------------------------
+    *           有内容的评价显示控件(待定)
+    *-------------------------------------
+    */
+    $(".pop_window").on("click", "#btn-check", function() {});
+});

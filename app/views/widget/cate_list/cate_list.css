@@ -297,6 +297,9 @@ img.icon-rst-badge{
 	color: #AAA;
 	font: 12px/1.6 "eleme";
 }
+.menu_sec_title .dish_flavo.on{
+    color: #EC4040;
+}
 
 .menu_sec_title .dish_title{
 	color: #333;
