@@ -71,11 +71,9 @@ define(['jquery', "shop/port"], function($, port){
 
             //请求成功后
             if(res.success){
-                alert(734678);
                 showConmments(res);
 
             }else{
-                
                 if(res.errMsg){
                     alert(res.errMsg);
                 }
@@ -88,7 +86,9 @@ define(['jquery', "shop/port"], function($, port){
         //保存商品名称
         data.good_name = goodInfo.goods_name;
         //获取模板填数据
+        console.log(data);
 		var temp = _.template( $("#drawer-temp").html() )(data);
+        console.log(temp);
 
         //渲染
         $(".pop_inner").html(temp);

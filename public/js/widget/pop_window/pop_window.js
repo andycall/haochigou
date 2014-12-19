@@ -8,16 +8,16 @@ define([ "jquery", "shop/port" ], function($, port) {
                 return void alert("服务器数据错误");
             }
             //请求成功后
-            res.success ? (alert(734678), showConmments(res)) : res.errMsg && alert(res.errMsg);
+            res.success ? showConmments(res) : res.errMsg && alert(res.errMsg);
         });
     }
     //ajax获取成功后的操作 将数据填进dom中
     function showConmments(data) {
         //保存商品名称
-        data.good_name = goodInfo.goods_name;
-        //获取模板填数据
+        data.good_name = goodInfo.goods_name, //获取模板填数据
+        console.log(data);
         var temp = _.template($("#drawer-temp").html())(data);
-        //渲染
+        console.log(temp), //渲染
         $(".pop_inner").html(temp);
     }
     //收藏商品ajax
