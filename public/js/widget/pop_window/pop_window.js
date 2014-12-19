@@ -95,8 +95,10 @@ define([ "jquery", "shop/port" ], function($, port) {
         $this.toggleClass("on"), $this.hasClass("on") ? collectAjax(goodInfo) : delCollectAjax(goodInfo);
     }), //hmphmphmp
     $(".favor_btn").on("click", function() {
-        $(this);
-        alert(34678);
+        var $this = $(this);
+        $this.toggleClass("on"), goodInfo.goodId = $this.parents(".js-get-good-id").attr("data-good_id"), 
+        goodInfo.goodName = $this.parents(".menu_sec_title").siblings(".menu_sec_desc").attr("title"), 
+        console.log(goodInfo), $this.hasClass("on") ? collectAjax(goodInfo) : delCollectAjax(goodInfo);
     }), /*------------------------------------
     *           有内容的评价显示控件(待定)
     *-------------------------------------

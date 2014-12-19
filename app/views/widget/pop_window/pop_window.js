@@ -117,7 +117,18 @@ define(['jquery', "shop/port"], function($, port){
     //hmphmphmp
     $(".favor_btn").on("click", function(ev){
         var $this = $(this);
-        alert(34678);
+
+        $this.toggleClass("on");
+
+        goodInfo.goodId = $this.parents(".js-get-good-id").attr("data-good_id");
+        goodInfo.goodName = $this.parents(".menu_sec_title").siblings(".menu_sec_desc").attr("title");
+
+        console.log(goodInfo);
+        if($this.hasClass('on')){
+            collectAjax(goodInfo); //追加到列表
+        }else{
+            delCollectAjax(goodInfo); //移除
+        }
     });
     
     //收藏商品ajax
