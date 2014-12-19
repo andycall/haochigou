@@ -27,7 +27,7 @@ define([ "jquery", "shop/port" ], function($, port) {
             $favorStatus.text("已收藏"));
         });
     }
-    console.log("shop collection bar loaded");
+    console.log("shop collection bar loaded"), console.log(port);
     /*
  *  @include "侧边栏收藏按钮"
 */
