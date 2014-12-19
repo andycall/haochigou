@@ -8,7 +8,7 @@ define([ "jquery", "shop/port" ], function($, port) {
                 return void alert("服务器数据错误");
             }
             //请求成功后
-            "true" == res.success ? showConmments(res.nextSrc ? res : res) : res.errMsg && alert(res.errMsg);
+            res.success ? showConmments(res.nextSrc ? res : res) : res.errMsg && alert(res.errMsg);
         });
     }
     //ajax获取成功后的操作 将数据填进dom中

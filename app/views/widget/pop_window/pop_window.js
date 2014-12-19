@@ -68,7 +68,7 @@ define(['jquery', "shop/port"], function($, port){
             }
 
             //请求成功后
-            if(res.success == "true"){
+            if(res.success){
                 if(res.nextSrc){
                     showConmments(res);
                 }else{
@@ -184,7 +184,7 @@ define(['jquery', "shop/port"], function($, port){
                 }
 
             }
-            
+
             if( res.success == "true"){
 
                 listsWrapper.find(".rst-aside-dish-item").each(function(i,$ele){
