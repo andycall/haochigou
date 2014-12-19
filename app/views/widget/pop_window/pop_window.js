@@ -1,6 +1,7 @@
 define(['jquery', "shop/port"], function($, port){
 
 	console.log("pop windows loaded");
+    console.log("pop_window");
     console.log(port);
 
 	/*
@@ -52,7 +53,7 @@ define(['jquery', "shop/port"], function($, port){
 
 	//ajax
 	function ajaxGetConmments(data){
-		$.get(port['getComments'], function(res){
+		$.post(port['getComments'], data, function(res){
 
             if( typeof res != "object" ){
 

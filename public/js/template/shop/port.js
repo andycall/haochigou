@@ -3,18 +3,24 @@
  */
 define(function() {
     return {
-        cartSetCount: "/cartSetCount",
+        cartSetCount: "./cartSetCount",
         //购物车设置商品数量
-        cartClear: "/cartClear",
+        cartClear: "./cartClear",
         //购物车清空
-        cartAdd: "/addtocart",
+        cartAdd: "addtocart",
         //购物车根据 id 添加商品
-        cartDel: "/cartDel",
+        cartDel: "./cartDel",
         //购物车根据 id 删除商品
-        cartInit: "/cartInit",
+        cartInit: "cartInit",
         //购物车初始化
-        shopFavor: "/collectshop",
+        shopFavor: "collectshop",
         //收藏店铺
-        delShopFavor: "/cancelshop"
+        delShopFavor: "cancelshop",
+        //取消收藏商品
+        goodFavor: "/collect",
+        //收藏商品
+        delGoodFavor: "/delCollect",
+        //取消收藏商品
+        getComments: "/goods_comments"
     };
 });
