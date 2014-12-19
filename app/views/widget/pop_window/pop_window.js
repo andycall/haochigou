@@ -114,6 +114,11 @@ define(['jquery', "shop/port"], function($, port){
             delCollectAjax(goodInfo); //移除
         }
     });
+    //hmphmphmp
+    $(".favor_btn").on("click", function(ev){
+        var $this = $(this);
+        alert(34678);
+    });
     
     //收藏商品ajax
     function collectAjax(data){

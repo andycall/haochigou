@@ -93,6 +93,10 @@ define([ "jquery", "shop/port" ], function($, port) {
         var $this = $(this);
         //感应
         $this.toggleClass("on"), $this.hasClass("on") ? collectAjax(goodInfo) : delCollectAjax(goodInfo);
+    }), //hmphmphmp
+    $(".favor_btn").on("click", function() {
+        $(this);
+        alert(34678);
     }), /*------------------------------------
     *           有内容的评价显示控件(待定)
     *-------------------------------------
