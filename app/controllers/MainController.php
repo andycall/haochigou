@@ -165,7 +165,7 @@ class MainController extends BaseController {
 		if( $v->fails() ){
 			$message         = $v->messages();	
 			return json_encode(array(
-				'success' => false,
+				'success' => 'false',
 				'state'   => 400,
 				'errMsg'  => $message->toArray(),
 				'no'      => 1
@@ -244,7 +244,7 @@ class MainController extends BaseController {
 			$onestore['shop_logo']          = $shop->pic;		  	// 商家的logo图片地址
 			$onestore['deliver_time']       = (float)$shop->interval;	// 送货时间间隔
 			$onestore['deliver_start']      = $shop->operation_time;	// ----------------------------没有开始时间，只有一个时间字符串
-			$onestore['shop_name']          = $shop->name;			// 商家名称
+			$onestore['shop_name']          = (mb_strlen($shop->name, 'utf8') > 5) ? mb_substr($shop->name, 0, 8, 'utf8') : $shop->name;			// 商家名称
 			$onestore['shop_type']          = $shop->type;			// 商家类型，以逗号分隔的字符串---------------------------这个还是问一下
 			$Level                          = $this->getLevel($shop);
 			$onestore['shop_level']         = $Level['thing_total'];			// 商家评级

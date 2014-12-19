@@ -452,7 +452,7 @@ class ShopController extends BaseController {
 		
 		if( $comments != NULL){
 			$output = array();
-			$output['success'] = true;
+			$output['success'] = 'true';
 			$output['state']   = 200;
 			$output['nextSrc'] = '';
 			$output['errMsg']  = '';

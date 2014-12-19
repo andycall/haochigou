@@ -177,7 +177,7 @@ define(['jquery','home/port'], function($, port){
         post.place_id = place_id;
 
         $.ajax({
-            url: "takeaway/public/index.php/add_collect",
+            url: "/collectshop",
             type: "POST",
             data: post,
             success: function(res) {

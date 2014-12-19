@@ -14,8 +14,8 @@ define(function(){
        	shopFavor : "/collectshop", //收藏店铺
        	delShopFavor : "/cancelshop", //取消收藏商品
 
-        goodFavor :  "/collect",    //收藏商品
-        delGoodFavor : "/delCollect", //取消收藏商品
+        goodFavor :  "/collectmenu",    //收藏商品
+        delGoodFavor : "/cancelmenu", //取消收藏商品
         getComments  : "/goods_comments"   //获得评论
 
 	};
