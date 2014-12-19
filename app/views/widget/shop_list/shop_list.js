@@ -91,9 +91,7 @@ define(['jquery', "tools/Sizer", "underscore"], function($, Sizer, _){
 
 		});
 
-		console.log(result);
 		Sizer.add(result);
-
 	})();
 
 

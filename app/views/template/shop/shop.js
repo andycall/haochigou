@@ -18,7 +18,8 @@ require.config({
 		shop_map : "../widget/shop_map",
 		shop_cart : "../widget/shop_cart",
 		pop_window : "../widget/pop_window",
-		shop_collect_bar : "../widget/shop_collect_bar"
+		shop_collect_bar : "../widget/shop_collect_bar",
+		tools : "../tools"
 	}
 });
 

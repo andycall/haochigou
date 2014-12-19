@@ -1,4 +1,4 @@
-define(['jquery' , "shop_cart/shop_cart"], function($, cart){
+define(['jquery' , 'tools/Sizer', "shop_cart/shop_cart"], function($, Sizer, cart){
 	console.log("cate list loaded");
 
 	function getListTop(list){
@@ -11,6 +11,9 @@ define(['jquery' , "shop_cart/shop_cart"], function($, cart){
 		});
 		return arr;
 	}
+
+
+
 
 	// 计算滚动方向
 	var CaculateDirection = (function(){
@@ -43,7 +46,88 @@ define(['jquery' , "shop_cart/shop_cart"], function($, cart){
 		scrollIndex     = 0,
 		positionArr = getListTop(classify_sec),
  		ready_tmp,               // 状态保存
-		ready_status    = false; // 是否需要运行切换
+		ready_status    = false, // 是否需要运行切换
+		good_list = {},
+		cate_view  = $(".cate_view"),
+		menu_list = $(".menu_list"),
+		original_list = cate_view.html();
+
+
+	(function(){
+		$.each(classify_sec, function(index){
+			var classify = $(this),
+				title = classify.find(".sec_title").attr("title"),
+				menu_list = classify.find('.menu_list_block');
+
+			good_list[index] = [];
+
+			$.each(menu_list, function(){
+				var list_block = $(this),
+					good_list_obj = {};
+
+				good_list_obj['good_id'] = list_block.data("good_id");
+				good_list_obj['good_price'] = list_block.data('good_price');
+				good_list_obj['good_level'] = list_block.data("good_level");
+				good_list_obj['good_sails'] = list_block.data("good_sails");
+				good_list_obj['HTML_string'] = list_block[0].cloneNode(true);
+
+				good_list[index].push(good_list_obj);
+			});
+		});
+	})();
+
+	$(".tool_item").on('click', function(e){
+		var _item = $('.tool_item'),
+			target = $(e.currentTarget),
+			_icon = $(".tool_item i"),
+			icon = target.find("i"),
+			menu_list = $(".menu_list");
+
+		_item.removeClass("ui_on");
+
+		target.toggleClass("ui_on");
+
+		_icon.removeClass("glyph-sort-up");
+		_icon.addClass("glyph-sort-down");
+
+
+		if(icon.hasClass('glyph-sort-up') && !target.hasClass("ui_on")){
+			icon.removeClass('glyph-sort-up');
+			icon.addClass("glyph-sort-down");
+		}
+		else{
+			icon.removeClass("glyph-sort-down");
+			icon.addClass("glyph-sort-up");
+		}
+
+
+		var label = target.data("target");
+
+		console.log(good_list);
+
+		if(label == "default") {
+			console.log(2);
+			cate_view.html(original_list);
+		}
+		else {
+			$.each(good_list, function(name, value){
+				value.sort(function(a, b){
+					return b[label] - a[label];
+				});
+
+				menu_list.eq(name).html("");
+
+				$.each(value, function(){
+					menu_list.eq(name).append(this['HTML_string']);
+				});
+			});
+		}
+
+
+		return false;
+	});
+
+
 
 
 	if($(window).scrollTop() >= menu_offset.top){
@@ -77,12 +161,11 @@ define(['jquery' , "shop_cart/shop_cart"], function($, cart){
 	$(".cate_item").on('click', function(e){
 		var id = $(e.currentTarget).data('classify_id');
 		windowScroll(id);
-		console.log(1);
 		return false;
 	});
 
 	// 购物车
-	$(".cate_view").on('click', '.rst-d-act-add', function(){
+	cate_view.on('click', '.rst-d-act-add', function(){
 		var good_id = $(this).parents('.menu_list_block').data("good_id");
 		cart.add(good_id, shop_id);
 		return false;
@@ -117,6 +200,7 @@ define(['jquery' , "shop_cart/shop_cart"], function($, cart){
 				"top"    : "auto"
 			});
 			toolBar_toggle.fadeOut(300);
+			drop_down_menu.fadeOut(300);
 			ready_status = false;
 		}
 
@@ -144,4 +228,7 @@ define(['jquery' , "shop_cart/shop_cart"], function($, cart){
 			}
 		}
 	});
+
+
+
 });

@@ -74,7 +74,7 @@ define([ "jquery", "tools/Sizer", "underscore" ], function($, Sizer, _) {
             storage.shop_level = shop_level, storage.order_count = order_count, storage.shop_announce = shop_announce, 
             storage.deliver_state_start = deliver_state_start, storage.shop_address = shop_address, 
             storage.business_hours = business_hours, storage.shop_summary = shop_summary, result.push(storage);
-        }), console.log(result), Sizer.add(result);
+        }), Sizer.add(result);
     }(), drop_list.on("click", "li", function(e) {
         dataTrigger(e, "drop");
     }), choice_click.on("click", function(e) {
