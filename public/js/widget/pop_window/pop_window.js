@@ -28,7 +28,7 @@ define([ "jquery", "shop/port" ], function($, port) {
             } catch (err) {
                 return alert("服务器数据错误"), void $(".pop_window .u-favor").toggleClass("on");
             }
-            if (res.success) {
+            if ("true" == res.success) {
                 var itemFavor = $(".rst-aside-dish-item").eq(0).clone(!0);
                 itemFavor.attr({
                     "data-good-id": goodInfo.goods_id,

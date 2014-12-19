@@ -148,7 +148,7 @@ define(['jquery', "shop/port"], function($, port){
                 }
 
             }
-            if( res.success){
+            if( res.success == "true"){
                 var itemFavor    = $(".rst-aside-dish-item").eq(0).clone(true);
 
                 itemFavor.attr({
@@ -185,7 +185,7 @@ define(['jquery', "shop/port"], function($, port){
 
             }
 
-            if( res.success == "true" ){
+            if( res.success == "true"){
 
                 listsWrapper.find(".rst-aside-dish-item").each(function(i,$ele){
                     $ele = $($ele);
