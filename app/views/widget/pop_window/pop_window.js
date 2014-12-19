@@ -4,6 +4,8 @@ define(['jquery', "shop/port"], function($, port){
     console.log("pop_window");
     console.log(port);
 
+    alert(457898);
+
 	/*
 	 *@include "左侧评论打开与关闭"
 	 *@include "ajax获取评论并显示出来" 
@@ -70,11 +72,7 @@ define(['jquery', "shop/port"], function($, port){
             //请求成功后
             if(res.success){
                 alert(734678);
-                if(res.nextSrc){
-                    showConmments(res);
-                }else{
-                    showConmments(res);
-                }
+                showConmments(res);
 
             }else{
                 
