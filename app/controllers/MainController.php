@@ -27,18 +27,20 @@ class MainController extends BaseController {
 			return Redirect::to('/map');
 		}
 		*/
+		$user_x = 29.5334930;
+		$user_y = 106.6075040;
 		$data = array();
 
 		$data['userbar'] 		= $this->getUserBar();
 		$data['pic_swap'] 		= $this->getPicSwap();
 		$data['side_bar']       = $this->getSideBar(); // 右边功能栏
 		$data['my_store']       = $this->getMyStore(); // 我收藏的店铺
-		$allStore               = $this->getShopList();
+		$allStore               = $this->getShopList($user_x, $user_y);
 		$data['shop_list']      = $allStore['shop_list'];	// 餐厅列表
 		$data['more_shop']      = $allStore['more_shop']; // 更多餐厅
 		# 弹出的这个框框也是从根据地址获取的那些店铺里面找的
 		# 一个是根据新旧排序，一个是根据热门排序，分别有8个餐厅
-		$data['my_store_alert']['data'] = $this->getMyStoreAlert(); // 我的收藏点击按钮之后弹出的框
+		$data['my_store_alert']['data'] = $this->getMyStoreAlert($user_x, $user_y); // 我的收藏点击按钮之后弹出的框
 		$data['add_image']['data'] = $this->getAddImage();//5个广告图片
 		$data['uncollection_store']['data'] = $this->uncollection_store();
 
@@ -239,7 +241,7 @@ class MainController extends BaseController {
 			$Level                          = $this->getLevel($shop);
 			$onestore['shop_level']         = $Level['thing_total'];			// 商家评级
 			$onestore['order_count']        = (float)$shop->sold_num;		// 订单总量
-			$onestore['is_opening']         = $shop->state;			// 营业状态
+			$onestore['is_opening']         = $this->isOnline($shop->operation_time, date('H:i')) ? 0 : 1;			// 营业状态
 			$onestore['is_ready_for_order'] = $shop->reserve;// 是否接受预定
 
 			array_push($my_store['data'], $onestore);
@@ -251,7 +253,7 @@ class MainController extends BaseController {
 	 * 点击我的收藏那个加号弹出的对话框
 	 * 必须登录才能操作
 	 */
-	public function getMyStoreAlert(){
+	public function getMyStoreAlert($user_x, $user_y){
 		if( !Auth::check() ){
 			return ;
 		} else{
@@ -262,9 +264,6 @@ class MainController extends BaseController {
 		//$data['new_shop'] = array();
 		$data['hot_shop'] = array();
 
-#TODO：由前端获取用户坐标
-		$user_x    = 39.9812385;
-		$user_y    = 116.3068369;
 		$geohash   = new Geohash();
 		$shopArray = $geohash->geohashGet($user_x, $user_y);
 		$shops     = new Collection();
@@ -313,7 +312,7 @@ class MainController extends BaseController {
 				$Level                     = $this->getLevel($shop);
 				$one['shop_level']         = $Level['thing_total'];
 				$one['order_count']        = (float)$shop->sold_num;
-				$one['is_opening']         = $shop->is_online;
+				$one['is_opening']         = $this->isOnline($shop->operation_time, date('H:i')) ? 0 : 1;
 				$one['is_ready_for_order'] = $shop->reserve;
 				$one['is_collected'] = in_array($shop->id, $user->collectShop->lists('shop_id'))?true:false;
 				array_push($data['hot_shop'], $one);	
@@ -328,19 +327,19 @@ class MainController extends BaseController {
 		$data = array(
 			array( 
 				"image_url" => "http://haofly.qiniudn.com/haochigo_pic_swap2.gif",
-				"jump_url"  => "1231"
+				"jump_url"  => ""
             ),
 			array( 
 				"image_url" => "http://haofly.qiniudn.com/haochigo_pic_swap.gif",
-				"jump_url"  => "1231"
+				"jump_url"  => ""
             ),
 			array( 
 				"image_url" => "http://haofly.qiniudn.com/haochigo_pic_swap3.gif",
-				"jump_url"  => "1231"
+				"jump_url"  => ""
             ),
 			array( 
 				"image_url" => "http://haofly.qiniudn.com/haochigo_pic_swap4.gif",
-				"jump_url"  => "1231"
+				"jump_url"  => ""
             ),
         );
 		return $data;
@@ -350,7 +349,7 @@ class MainController extends BaseController {
 	 * 获取餐厅列表
 	 * 默认15个，多的在更多餐厅里面显示
 	*/
-	public function getShopList(){
+	public function getShopList($user_x, $user_y){
 		$result = array(
 			'shop_list' => array(),
 			'more_shop' => array()
@@ -371,9 +370,6 @@ class MainController extends BaseController {
 		}
 
 		$data['shops'] = array();
-#TODO：由前端获取用户坐标
-		$user_x = 39.9812385;
-		$user_y = 116.3068369;
 
 		$geohash   = new Geohash();
 		$shopArray = $geohash->geohashGet($user_x, $user_y);
@@ -390,9 +386,6 @@ class MainController extends BaseController {
 
 
 			$onestore['isOnline']                = $this->isOnline($shop->operation_time, date('H:i')) ? true : false;			// 是否营业	
-
-
-			
 			$onestore['isSupportPay']            = in_array('1', explode(',', $shop->pay_method));	// 是否支持在线支付
 			$onestore['shop_id']                 = $shop->id;											// 商家id
 			$onestore['place_id']                = 111111;									// -------------------位置经纬度和位置id后期再改数据库
@@ -412,7 +405,7 @@ echo $onestore['shop_name'];
 			$onestore['deliver_state_start']     = $shop->begin_price;
 			$onestore['deliver_start_statement'] = $shop->begin_price;		// 起送价描述
 			$onestore['shop_address']            = $shop->address;									// 商家地址
-			$onestore['is_opening']              = $shop->state;										// 0是正在营业，1是打烊了，2是太忙了
+			$onestore['is_opening']              = $this->isOnline($shop->operation_time, date('H:i')) ? 0 : 1;	// 0是正在营业，1是打烊了，2是太忙了
 			$onestore['is_ready_for_order']      = $shop->reserve;							// 是否接收预定
 			$onestore['close_msg']               = $shop->close_msg;									// 关门信息
 			$onestore['business_hours']          = $shop->operation_time;						// 营业时间

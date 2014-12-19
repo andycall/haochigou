@@ -10,8 +10,6 @@ define(['jquery', 'timer', 'find_password_template/port',  "JSON", 'jquery-ui'],
 		});
 		return obj;
 	};
-
-
 	var RegObj = {
 			register_email : /(?:^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$)|(?:^[\d]{6,16})$/,
 			register_phone : /\d{11}/,
@@ -64,7 +62,7 @@ define(['jquery', 'timer', 'find_password_template/port',  "JSON", 'jquery-ui'],
 			async: false
 		})
 			.done(function(){
-
+				alert("发送成功， 请注意查收短信");
 			})
 			.fail(function(){
 				alert("服务器错误！");
@@ -121,8 +119,35 @@ define(['jquery', 'timer', 'find_password_template/port',  "JSON", 'jquery-ui'],
 
 
 		if(target.id == 'form'){
-			$('#tabs').hide();
-			$('.success_info').show();
+			$.ajax({
+				url : port['email_check'],
+				type : "POST",
+				data : JSON.encode({
+					register_email: data['register_email'],
+					auth_code : data['auth_code']
+				}),
+				contentType: 'application/json; charset=utf-8',
+				dataType: 'json',
+				async: false
+			}).done(function(data){
+				if(data['errMsg']){
+					alert(data['errMsg']);
+				}
+				$('#tabs').hide();
+				$('.success_info').show();
+			}).fail(function(data){
+				if(data['errTarget']){
+					var targets = data['errTarget'].split(",");
+
+					targets.forEach(function(value){
+						$("input[name='" + value + "'").parent().find("div.u-error-tip").show();
+					});
+
+				}
+				else{
+					alert("服务器错误！");
+				}
+			});
 			return false;
 		}
 
