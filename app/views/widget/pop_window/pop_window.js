@@ -69,6 +69,7 @@ define(['jquery', "shop/port"], function($, port){
 
             //请求成功后
             if(res.success){
+                alert(734678);
                 if(res.nextSrc){
                     showConmments(res);
                 }else{
