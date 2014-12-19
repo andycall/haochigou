@@ -471,8 +471,8 @@ class ShopController extends BaseController {
 				$one['comment_content'] = $comment->content;
 				array_push($output['data']['comment_body'], $one);
 			}
-			var_dump($output);
-//			return Response::json($output);
+			//var_dump($output);
+			return Response::json($output);
 		}else{
 			return json_encode(array(
 				'success' => false,
