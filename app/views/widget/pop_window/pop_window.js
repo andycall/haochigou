@@ -52,7 +52,6 @@ define(['jquery', "shop/port"], function($, port){
     	$windowMask.hide();
     });
 
-
 	//ajax
 	function ajaxGetConmments(data){
         console.log(data);
@@ -71,7 +70,7 @@ define(['jquery', "shop/port"], function($, port){
 
             //请求成功后
             if(res.success){
-                showConmments(res.data);
+                showConmments(res);
             }else{
                 if(res.errMsg){
                     alert(res.errMsg);

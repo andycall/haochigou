@@ -1,6 +1,5 @@
 {{-- 评论弹出框 template--}}
 <script type="text/template" id="drawer-temp">
-<%console.log(shop_total);%>
 <div class="drawer-header">
 	<a href="javascript:void(0)" class="u-close js-close-pop-window">x</a>
 
@@ -28,8 +27,8 @@
 				<i>★</i>
 			</span>
 
-			<span class="u-bar" style="width:<%= (data.shop_level.level_5/100*80)+'px'%>"></span>
-			<span class="rate"><%= data.shop_level.level_5 %>%</span>
+			<span class="u-bar" style="width:<%= (shop_level.level_5/100*80)+'px'%>"></span>
+			<span class="rate"><%=shop_level.level_5 %>%</span>
 
 		</li>
 		<li>
@@ -42,8 +41,8 @@
 				<i class="off">★</i>
 			</span>
 
-			<span class="u-bar" style="width:<%= (data.shop_level.level_4/100*80)+'px'%>"></span>
-			<span class="rate"><%= data.shop_level.level_4 %>%</span>
+			<span class="u-bar" style="width:<%= (shop_level.level_4/100*80)+'px'%>"></span>
+			<span class="rate"><%= shop_level.level_4 %>%</span>
 		</li>
 		<li>
 			<i class="u-icon-star"></i>
@@ -55,8 +54,8 @@
 				<i class="off">★</i>
 			</span>
 
-			<span class="u-bar" style="width:<%= (data.shop_level.level_3/100*80)+'px'%>"></span>
-			<span class="rate"><%= data.shop_level.level_3 %>%</span>
+			<span class="u-bar" style="width:<%= (shop_level.level_3/100*80)+'px'%>"></span>
+			<span class="rate"><%= shop_level.level_3 %>%</span>
 		</li>
 		<li>
 			<i class="u-icon-star"></i>
@@ -68,8 +67,8 @@
 				<i class="off">★</i>
 			</span>
 
-			<span class="u-bar" style="width:<%= (data.shop_level.level_2/100*80)+'px'%>"></span>
-			<span class="rate"><%= data.shop_level.level_2 %>%</span>
+			<span class="u-bar" style="width:<%= (shop_level.level_2/100*80)+'px'%>"></span>
+			<span class="rate"><%= shop_level.level_2 %>%</span>
 		</li>
 		<li>
 			<i class="u-icon-star"></i>
@@ -81,8 +80,8 @@
 				<i class="off">★</i>
 			</span>
 
-			<span class="u-bar" style="width:<%= (data.shop_level.level_1/100*80)+'px'%>"></span>
-			<span class="rate"><%= data.shop_level.level_1 %>%</span>
+			<span class="u-bar" style="width:<%= (shop_level.level_1/100*80)+'px'%>"></span>
+			<span class="rate"><%= shop_level.level_1 %>%</span>
 
 		</li>
 	</ul>
