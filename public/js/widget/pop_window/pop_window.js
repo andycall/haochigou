@@ -47,7 +47,7 @@ define([ "jquery", "shop/port" ], function($, port) {
             } catch (err) {
                 return alert("服务器数据错误"), void $(".pop_window .u-favor").toggleClass("on");
             }
-            res.success ? listsWrapper.find(".rst-aside-dish-item").each(function(i, $ele) {
+            "true" == res.success ? listsWrapper.find(".rst-aside-dish-item").each(function(i, $ele) {
                 $ele = $($ele), $ele.attr("data-good-id") == data.goods_id && $ele.attr("data-shop-id") == data.shop_id && $ele.find(".food_name").text() == data.goods_name && $ele.remove();
             }) : res.errMsg && alert(res.errMsg);
         });

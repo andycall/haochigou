@@ -184,8 +184,8 @@ define(['jquery', "shop/port"], function($, port){
                 }
 
             }
-
-            if( res.success){
+            
+            if( res.success == "true"){
 
                 listsWrapper.find(".rst-aside-dish-item").each(function(i,$ele){
                     $ele = $($ele);
