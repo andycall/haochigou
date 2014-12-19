@@ -26,11 +26,15 @@ define(['jquery'], function($){
 
 		if($.isFunction(value)) return;
 
-		for(var i = 0,len = value.length;  i < len ; i ++){
-			self.data.push(value[i]);
-		}
-	};
+		//for(var i = 0,len = value.length;  i < len ; i ++){
+		//	self.data.push(value[i]);
+		//}
+		$.each(value, function(name, value){
+			self.data.push(value);
+		});
 
+		console.log(self.data);
+	};
 
 
 	/**
@@ -42,6 +46,7 @@ define(['jquery'], function($){
 		var self = this,
 			data = self.data,
 			index;
+
 
 		if(!$.isPlainObject(labelObject)) return;
 

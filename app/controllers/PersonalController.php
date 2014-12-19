@@ -44,14 +44,23 @@ class PersonalController extends BaseController {
 		);
 		$v = Validator::make($record, $rules);
 		if( $v->fails() ){
-			echo '唉，错了';
-			echo $v->messages();
-			return Redirect::to('http://weibo');
+			$message         = $v->messages();	
+			return json_encode(array(
+				'success' => false,
+				'state'   => 400,
+				'errMsg'  => $message->toArray(),
+				'no'      => 1
+			));
 		}
 
 		$order = new Order($record);
 		if( $order->save() ){
-			return 'OKOK';
+			return json_encode(array(
+				'success' => true,
+				'state'   => 200,
+				'errMsg'  => 'finished',
+				'no'      => 0
+			));
 		}
 	}
 
@@ -109,12 +118,23 @@ class PersonalController extends BaseController {
 		);
 		$v = Validator::make($record, $rules);
 		if( $v->fails() ){
-			return Redirect::to('http://baidu.com');
+			$message         = $v->messages();	
+			return json_encode(array(
+				'success' => false,
+				'state'   => 400,
+				'errMsg'  => $message->toArray(),
+				'no'      => 1
+			));
 		}
 
 		$collect = new CollectMenu($record);
 		if( $collect->save() ){
-			return 'OK';
+			return json_encode(array(
+				'success' => true,
+				'state'   => 200,
+				'errMsg'  => 'finished',
+				'no'      => 0
+			));
 		}
 	}
 
@@ -136,12 +156,13 @@ class PersonalController extends BaseController {
 		);
 		$v = Validator::make($new_collect, $rules);
 		if( $v->fails() ){
-			return Redirect::to('http://baidu.com');
-
-			return Redirect::to('error')
-				->with('user', Auth::user())
-				->withErrors($v)
-				->withInput();
+			$message         = $v->messages();	
+			return json_encode(array(
+				'success' => false,
+				'state'   => 400,
+				'errMsg'  => $message->toArray(),
+				'no'      => 1
+			));
 		}
 
 		$collect = new CollectShop($new_collect);
@@ -174,12 +195,22 @@ class PersonalController extends BaseController {
 		);
 		$v = Validator::make($record, $rules);
 		if( $v->fails() ){
-			echo 'eheh';
-			echo $v->messages();
+			$message         = $v->messages();	
+			return json_encode(array(
+				'success' => false,
+				'state'   => 400,
+				'errMsg'  => $message->toArray(),
+				'no'      => 1
+			));
 		}
 
 		if( Order::where('id', $record['order_id'])->update(array('state' => 2)) ){
-			echo 'OKOK';
+			return json_encode(array(
+				'success' => true,
+				'state'   => 200,
+				'errMsg'  => 'finished',
+				'no'      => 0
+			));
 		}
 	}
 
@@ -198,13 +229,29 @@ class PersonalController extends BaseController {
 		);
 		$v = Validator::make($record, $rules);
 		if( $v->fails() ){
-			echo $v->messages();
+			$message         = $v->messages();	
+			return json_encode(array(
+				'success' => false,
+				'state'   => 400,
+				'errMsg'  => $message->toArray(),
+				'no'      => 1
+			));
 		}
 
 		if( Order::where('id', $record['order_id'])->update(array('state' => $record['state'])) ){
-			echo 'OKOK';
+			return json_encode(array(
+				'success' => true,
+				'state'   => 200,
+				'errMsg'  => 'finished',
+				'no'      => 0
+			));
 		}else{
-			echo 'error';
+			return json_encode(array(
+				'success' => false,
+				'state' => 400,
+				'errMsg' => 'cuowu',
+				'no' => 1
+			));
 		}
 	}
 }

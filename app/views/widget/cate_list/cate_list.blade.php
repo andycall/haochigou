@@ -26,10 +26,10 @@
                 </ul>
             </div>
         </div>
-        <a href="" class="tool_item ui_on">默认排序</a>
-        <a href="" class="tool_item">评分<i class="glyph-sort-down"></i></a>
-        <a href="" class="tool_item">销量<i class="glyph-sort-down"></i></a>
-        <a href="" class="tool_item">价格<i class="glyph-sort-down"></i></a>
+        <a href="javascript:void(0)" data-target="default" class="tool_item ui_on">默认排序<i class="glyph-sort-up"></i></a>
+        <a href="javascript:void(0)" data-target="good_level" class="tool_item">评分<i class="glyph-sort-down"></i></a>
+        <a href="javascript:void(0)" data-target="good_sails" class="tool_item">销量<i class="glyph-sort-down"></i></a>
+        <a href="javascript:void(0)" data-target="good_price" class="tool_item">价格<i class="glyph-sort-down"></i></a>
     </div>
 </div>
 
@@ -40,7 +40,7 @@
         {{--<p  class="ad_sec" title="">每天可享受两单优惠，每单可享受3份特价菜。</p>--}}
         <ul class="menu_list">
             @foreach($value['classify_goods'] as $good_name=>$good_value)
-            <li class="menu_list_block js-get-good-id" data-good_id="{{$good_value['goods_id']}}">
+            <li class="menu_list_block js-get-good-id" data-good_id="{{$good_value['goods_id']}}" data-good_price="{{$good_value['goods_price']}}" data-good_level="{{$good_value['goods_level']}}" data-good_sails="{{$good_value['good_sails']}}">
                 <div class="menu_sec_info">
                     <p class="menu_sec_title">
                         <a href="javascript:void(0)" class="dish_flavor favor_btn">♥</a>
@@ -86,6 +86,50 @@
 </div>
 
 {{-- Template --}}
+
+<script type="text/template" id="list_template">
+<% _.each(list ,function(good_value, index){ %>
+    <li class="menu_list_block js-get-good-id" data-good_id="<%= good_value['goods_id'] %>">
+        <div class="menu_sec_info">
+            <p class="menu_sec_title">
+                <a href="javascript:void(0)" class="dish_flavor favor_btn">♥</a>
+                <a href="javascript:void(0)" class="dish_title"></a>
+            </p>
+            <p class="menu_sec_desc" title="<%= good_value['goods_name'] %>"><%= good_value['goods_name'] %></p>
+        </div>
+        <div class="menu_sec_note">
+            
+        </div>
+        <div class="menu_sec_action">
+            <div class="dish_act act_btn">
+                <a href="" class="rst-d-act-add add_btn" title="点击一份">
+                    <span class="rst-d-act-glyph"></span>
+                    <span class="price symbol-rmb"><%= good_value['goods_price'] %></span>
+                 </a>
+                <div class="rst-hint-modal clear-cart">
+                    <p>篮子中已有「比格比萨」的美食，清空篮子后才能加入「土豆肉丝炒饭」</p>
+                    <div class="btn-wrapper">
+                        <a href="" class="ui-btn">再等等</a>
+                        <a href="" class="ui-btn btn-confirm">清空并添加</a>
+                    </div>
+                </div>
+                <div  class="rst-d-act-dropdown main_food_panel">
+                    <span class="helper">添加到以下菜品中</span>
+                    <span class="dish single_main_food">意大利皮塞</span>
+                    <span class="dish single_main_food">皮蛋炒肉</span>
+                </div>
+            </div>
+        </div>
+        <div class="menu_sec_status">
+            <span class="rst-d-rating food_rating js-open-pop-window">
+                <i class="icon-d-star s<%= good_value['goods_level']%> i_s"></i>(<%= good_value['comment_count'] %>)
+            </span>
+            <span class="rst-d-sales js-open-pop-window">月售<%= good_value['good_sails'] %>份</span>
+        </div>
+</li>
+<% }); %>
+
+</script>
 
 
 

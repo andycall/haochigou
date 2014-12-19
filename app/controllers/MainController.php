@@ -122,19 +122,21 @@ class MainController extends BaseController {
 		$v = Validator::make($new_collect, $rules);
 		if( $v->fails() ){
 			$message         = $v->messages();	
-			$error['msg']    = $message->toArray();
-			$error['status'] = '400';
-			return $error;
+			return json_encode(array(
+				'success' => false,
+				'state'   => 400,
+				'errMsg'  => $message->toArray(),
+				'no'      => 1
+			));
 		}
-		//echo '呵呵';
 		
 		if( CollectShop::where('shop_id', Input::get('shop_id'))->where('uid', $user->front_uid)->delete() ){
 			$output = array(
 				'success' => 'true',
-				'state' => 200,
+				'state'   => 200,
 				'nextSrc' => '',
-				'errMsg' => '',
-				'no' => 0
+				'errMsg'  => '',
+				'no'      => 0
 			);
 			$stores = $this->getMyStore();
 			$output['data']['collection_shop'] = $stores['data'];
@@ -161,17 +163,23 @@ class MainController extends BaseController {
 		);
 		$v = Validator::make($new_collect, $rules);
 		if( $v->fails() ){
-			echo '错误了';
+			$message         = $v->messages();	
+			return json_encode(array(
+				'success' => false,
+				'state'   => 400,
+				'errMsg'  => $message->toArray(),
+				'no'      => 1
+			));
 		}
 
 		$collect = new CollectShop($new_collect);
 		if( $collect->save() ){
 			$output = array(
 				'success' => 'true',
-				'state' => 200,
+				'state'   => 200,
 				'nextSrc' => '',
-				'errMsg' => '',
-				'no' => 0
+				'errMsg'  => '',
+				'no'      => 0
 			);
 			$stores = $this->getMyStore();
 			$output['data']['collection_shop'] = $stores['data'];

@@ -445,12 +445,14 @@ class ShopController extends BaseController {
 	 */
 	public function getGoodComment(){
 		$good_id = Input::get('goods_id');
+		
 		$menu = Menu::find($good_id);
 		$comments = $menu->comments;
-
+		//var_dump($comments);
+		
 		if( $comments != NULL){
 			$output = array();
-			$output['success'] = 'true';
+			$output['success'] = true;
 			$output['state']   = 200;
 			$output['nextSrc'] = '';
 			$output['errMsg']  = '';
@@ -469,9 +471,15 @@ class ShopController extends BaseController {
 				$one['comment_content'] = $comment->content;
 				array_push($output['data']['comment_body'], $one);
 			}
-			Response::json($output);
+			//var_dump($output);
+			return Response::json($output);
 		}else{
-			return ;
+			return json_encode(array(
+				'success' => false,
+				'state'   => 400,
+				'errMsg'  => '获取失败',
+				'no'      => 1
+			));
 		}
 	}
 

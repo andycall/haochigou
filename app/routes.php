@@ -142,7 +142,7 @@ Route::post('cartSetCount', 'ShopController@cartSetCount'); // 这是在提交�
 Route::get('userBarCart', 'ShopController@getUserBarCart');    // 获取购物车信息
 Route::post('cartClear', 'ShopController@cartClear');  // 清空购物车
 Route::post('cartDel', 'ShopController@cartDel');  // 从购物车删除
-Route::get('goods_comments', 'ShopController@getGoodComment'); // 
+Route::post('goods_comments', 'ShopController@getGoodComment'); // 
 
 # 用户
 Route::get('mail', function(){});                               // 用户提醒

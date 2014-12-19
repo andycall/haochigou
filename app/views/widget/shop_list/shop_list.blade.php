@@ -57,8 +57,8 @@
     <div class="more_shops-row">
         <%  for (var i = n * 5 ; (i < n * 5 + 5) && (i < shops.length); i++){ %>
             <a href="<%= shops[i]['shop_url'] %>" class="restaurant-<%= shops[i]['shop_id'] %>">
-            
-             <% if(shops[i]['isonline']){ %>
+
+             <% if(shops[i]['isonline'] == 0){ %>
                   <div class="more_shops-row-book more_shops-row-colse" data-support_activity="<%= shops[i]['support_activity'].join(',') %>" data-isHot="<%= Number(shops[i]['ishot']) %>" data-isOnline="<%= Number(shops[i]['isonline']) %>" data-isSupportPay="<%= Number(shops[i]['issupportpay']) %>" data-flavor="<%=  shops[i]['flavor'] %>" data-shop_id="<%= shops[i]['shop_id'] %>" data-place_id="<%= shops[i]['place_id'] %>">
             <% } else { %>
                   <div class="more_shops-row-book" data-support_activity="<%= shops[i]['support_activity'].join(',') %>" data-isHot="<%= Number(shops[i]['ishot']) %>" data-isOnline="<%= Number(shops[i]['isonline']) %>" data-isSupportPay="<%= shops[i]['issupportpay'] %>" data-flavor="<%= shops[i]['flavor'] %>" data-shop_id="<%= shops[i]['shop_id'] %>" data-place_id="<%= shops[i]['place_id'] %>">
@@ -108,9 +108,11 @@
                         <div class="title">
                             <p><%= shops[i]['shop_name'] %></p>
                         </div>
+
             <% if(shops[i]['is_opening']){ %>
+
                         <div class="busy">
-                <% if(shops[i]['is_opening'] == 1 ){ %>
+                <% if(shops[i]['is_opening']['isonline'] == 1 ){ %>
                             <span>休息中</span>
                         </div>
                         <div class="time">
