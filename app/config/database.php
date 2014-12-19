@@ -52,16 +52,16 @@ return array(
 			'prefix'   => '',
 		),
 
-//		'mysql' => array(
-//			'driver'    => 'mysql',
-//			'host'      => '42.62.101.36',
-//			'database'  => 'haochigo',
-//			'username'  => 'haochigo',
-//			'password'  => 'vector2014',
-//			'charset'   => 'utf8',
-//			'collation' => 'utf8_unicode_ci',
-//			'prefix'    => 'v_',
-//		),
+		'mysql' => array(
+			'driver'    => 'mysql',
+			'host'      => '42.62.101.36',
+			'database'  => 'haochigo',
+			'username'  => 'haochigo',
+			'password'  => 'vector2014',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => 'v_',
+		),
 
 
 
@@ -77,7 +77,7 @@ return array(
 //        ),
 
 
-
+/*
         'mysql' => array(
             'driver'    => 'mysql',
             'host'      => '127.0.0.1',
@@ -88,7 +88,7 @@ return array(
             'collation' => 'utf8_unicode_ci',
             'prefix'    => 'v_',
         ),
-
+*/
 
 		'pgsql' => array(
 			'driver'   => 'pgsql',
