@@ -149,7 +149,7 @@ define(['jquery', "shop/port"], function($, port){
 
             }
 
-            if( res.success == "true" ){
+            if( res.success){
                 var itemFavor    = $(".rst-aside-dish-item").eq(0).clone(true);
 
                 itemFavor.attr({
