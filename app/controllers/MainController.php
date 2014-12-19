@@ -27,18 +27,20 @@ class MainController extends BaseController {
 			return Redirect::to('/map');
 		}
 		*/
+		$user_x = 29.5334930;
+		$user_y = 106.6075040;
 		$data = array();
 
 		$data['userbar'] 		= $this->getUserBar();
 		$data['pic_swap'] 		= $this->getPicSwap();
 		$data['side_bar']       = $this->getSideBar(); // 右边功能栏
 		$data['my_store']       = $this->getMyStore(); // 我收藏的店铺
-		$allStore               = $this->getShopList();
+		$allStore               = $this->getShopList($user_x, $user_y);
 		$data['shop_list']      = $allStore['shop_list'];	// 餐厅列表
 		$data['more_shop']      = $allStore['more_shop']; // 更多餐厅
 		# 弹出的这个框框也是从根据地址获取的那些店铺里面找的
 		# 一个是根据新旧排序，一个是根据热门排序，分别有8个餐厅
-		$data['my_store_alert']['data'] = $this->getMyStoreAlert(); // 我的收藏点击按钮之后弹出的框
+		$data['my_store_alert']['data'] = $this->getMyStoreAlert($user_x, $user_y); // 我的收藏点击按钮之后弹出的框
 		$data['add_image']['data'] = $this->getAddImage();//5个广告图片
 		$data['uncollection_store']['data'] = $this->uncollection_store();
 
@@ -251,7 +253,7 @@ class MainController extends BaseController {
 	 * 点击我的收藏那个加号弹出的对话框
 	 * 必须登录才能操作
 	 */
-	public function getMyStoreAlert(){
+	public function getMyStoreAlert($user_x, $user_y){
 		if( !Auth::check() ){
 			return ;
 		} else{
@@ -262,9 +264,6 @@ class MainController extends BaseController {
 		//$data['new_shop'] = array();
 		$data['hot_shop'] = array();
 
-#TODO：由前端获取用户坐标
-		$user_x    = 39.9812385;
-		$user_y    = 116.3068369;
 		$geohash   = new Geohash();
 		$shopArray = $geohash->geohashGet($user_x, $user_y);
 		$shops     = new Collection();
@@ -328,19 +327,19 @@ class MainController extends BaseController {
 		$data = array(
 			array( 
 				"image_url" => "http://haofly.qiniudn.com/haochigo_pic_swap2.gif",
-				"jump_url"  => "1231"
+				"jump_url"  => ""
             ),
 			array( 
 				"image_url" => "http://haofly.qiniudn.com/haochigo_pic_swap.gif",
-				"jump_url"  => "1231"
+				"jump_url"  => ""
             ),
 			array( 
 				"image_url" => "http://haofly.qiniudn.com/haochigo_pic_swap3.gif",
-				"jump_url"  => "1231"
+				"jump_url"  => ""
             ),
 			array( 
 				"image_url" => "http://haofly.qiniudn.com/haochigo_pic_swap4.gif",
-				"jump_url"  => "1231"
+				"jump_url"  => ""
             ),
         );
 		return $data;
@@ -350,7 +349,7 @@ class MainController extends BaseController {
 	 * 获取餐厅列表
 	 * 默认15个，多的在更多餐厅里面显示
 	*/
-	public function getShopList(){
+	public function getShopList($user_x, $user_y){
 		$result = array(
 			'shop_list' => array(),
 			'more_shop' => array()
@@ -371,9 +370,6 @@ class MainController extends BaseController {
 		}
 
 		$data['shops'] = array();
-#TODO：由前端获取用户坐标
-		$user_x = 39.9812385;
-		$user_y = 116.3068369;
 
 		$geohash   = new Geohash();
 		$shopArray = $geohash->geohashGet($user_x, $user_y);
