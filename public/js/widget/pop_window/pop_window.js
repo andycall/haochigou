@@ -32,7 +32,7 @@ define([ "jquery", "shop/port" ], function($, port) {
                 var itemFavor = $(".rst-aside-dish-item").eq(0).clone(!0);
                 itemFavor.attr({
                     "data-good-id": goodInfo.goods_id,
-                    "data-shop-id": goodInfo.shopId
+                    "data-shop-id": goodInfo.shop_id
                 }), //设置id
                 itemFavor.find(".food_name").text(goodInfo.goods_name), itemFavor.find(".symbol-rmb").text(goodInfo.goods_price), 
                 listsWrapper.find(".rst-aside-dish-item").eq(0).before(itemFavor);
@@ -48,7 +48,7 @@ define([ "jquery", "shop/port" ], function($, port) {
                 return alert("服务器数据错误"), void $(".pop_window .u-favor").toggleClass("on");
             }
             "true" == res.success ? listsWrapper.find(".rst-aside-dish-item").each(function(i, $ele) {
-                $ele = $($ele), $ele.attr("data-good-id") == data.goods_id && $ele.attr("data-shop-id") == data.shopId && $ele.find(".food_name").text() == data.goods_name && $ele.remove();
+                $ele = $($ele), $ele.attr("data-good-id") == data.goods_id && $ele.attr("data-shop-id") == data.shop_id && $ele.find(".food_name").text() == data.goods_name && $ele.remove();
             }) : res.errMsg && alert(res.errMsg);
         });
     }
@@ -66,7 +66,7 @@ define([ "jquery", "shop/port" ], function($, port) {
         //商品id
         goods_price: "",
         //价格
-        shopId: $(".pop_window .pop_inner").attr("data-shop-id")
+        shop_id: $(".pop_window .pop_inner").attr("data-shop-id")
     }, $popWindow = $(".pop_window"), $windowMask = $(".u-mask");
     //打开左侧框
     $(".js-open-pop-window").on("click", function() {

@@ -15,7 +15,7 @@ define(['jquery', "shop/port"], function($, port){
         "goods_name"  : "", //名称
         "goods_id"    : "", //商品id
         "goods_price" : "", //价格
-        "shopId"    : $(".pop_window .pop_inner").attr("data-shop-id")  //商家id
+        "shop_id"    : $(".pop_window .pop_inner").attr("data-shop-id")  //商家id
     };
 
     /*------------------------------------------
@@ -154,7 +154,7 @@ define(['jquery', "shop/port"], function($, port){
 
                 itemFavor.attr({
                     'data-good-id' : goodInfo.goods_id,
-                    'data-shop-id' : goodInfo.shopId
+                    'data-shop-id' : goodInfo.shop_id
                 }); //设置id
 
                 itemFavor.find(".food_name").text(goodInfo.goods_name);
@@ -190,7 +190,7 @@ define(['jquery', "shop/port"], function($, port){
 
                 listsWrapper.find(".rst-aside-dish-item").each(function(i,$ele){
                     $ele = $($ele);
-                    if( ( $ele.attr("data-good-id") == data.goods_id ) && ( $ele.attr("data-shop-id") == data.shopId ) && ( $ele.find(".food_name").text() == data.goods_name ) ){
+                    if( ( $ele.attr("data-good-id") == data.goods_id ) && ( $ele.attr("data-shop-id") == data.shop_id ) && ( $ele.find(".food_name").text() == data.goods_name ) ){
                         $ele.remove(); //移除
                     }
                 })
