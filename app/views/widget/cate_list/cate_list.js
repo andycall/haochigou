@@ -103,10 +103,8 @@ define(['jquery' , 'tools/Sizer', "shop_cart/shop_cart"], function($, Sizer, car
 
 		var label = target.data("target");
 
-		console.log(good_list);
 
 		if(label == "default") {
-			console.log(2);
 			cate_view.html(original_list);
 		}
 		else {
