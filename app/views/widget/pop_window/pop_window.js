@@ -70,7 +70,7 @@ define(['jquery', "shop/port"], function($, port){
 
             //请求成功后
             if(res.success){
-                showConmments(res);
+                showConmments(res.data);
             }else{
                 if(res.errMsg){
                     alert(res.errMsg);
