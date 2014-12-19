@@ -1,7 +1,7 @@
 define([ "jquery", "shop/port" ], function($, port) {
     //ajax
     function ajaxGetConmments(data) {
-        consoe.log(data), $.post(port.getComments, data, function(res) {
+        console.log(data), $.post(port.getComments, data, function(res) {
             if ("object" != typeof res) try {
                 res = $.parseJSON(res);
             } catch (err) {

@@ -53,7 +53,7 @@ define(['jquery', "shop/port"], function($, port){
 
 	//ajax
 	function ajaxGetConmments(data){
-        consoe.log(data);
+        console.log(data);
 		$.post(port['getComments'], data, function(res){
 
             if( typeof res != "object" ){
