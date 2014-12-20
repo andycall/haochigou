@@ -1,4 +1,23 @@
 define(['jquery'], function($){
+    $('.form-horizontal').on('submit', check);
+    function check(e){
+        var oriPwd = $('#oriPwd').val();
+        var newPwd = $('#newPwd').val();
+        var newPwdRepeat = $('#verifyPwd').val();
+        if(newPwd != newPwdRepeat){
+            alert('两次输入的密码不同!请检查!');
+            return false;
+        }
+        if(!oriPwd){
+            alert('原密码不得为空!请检查!');
+            return false;
+        }
+        if(!newPwd || !newPwdRepeat){
+            alert('密码不得为空!请检查!');
+            return false;
+        }
+        return true;
+    }
     //$('#changePwd').on('click', sendVerify);
     //function sendVerify(e){
     //    var oriPwd = $('#oriPwd').val();
