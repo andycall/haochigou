@@ -8,7 +8,7 @@ define([ "jquery", "shop/port" ], function($, port) {
                 return void alert("服务器数据错误");
             }
             //请求成功后
-            res.success ? showConmments(res.data) : res.errMsg && alert(res.errMsg);
+            "true" == res.success ? showConmments(res.data) : res.errMsg && alert(res.errMsg);
         });
     }
     //ajax获取成功后的操作 将数据填进dom中
@@ -17,7 +17,7 @@ define([ "jquery", "shop/port" ], function($, port) {
         data.good_name = goodInfo.goods_name, //获取模板填数据
         console.log(data);
         var temp = _.template($("#drawer-temp").html())(data);
-        console.log(temp), //渲染
+        //渲染
         $(".pop_inner").html(temp);
     }
     //收藏商品ajax
@@ -99,7 +99,7 @@ define([ "jquery", "shop/port" ], function($, port) {
         var $this = $(this);
         $this.toggleClass("on"), goodInfo.goods_id = $this.parents(".js-get-good-id").attr("data-good_id"), 
         goodInfo.goods_name = $this.parents(".menu_sec_title").siblings(".menu_sec_desc").attr("title"), 
-        console.log(goodInfo), $this.hasClass("on") ? collectAjax(goodInfo) : delCollectAjax(goodInfo);
+        $this.hasClass("on") ? collectAjax(goodInfo) : delCollectAjax(goodInfo);
     }), /*------------------------------------
     *           有内容的评价显示控件(待定)
     *-------------------------------------

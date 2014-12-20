@@ -69,7 +69,7 @@ define(['jquery', "shop/port"], function($, port){
             }
 
             //请求成功后
-            if(res.success){
+            if(res.success == "true"){
                 showConmments(res.data);
             }else{
                 if(res.errMsg){
@@ -86,7 +86,6 @@ define(['jquery', "shop/port"], function($, port){
         //获取模板填数据
         console.log(data);
 		var temp = _.template( $("#drawer-temp").html() )(data);
-        console.log(temp);
 
         //渲染
         $(".pop_inner").html(temp);
@@ -121,7 +120,6 @@ define(['jquery', "shop/port"], function($, port){
         goodInfo.goods_id = $this.parents(".js-get-good-id").attr("data-good_id");
         goodInfo.goods_name = $this.parents(".menu_sec_title").siblings(".menu_sec_desc").attr("title");
 
-        console.log(goodInfo);
         if($this.hasClass('on')){
             collectAjax(goodInfo); //追加到列表
         }else{
