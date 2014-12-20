@@ -30,9 +30,9 @@ require.config({
 // 加载项目所需的所有依赖项
 define([
 	'userBar/userBar',
-	"footer/footer",
-	"sidebar/sidebar",
-	"personal_after_month/personal_after_month",
+	//"footer/footer",
+	//"sidebar/sidebar",
+	//"personal_after_month/personal_after_month",
     "order_form/order_form"
 ], function($){
 	console.log("init");

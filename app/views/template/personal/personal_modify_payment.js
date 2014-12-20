@@ -1,5 +1,5 @@
 require.config({
-	baseUrl : "js/lib/",
+	baseUrl : "/js/lib/",
 	shim : {
 		"underscore" : {
 			exports : "_"
@@ -26,9 +26,9 @@ require.config({
 // 加载项目所需的所有依赖项
 define([
 	'userBar/userBar',
-	"footer/footer",
-	"sidebar/sidebar",
-	"personal_details/personal_details",
+	//"footer/footer",
+	//"sidebar/sidebar",
+	//"personal_details/personal_details",
 	"personal_modify_payment_quaoate/personal_modify_payment"
 ], function($){
 	console.log("init");

@@ -22,20 +22,19 @@ require.config({
 		tools : "../tools"
 	}
 });
-
 // 加载项目所需的所有依赖项
 define([
 	'userBar/userBar',
-	"nav/nav",
+	//"nav/nav",
     "my_collection/my_collection",
     "my_collection_alert/my_collection_alert",
-	"footer/footer",
-	"more_shops/more_shops",
+	//"footer/footer",
+	//"more_shops/more_shops",
 	"shop_list/shop_list",
 	"swipe/swipe",
-	"shop_sec/shop_sec",
-	"shop_uncollected/shop_uncollected",
-	"shop_info/shop_info"
+	//"shop_sec/shop_sec",
+	//"shop_uncollected/shop_uncollected",
+	//"shop_info/shop_info"
 ], function($){
 	console.log("init");
 	//当页面准备改变时

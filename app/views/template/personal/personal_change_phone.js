@@ -31,8 +31,8 @@ require.config({
 // 加载项目所需的所有依赖项
 define([
 	'userBar/userBar',
-	"footer/footer",
-	"sidebar/sidebar",
+	//"footer/footer",
+	//"sidebar/sidebar",
 	"personal_change_phone/personal_change_phone"
 ], function($){
 	console.log("init");

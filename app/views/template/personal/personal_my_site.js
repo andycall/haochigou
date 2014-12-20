@@ -29,8 +29,8 @@ require.config({
 // 加载项目所需的所有依赖项
 define([
 	'userBar/userBar',
-	"footer/footer",
-	"sidebar/sidebar",
+	//"footer/footer",
+	//"sidebar/sidebar",
 	"personal_my_site/personal_my_site"
 ], function($){
 	console.log("init");

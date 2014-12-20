@@ -243,33 +243,11 @@
         place_id : "123213123"
     }
     output:{
-        success : "true"                // 成功返回true, 失败返回false
-        state   : 200                   // HTTP 状态码
-        nextSrc : ""                    // 登录成功后的跳转地址
-        errMsg  : ""                    // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
-        no      : 0                     // 错误号 ,错误号就出现在这, 如果没有, 那内容为空.
-        data: {
-            shop_id : ""                    // 商家id
-            place_id : ""                   // 商家位置id
-            shop_logo : ""                  // 商家的logo图片地址
-            shop_name : ""                  // 商家名称
-            shop_type : ""                  // 商家类型
-            shop_level : {                  // 总共10个等级, 1个半星一个等级
-                level_5 : "66"              // 评论为5星的比例
-                level_4 : "17"              // 评论为4星的比例
-                level_3 : "6"               // 评论为3星的比例
-                level_2 : "2"               // 评论为2星的比例
-                level_1 : "8"               // 评论为1星的比例
-            }
-            shop_total   : ""                // 总评价
-            comment_count : ""              // 评论人数
-            shop_statement : ""             // 商家简介
-            shop_time     : "09:50 - 13:30 / 16:00 - 19:30" // 商家开门时间 (纯字符串, 应该是商家自己写上去的)
-            shop_address  : ""              // 商家地址
-            deliver_begin : "19:30"         // 送餐开始时间
-            shop_distance : "400"           // 商家距离(米)
-            price_begin   : ""              // 起送价
-            is_collected : "true"               // 是否被收藏了
+        success : "true" // 成功返回true, 失败返回false
+        state   : 200  // HTTP 状态码
+        nextSrc : ""  // 登录成功后的跳转地址
+        errMsg  : ""  // 如果出现错误, 错误信息就出现在这, 如果没有, 那内容为空.
+        no      : 0  // 错误号 ,错误号就出现在这, 如果没有, 那内容为空.        no      : 0  // 错误号 ,错误号就出现在这, 如果没有, 那内容为空.
     }
 
     // 取消收藏商家

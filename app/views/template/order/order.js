@@ -23,12 +23,12 @@ require.config({
 // 加载项目所需的所有依赖项
 define([
 	'userBar/userBar',
-	"footer/footer",
-	"content_header/content_header",
+	//"footer/footer",
+	//"content_header/content_header",
 	"deliver_place/deliver_place",
-	"deliver_time/deliver_time",
+	//"deliver_time/deliver_time",
 	"good_basket/good_basket",
-	"pay_method/pay_method",
+	//"pay_method/pay_method",
 	"cart_topbar/cart_topbar"
 ], function($){
 	console.log("init");
