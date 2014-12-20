@@ -22,11 +22,8 @@ use Illuminate\Database\Eloquent\Collection;
 class MainController extends BaseController {
 
 	public function index(){
-		/*
-		if( !Auth::check() ){
-			return Redirect::to('/map');
-		}
-		*/
+		$user_x = Input::get('x');
+		$user_y = Input::get('y');
 		$user_x = 29.5334930;
 		$user_y = 106.6075040;
 		$data = array();
@@ -49,7 +46,6 @@ class MainController extends BaseController {
 
 	/**
 	 * 计算某个店铺或者某个商品评分的各个等级的
-	 *
 	 * @return array(评论数，总评论数，总评价)
 	 */
 	public function getLevel($thing){
@@ -70,7 +66,6 @@ class MainController extends BaseController {
 			$result['thing_total'] = round( ($thing->comments()->sum('value')) / $result['comment_count'], 1);// 保留一位小数
 		}
 		return $result;
-
 	}
 
 	/**
@@ -99,9 +94,7 @@ class MainController extends BaseController {
 		$output['data']['collection_shop'] = $stores['data'];
 		return $output;
 	}
-		//var_dump($hehe);
-		//return array('success' => true);
-		
+
 	/**
 	 * 取消收藏某个商家
 	 *
@@ -142,12 +135,10 @@ class MainController extends BaseController {
 			$output['data']['collection_shop'] = $stores['data'];
 			return $output;
 		}
-		
 	}
 
 	/**
 	 * 收藏某个店铺
-	 *
 	 * 请求类型：POST
 	 */
 	public function collectShop(){
