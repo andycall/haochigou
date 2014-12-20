@@ -113,7 +113,7 @@ class PersonalController extends BaseController {
 		);
 		$record = array(
 			'user_id' => $user->front_uid,
-			'menu_id' => Input::get('menu_id'),
+			'menu_id' => Input::get('goods_id'),
 			'uptime'  => time()
 		);
 		$v = Validator::make($record, $rules);
